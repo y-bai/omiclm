@@ -82,7 +82,7 @@ DATA_PATH = {
     # train output dir
     "TRAINING_OUTPUT_DIR": "outputs",
 
-    "PROJECT_ROOT_PATH": r"/home/share/huadjyin/home/weiyilin/project/DNALLM",  
+    "PROJECT_ROOT_PATH": r"path/to/project/root",  
 }
 
 PRETRAINED_MODEL_NAME_PATH = {
