@@ -1,0 +1,37 @@
+cyclone001-agent-49
+06/07/2024 17:26:57 - INFO - __main__ - Start generate dataset for: 
+/home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/DNA_training_set.csv
+/home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/DNA_test_set.csv
+06/07/2024 17:26:58 - INFO - datasets.builder - Using custom data configuration raw_seq_dataset-46676eb45a01bbd9
+06/07/2024 17:26:58 - INFO - datasets.info - Loading Dataset Infos from /home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/datasets/packaged_modules/csv
+06/07/2024 17:26:58 - INFO - datasets.builder - Generating dataset csv (/home/share/huadjyin/home/baiyong01/.cache/huggingface/datasets/csv/raw_seq_dataset-46676eb45a01bbd9/0.0.0/eea64c71ca8b46dd3f537ed218fc9bf495d5707789152eb2764f5c78fa66d59d)
+06/07/2024 17:26:58 - INFO - datasets.builder - Downloading and preparing dataset csv/raw_seq_dataset to /home/share/huadjyin/home/baiyong01/.cache/huggingface/datasets/csv/raw_seq_dataset-46676eb45a01bbd9/0.0.0/eea64c71ca8b46dd3f537ed218fc9bf495d5707789152eb2764f5c78fa66d59d...
+06/07/2024 17:26:58 - INFO - datasets.parallel.parallel - Spawning 2 processes for 2 objects in slices of [1, 1]
+06/07/2024 17:26:58 - INFO - datasets.parallel.parallel - Finished 2 processes
+06/07/2024 17:26:58 - INFO - datasets.parallel.parallel - Unpacked 2 objects
+06/07/2024 17:26:58 - INFO - datasets.download.download_manager - Downloading took 0.0 min
+06/07/2024 17:26:58 - INFO - datasets.download.download_manager - Checksum Computation took 0.0 min
+06/07/2024 17:26:58 - INFO - datasets.parallel.parallel - Spawning 2 processes for 2 objects in slices of [1, 1]
+06/07/2024 17:26:58 - INFO - datasets.parallel.parallel - Finished 2 processes
+06/07/2024 17:26:58 - INFO - datasets.parallel.parallel - Unpacked 2 objects
+06/07/2024 17:26:58 - INFO - datasets.builder - Generating train split
+06/07/2024 17:26:58 - WARNING - datasets.builder - Setting num_proc from 15 back to 1 for the train split to disable multiprocessing as it only contains one shard.
+06/07/2024 18:30:23 - INFO - datasets.builder - Generating test split
+06/07/2024 18:30:23 - WARNING - datasets.builder - Setting num_proc from 15 back to 1 for the test split to disable multiprocessing as it only contains one shard.
+06/07/2024 18:32:28 - INFO - datasets.utils.info_utils - Unable to verify splits sizes.
+06/07/2024 18:32:28 - INFO - datasets.builder - Dataset csv downloaded and prepared to /home/share/huadjyin/home/baiyong01/.cache/huggingface/datasets/csv/raw_seq_dataset-46676eb45a01bbd9/0.0.0/eea64c71ca8b46dd3f537ed218fc9bf495d5707789152eb2764f5c78fa66d59d. Subsequent calls will reuse this data.
+06/07/2024 18:33:05 - INFO - __main__ - generted HF datasets: 
+DatasetDict({
+    train: Dataset({
+        features: ['sample', 'pos', 'seq', 'peak_value'],
+        num_rows: 124167712
+    })
+    test: Dataset({
+        features: ['sample', 'pos', 'seq', 'peak_value'],
+        num_rows: 4208429
+    })
+})
+06/07/2024 18:34:38 - INFO - datasets.arrow_dataset - Listing files in /home/share/huadjyin/home/baiyong01/.cache/huggingface/datasets/csv/raw_seq_dataset-46676eb45a01bbd9/0.0.0/eea64c71ca8b46dd3f537ed218fc9bf495d5707789152eb2764f5c78fa66d59d
+06/07/2024 18:34:38 - INFO - datasets.arrow_dataset - Listing files in /home/share/huadjyin/home/baiyong01/.cache/huggingface/datasets/csv/raw_seq_dataset-46676eb45a01bbd9/0.0.0/eea64c71ca8b46dd3f537ed218fc9bf495d5707789152eb2764f5c78fa66d59d
+06/07/2024 18:34:38 - INFO - __main__ - HF datasets saved at: 
+/home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/raw_datasets/seq_dataset

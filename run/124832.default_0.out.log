@@ -1,0 +1,19 @@
+cyclone001-agent-48
+06/15/2024 17:25:17 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: True
+06/15/2024 17:25:17 - INFO - __main__ - sc model pretrained path:/home/share/huadjyin/home/weiyilin/project/DNALLM/scGPT/scGPT_human
+06/15/2024 17:25:17 - INFO - __main__ - loading scRNA data from /home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/CD8_expression_5K.h5ad
+06/15/2024 17:25:19 - INFO - __main__ - remove 'log1p' key from the adata.uns
+06/15/2024 17:25:19 - INFO - __main__ - raw scRNA data:
+AnnData object with n_obs × n_vars = 359661 × 5000
+    obs: 'library', 'sample', 'predicted_doublets', 'n_genes_by_counts', 'total_counts', 'total_counts_mt', 'pct_counts_mt', 'total_counts_rb', 'pct_counts_rb', 'total_counts_ncRNA', 'pct_counts_ncRNA', 'total_counts_hb', 'pct_counts_hb', 'n_counts', 'n_genes', 'celltype_l1', 'celltype_l2', 'celltype_l3', 'celltype_l4', 'SEACell_ID', 'SEACell_l3', 'SEACell_l4', 'final_annotation'
+    var: 'highly_variable', 'means', 'dispersions', 'dispersions_norm'
+    uns: 'hvg'
+    obsm: 'X_pca', 'X_pca_harmony', 'X_umap'
+06/15/2024 17:25:22 - INFO - __main__ - preprocessing scRNA data with scgpt
+06/15/2024 17:25:22 - WARNING - omic_models.pretrained_model.data_prep._scrna_data_processor_base - gene_name not found in var columns, Using var_names instead
+scGPT - INFO - Filtering genes by counts ...
+scGPT - INFO - Normalizing total counts ...
+scGPT - INFO - Log1p transforming ...
+scGPT - INFO - Binning data ...
+06/15/2024 17:28:38 - INFO - __main__ - scRNA embedding...
+06/15/2024 17:31:13 - INFO - __main__ - save scRNA embedding at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/embedding_datasets/scrna_dataset/scgpt/CD8_expression_5K
