@@ -47,8 +47,8 @@ RAW_SCRNA_HAS_HVG = True
 RAW_SCRNA_CELL_TYPE_VAR_NAME = "celltype_l4"  # This is used for Geneformer when tokenization
 
 USE_STREAMING = False
-MSLE_LOSS_ALPHA = 1.0   # Not used in the current version
-MSLE_LOSS_BETA = 5.0    # Not used in the current version
+MSLE_LOSS_ALPHA = 1.0   
+MSLE_LOSS_BETA = 5.0    
 
 ATTN_FFN_TYPE = "gated_mlp"  # "moe" or "mlp", "gated_mlp"
 
