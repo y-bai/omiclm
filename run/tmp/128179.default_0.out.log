@@ -1,0 +1,2007 @@
+cyclone001-agent-44
+06/30/2024 20:48:52 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 20:48:52 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 20:48:52 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 20:48:52 - INFO - __main__ - >>> loading TOKENIZED SEQ data and split from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K
+06/30/2024 20:50:08 - INFO - __main__ - >>> spliting TRAIN DATASET into train (99.95%) and valiadtion (0.05%) datasets.
+06/30/2024 20:50:08 - INFO - datasets.arrow_dataset - Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+06/30/2024 20:50:12 - INFO - __main__ - train dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 121558634
+})
+06/30/2024 20:50:12 - INFO - __main__ - validation dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 60810
+})
+06/30/2024 20:50:14 - INFO - __main__ - >>> loading EVAL DATASET
+06/30/2024 20:50:14 - INFO - __main__ - >>> loading SCRNA EMBEDDING data (h5ad) from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/embedding_datasets/scrna_dataset/scgpt/CD8_expression_5K/CD8_expression_5K_embedding.h5ad
+06/30/2024 20:50:15 - INFO - __main__ - >>> LOADED pretrained model and tokenizer from /home/share/huadjyin/home/weiyilin/project/DNALLM/HyenaDNA/hyenadna-tiny-1k-seqlen
+06/30/2024 20:50:15 - INFO - __main__ - >>> OmicFormerConfig: 
+{
+  "dropout": 0.1,
+  "ffn_type": "gated_mlp",
+  "fusion_type": "cross_attn",
+  "hidden_dim": 512,
+  "initializer_range": 0.02,
+  "intermediate_hidden_dim": 512,
+  "moe_topk": 2,
+  "n_heads": 8,
+  "n_layers_encoder": 4,
+  "n_layers_fusion": 8,
+  "n_outputs": 1,
+  "n_residuals_per_layer": 2,
+  "num_experts": 4,
+  "out_pooling_mode": "adaptive",
+  "out_pooling_size": 4,
+  "pre_layer_type": "gated_mlp",
+  "scrna_input_pooling_mode": "adaptive",
+  "scrna_input_pooling_size": 200,
+  "seq_input_pooling_mode": "adaptive",
+  "seq_input_pooling_size": 501
+}
+06/30/2024 20:50:15 - INFO - __main__ - >>> OmicFormerPreTrainedModel: 
+OmicFormerPreTrainedModel(
+  (seq_emb_model): HyenaDNAPreTrainedModel(
+    (model): HyenaDNAModel(
+      (backbone): LMBackbone(
+        (embeddings): GPT2Embeddings(
+          (word_embeddings): Embedding(16, 128)
+        )
+        (layers): ModuleList(
+          (0): Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=128, out_features=384, bias=True)
+              (out_proj): Linear(in_features=128, out_features=128, bias=True)
+              (short_filter): Conv1d(384, 384, kernel_size=(3,), stride=(1,), padding=(2,), groups=384)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=128, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.1, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=128, out_features=512, bias=True)
+              (fc2): Linear(in_features=512, out_features=128, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+          )
+          (1): Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=128, out_features=384, bias=True)
+              (out_proj): Linear(in_features=128, out_features=128, bias=True)
+              (short_filter): Conv1d(384, 384, kernel_size=(3,), stride=(1,), padding=(2,), groups=384)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=128, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.0, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=128, out_features=512, bias=True)
+              (fc2): Linear(in_features=512, out_features=128, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (drop_f): Dropout(p=0.0, inplace=False)
+        (ln_f): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (model): OmicFormer(
+    (seq_embedding): OmicEmbedding(
+      (pre_proj): Sequential(
+        (0): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=128, out_features=1024, bias=True)
+          (fc2): Linear(in_features=512, out_features=512, bias=True)
+        )
+      )
+    )
+    (seq_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (out_pooling): EmbeddingPooling(
+      (ada_pool): AdaptiveAvgPool1d(output_size=4)
+    )
+    (out_proj): OutputLayer(
+      (out): Sequential(
+        (0): Linear(in_features=2048, out_features=512, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=512, out_features=1, bias=True)
+      )
+    )
+  )
+)
+06/30/2024 20:50:15 - INFO - __main__ - num params: 1881729
+06/30/2024 20:50:15 - INFO - __main__ - num trainable params: 1445633
+06/30/2024 20:50:15 - INFO - __main__ - ^^^^^^^^tf32 is set: True
+06/30/2024 20:50:15 - INFO - __main__ - ^^^^^^^^fp16 = False
+06/30/2024 20:50:15 - INFO - __main__ - ^^^^^^^^Learning rate: 0.0006
+06/30/2024 20:50:15 - INFO - __main__ - ^^^^^^^^LR scheduler type : cosine
+06/30/2024 20:50:15 - INFO - __main__ - ^^^^^^^^use streaming : False
+06/30/2024 20:50:15 - WARNING - accelerate.utils.other - Detected kernel version 4.19.90, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+06/30/2024 20:50:16 - INFO - __main__ - >>>>>>>>>>>>>>>>Start training and evaluatoin......
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 6.0799241065979seq embedding time: 4.06532883644104
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 5.8980255126953125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01282501220703125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013078689575195312
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013864755630493164
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011322259902954102
+seq embedding time: 0.011180400848388672
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013376235961914062
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012809514999389648
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013716697692871094
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.02242755889892578
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011059761047363281
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 1.1561908721923828
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01136636734008789
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012267589569091797
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013175487518310547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012473583221435547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012362957000732422
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 2.432093858718872
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013538599014282227
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012235641479492188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01247406005859375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013163089752197266
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010312318801879883
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 2.039240837097168
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012864112854003906
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012402772903442383
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013851404190063477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013006925582885742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010627269744873047
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq_embedding: (False, torch.Size([72, 501, 128]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 2.7823445796966553cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.022315502166748047
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015685558319091797
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01722574234008789
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.017276525497436523
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015474796295166016
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 3.9482603073120117
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012937545776367188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01029658317565918
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01295614242553711
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01313924789428711
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011514425277709961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 4.143869400024414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013553380966186523
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01286458969116211
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012653112411499023
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013549566268920898
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010598897933959961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 2.7378132343292236
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012868881225585938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012918233871459961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012877225875854492
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013595104217529297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011118412017822266
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.9283654689788818
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013557672500610352
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012759208679199219
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012333154678344727
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013115644454956055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012989521026611328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01152491569519043
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.020514249801635742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013514041900634766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013602018356323242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013910055160522461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01070404052734375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010472536087036133
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013970136642456055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010829925537109375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012521505355834961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013526201248168945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010713338851928711
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010313749313354492
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012725114822387695
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010894536972045898
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012481689453125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013257741928100586
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010589122772216797
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011212348937988281
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01272130012512207
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012785911560058594
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012541770935058594
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013168096542358398
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011792421340942383
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011121273040771484
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013386726379394531
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01146078109741211
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012600898742675781
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013157367706298828
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.011852502822875977seq embedding time: 0.011262893676757812
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013000965118408203
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010392427444458008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012460470199584961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013009071350097656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010360002517700195
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq_embedding: (False, torch.Size([72, 501, 128]))seq embedding time: 0.012964010238647461
+
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010764837265014648
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010158777236938477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010445117950439453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013104915618896484
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011325597763061523
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010718584060668945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012690305709838867
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010567188262939453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010337352752685547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013198137283325195
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01047205924987793
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq embedding time: 0.013637542724609375cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.011790275573730469
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010735511779785156
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01036381721496582
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012972831726074219
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014684200286865234
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011318683624267578
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01669144630432129
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010614871978759766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010378837585449219
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013668298721313477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010337352752685547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010137557983398438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013190507888793945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010512590408325195
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01038360595703125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013289928436279297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010469675064086914seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010773897171020508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01288747787475586
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010466814041137695
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011184215545654297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01938652992248535
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+seq_embedding: (False, torch.Size([72, 501, 128]))cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+
+cell_embedding: (False, torch.Size([72, 200, 512]))seq embedding time: 0.020568370819091797seq embedding time: 0.020383834838867188
+
+
+seq embedding time: 0.02554917335510254
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015172481536865234
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.016931772232055664
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013911247253417969
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01044774055480957
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014330148696899414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010395526885986328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01044011116027832
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012274503707885742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013283252716064453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010320663452148438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012706995010375977
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01033639907836914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010139942169189453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012240171432495117
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015767335891723633
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010446310043334961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013901233673095703
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010896682739257812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010461568832397461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010574817657470703
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01513981819152832
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010510683059692383
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014080047607421875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010564088821411133
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012302398681640625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012222528457641602
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014235258102416992
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010468721389770508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01533818244934082
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010541915893554688
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010103225708007812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010173320770263672
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014435291290283203
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010711431503295898
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015111207962036133
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010644674301147461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010266780853271484
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01040339469909668
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012369632720947266
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010549545288085938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013520479202270508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010613203048706055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010167121887207031
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010320901870727539
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015059709548950195
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012161016464233398
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01282954216003418
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010840177536010742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012245416641235352
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012480735778808594
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012291431427001953
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010886669158935547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01264047622680664
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010928869247436523
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01393437385559082
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012398242950439453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012393474578857422
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010457754135131836
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011838912963867188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01047205924987793
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012935161590576172
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012439727783203125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012443780899047852
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010407686233520508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012412786483764648
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01080775260925293
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014569997787475586
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012577056884765625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012645721435546875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010442256927490234
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013973474502563477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010260343551635742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012990474700927734
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012334585189819336
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012418508529663086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010476112365722656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014061689376831055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010596036911010742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013256549835205078
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012472867965698242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01262044906616211
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011533021926879883
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012430191040039062
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012370109558105469
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012917757034301758
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012660503387451172
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012590646743774414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011565446853637695
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011986255645751953
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01222372055053711
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013106346130371094
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012678861618041992
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012476444244384766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010978221893310547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.0113983154296875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010478019714355469
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013044357299804688
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012482643127441406
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012459993362426758
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010696887969970703
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011312723159790039
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01071310043334961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013067245483398438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012199163436889648
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01220083236694336
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01031351089477539
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011783123016357422
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010214567184448242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012941360473632812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01018977165222168
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010252237319946289
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010538578033447266
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011369943618774414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01062774658203125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014089584350585938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01229238510131836
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012634992599487305
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010636329650878906
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014644861221313477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010834693908691406
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013096094131469727
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012300729751586914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012276172637939453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010530471801757812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011846542358398438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010583639144897461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012966156005859375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012313604354858398
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012499094009399414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011507272720336914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013501644134521484
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011049270629882812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013368368148803711
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012504339218139648
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012552499771118164
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010327816009521484
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.015448808670043945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010187864303588867
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011618852615356445
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012798309326171875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012517452239990234
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010986804962158203
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012133359909057617
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010995864868164062
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011522293090820312
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01272439956665039
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012685060501098633
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01074981689453125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01145315170288086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011004209518432617
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011229276657104492
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012318134307861328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012354373931884766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014970064163208008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.017542600631713867
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010564088821411133
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013328075408935547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012414693832397461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012469291687011719
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01063990592956543
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01181936264038086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010512590408325195
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011344432830810547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01237177848815918
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01241755485534668
+{'loss': 1.8274, 'grad_norm': 25.952178955078125, 'learning_rate': 2.9999999999999997e-05, 'epoch': 0.00017769185389465006}
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014672040939331055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01482248306274414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014436006546020508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01312708854675293
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013244152069091797
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012532949447631836
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010644674301147461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012261152267456055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012146234512329102
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012527227401733398
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012472152709960938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012621402740478516
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01185917854309082
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.012400627136230469
+seq embedding time: 0.01161813735961914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012580156326293945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012681245803833008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012453079223632812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01122283935546875
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.012644052505493164
+seq embedding time: 0.012647151947021484
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012585163116455078
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014534711837768555
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01238703727722168
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.011231422424316406seq embedding time: 0.010510921478271484
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012357473373413086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010305166244506836
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012176752090454102
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01245880126953125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010879278182983398
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010776996612548828seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01254582405090332
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010530233383178711
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01251077651977539
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012444734573364258
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.010919332504272461seq embedding time: 0.011148929595947266
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012392282485961914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010784149169921875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012256622314453125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012418985366821289
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq_embedding: (False, torch.Size([72, 501, 128]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011544227600097656
+seq embedding time: 0.011053323745727539
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012601375579833984
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010457515716552734
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01244664192199707
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012558937072753906
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010659933090209961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011435985565185547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012398719787597656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010372638702392578
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01269674301147461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012562274932861328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010125160217285156
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01154780387878418
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012388229370117188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010792255401611328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012209892272949219
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012406587600708008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010303497314453125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012391090393066406
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012050628662109375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011046886444091797
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012261152267456055
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010668277740478516
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010215997695922852
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011388778686523438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011257648468017578
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011124610900878906
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012528657913208008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01243281364440918
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010652780532836914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011173725128173828
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01262044906616211
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010654211044311523
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012350797653198242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012439727783203125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010149717330932617
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012403488159179688
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012052297592163086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011461734771728516
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012317419052124023
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.056740522384643555
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01024484634399414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012336015701293945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012250661849975586
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011354684829711914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012357711791992188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01742386817932129
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq_embedding: (False, torch.Size([72, 501, 128]))cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+
+seq embedding time: 0.01746368408203125cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.019376039505004883
+seq embedding time: 0.02227330207824707
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.014973878860473633
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.016785144805908203
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013159751892089844
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01081395149230957
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.011543035507202148seq embedding time: 0.012339115142822266
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01145482063293457
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012407541275024414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.03287148475646973
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010695934295654297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010580062866210938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01245737075805664
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010785102844238281
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012299776077270508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012429952621459961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010301351547241211
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011362075805664062
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012428998947143555
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010705709457397461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012979984283447266
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012378215789794922
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010359764099121094
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012407302856445312
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011594057083129883
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011007308959960938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012792825698852539
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01230621337890625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010526657104492188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011115789413452148
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012339591979980469
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010708093643188477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012678384780883789
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012380599975585938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010682344436645508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010658502578735352
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012424945831298828
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010703563690185547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012110233306884766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01308298110961914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010827302932739258
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012099027633666992
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011804580688476562
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010560989379882812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012826919555664062
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012420415878295898
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010503530502319336
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01118016242980957
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012378692626953125
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010851383209228516
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012440681457519531
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012372255325317383
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010463237762451172
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01109623908996582
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012247800827026367
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010637521743774414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012562990188598633
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01246953010559082
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010309696197509766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012223482131958008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012013673782348633
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011956930160522461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012386083602905273
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010689735412597656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010224103927612305
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010390758514404297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011733055114746094
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011114120483398438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012331724166870117
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012442350387573242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011281013488769531
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012523889541625977
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010390758514404297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01052713394165039
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012395620346069336
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012311220169067383
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010957002639770508
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012232303619384766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010667800903320312
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010497808456420898
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012663602828979492
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012748479843139648
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010293722152709961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01263117790222168
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010614156723022461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01040196418762207
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011249303817749023
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012749195098876953
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010853052139282227
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012700796127319336
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010971546173095703
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010257959365844727
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010641336441040039
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012735605239868164
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010231971740722656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq embedding time: 0.012549400329589844cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.011862754821777344
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011350393295288086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010660886764526367
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01482844352722168
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010166168212890625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012578248977661133
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012627124786376953
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011555910110473633
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010428190231323242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012592554092407227
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01242375373840332
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012630224227905273
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010129451751708984
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.009925127029418945
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012001991271972656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012796163558959961
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010521411895751953
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012567281723022461
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010894060134887695
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.010374784469604492
+seq embedding time: 0.010927438735961914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01301121711730957
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010223388671875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012747526168823242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012479066848754883
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010074615478515625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012284517288208008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012994766235351562
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011458158493041992
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012719154357910156
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012349128723144531
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012212991714477539
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013031005859375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01267099380493164
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012664318084716797
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011713981628417969
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010320663452148438
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010709762573242188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012506484985351562
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012881278991699219
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010159969329833984
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011551618576049805
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01286935806274414
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010549545288085938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012259244918823242
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012794256210327148
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010016202926635742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011502265930175781
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012699604034423828
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010230064392089844
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012220144271850586
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012517452239990234
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011001825332641602
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012693405151367188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010612010955810547
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010282754898071289
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012538433074951172
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013047456741333008
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011449575424194336
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012663602828979492
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010797977447509766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010219573974609375
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011021614074707031
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012926101684570312
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011414289474487305
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012829303741455078
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012513160705566406
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01039576530456543
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012319564819335938
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012693166732788086
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011433601379394531
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013073921203613281
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012514114379882812
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010293960571289062
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012682676315307617
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012790679931640625
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.012515544891357422seq embedding time: 0.011553764343261719
+
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012327432632446289
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010792255401611328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012820720672607422
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012619733810424805
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010746955871582031
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01239466667175293
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012409687042236328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010170698165893555
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012652397155761719
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.017928123474121094
+seq_embedding: (False, torch.Size([72, 501, 128]))seq_embedding: (False, torch.Size([72, 501, 128]))
+
+cell_embedding: (False, torch.Size([72, 200, 512]))
+cell_embedding: (False, torch.Size([72, 200, 512]))seq embedding time: 0.017572402954101562
+
+seq embedding time: 0.03018784523010254
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.018213272094726562
+seq_embedding: (False, torch.Size([72, 501, 128]))
+seq_embedding: (False, torch.Size([72, 501, 128]))cell_embedding: (False, torch.Size([72, 200, 512]))
+
+seq embedding time: 0.01656031608581543
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.022383928298950195
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013530254364013672
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01105952262878418
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012566804885864258
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01234889030456543
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010573863983154297
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012241363525390625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.0125732421875
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011081695556640625
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012470483779907227
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010221004486083984
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.011042118072509766
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012233972549438477
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012429475784301758
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010946035385131836
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012440204620361328
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012202024459838867
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012707233428955078
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012218236923217773
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012613534927368164
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010517358779907227
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012453317642211914
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01216578483581543
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010187387466430664
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012195348739624023
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012632369995117188
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012549161911010742
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013313531875610352
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012327432632446289
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010659217834472656
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012340784072875977
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.01442408561706543
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010875225067138672
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012369871139526367
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.013985157012939453
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.010693788528442383
+seq_embedding: (False, torch.Size([72, 501, 128]))
+cell_embedding: (False, torch.Size([72, 200, 512]))
+seq embedding time: 0.012253761291503906

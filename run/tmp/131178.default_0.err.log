@@ -1,0 +1,82 @@
+gcc-12.2.0 loaded successful
+cuda-11.8.0 loaded successful
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/Switched_Bm_IGHDneg/train/cache-6994b8f3e2e0c140.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/Switched_Bm_IGHDneg/train/cache-254c2e87bb376e67.arrow
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-18 15:43:22,322 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-18 15:44:56,163 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:2048] 2024-07-18 15:44:56,493 >> ***** Running training *****
+[INFO|trainer.py:2049] 2024-07-18 15:44:56,494 >>   Num examples = 121,558,634
+[INFO|trainer.py:2050] 2024-07-18 15:44:56,494 >>   Num Epochs = 1
+[INFO|trainer.py:2051] 2024-07-18 15:44:56,494 >>   Instantaneous batch size per device = 72
+[INFO|trainer.py:2054] 2024-07-18 15:44:56,494 >>   Total train batch size (w. parallel, distributed & accumulation) = 1,440
+[INFO|trainer.py:2055] 2024-07-18 15:44:56,494 >>   Gradient Accumulation steps = 10
+[INFO|trainer.py:2056] 2024-07-18 15:44:56,494 >>   Total optimization steps = 60,000
+[INFO|trainer.py:2057] 2024-07-18 15:44:56,495 >>   Number of trainable parameters = 38,957,057
+[INFO|trainer_utils.py:797] 2024-07-18 15:45:07,159 >> The following columns in the training set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: sample_record_id. If sample_record_id are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+[INFO|trainer_utils.py:797] 2024-07-18 15:45:07,258 >> The following columns in the training set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: sample_record_id. If sample_record_id are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+[INFO|trainer_utils.py:797] 2024-07-18 15:45:07,337 >> The following columns in the training set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: sample_record_id. If sample_record_id are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+[WARNING|modeling_utils.py:1188] 2024-07-18 15:45:10,764 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-18 15:45:11,684 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[INFO|trainer.py:3614] 2024-07-18 15:48:00,500 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-18 15:48:00,500 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-18 15:48:00,500 >>   Batch size = 72
+[INFO|trainer_utils.py:797] 2024-07-18 15:48:01,393 >> The following columns in the evaluation set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: sample_record_id. If sample_record_id are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+[INFO|trainer_utils.py:797] 2024-07-18 15:48:01,522 >> The following columns in the evaluation set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: sample_record_id. If sample_record_id are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+[INFO|trainer_utils.py:797] 2024-07-18 15:48:01,545 >> The following columns in the evaluation set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: sample_record_id. If sample_record_id are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+[E ProcessGroupNCCL.cpp:828] [Rank 0] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=879, OpType=_ALLGATHER_BASE, Timeout(ms)=7200000) ran for 7209805 milliseconds before timing out.
+[E ProcessGroupNCCL.cpp:828] [Rank 1] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=878, OpType=_ALLGATHER_BASE, Timeout(ms)=7200000) ran for 7209811 milliseconds before timing out.
+[E ProcessGroupNCCL.cpp:455] Some NCCL operations have failed or timed out. Due to the asynchronous nature of CUDA kernels, subsequent GPU operations might run on corrupted/incomplete data.
+[E ProcessGroupNCCL.cpp:460] To avoid data inconsistency, we are taking the entire process down.
+[E ProcessGroupNCCL.cpp:455] Some NCCL operations have failed or timed out. Due to the asynchronous nature of CUDA kernels, subsequent GPU operations might run on corrupted/incomplete data.
+[E ProcessGroupNCCL.cpp:460] To avoid data inconsistency, we are taking the entire process down.
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: -6) local_rank: 0 (pid: 2296543) of binary: /home/HPCBase/tools/anaconda3/bin/python
+Traceback (most recent call last):
+  File "/home/share/huadjyin/home/baiyong01/.local/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+run_omicformer_train.py FAILED
+--------------------------------------------------------
+Failures:
+[1]:
+  time      : 2024-07-18_17:48:39
+  host      : ip-173-5-149-32.atlnga.spcsdns.net
+  rank      : 1 (local_rank: 1)
+  exitcode  : -6 (pid: 2296544)
+  error_file: <N/A>
+  traceback : Signal 6 (SIGABRT) received by PID 2296544
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-07-18_17:48:39
+  host      : ip-173-5-149-32.atlnga.spcsdns.net
+  rank      : 0 (local_rank: 0)
+  exitcode  : -6 (pid: 2296543)
+  error_file: <N/A>
+  traceback : Signal 6 (SIGABRT) received by PID 2296543
+========================================================

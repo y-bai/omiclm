@@ -1,0 +1,303 @@
+gcc-12.2.0 loaded successful
+cuda-11.8.0 loaded successful
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-03 13:38:21,117 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-03 13:38:41,263 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-03 13:38:41,475 >> max_steps is given, it will override any value given in num_train_epochs
+[WARNING|trainer.py:577] 2024-07-03 13:38:41,504 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:2048] 2024-07-03 13:38:42,079 >> ***** Running training *****
+[INFO|trainer.py:2049] 2024-07-03 13:38:42,080 >>   Num examples = 121,558,634
+[INFO|trainer.py:2050] 2024-07-03 13:38:42,080 >>   Num Epochs = 4
+[INFO|trainer.py:2051] 2024-07-03 13:38:42,080 >>   Instantaneous batch size per device = 72
+[INFO|trainer.py:2054] 2024-07-03 13:38:42,080 >>   Total train batch size (w. parallel, distributed & accumulation) = 5,760
+[INFO|trainer.py:2055] 2024-07-03 13:38:42,080 >>   Gradient Accumulation steps = 10
+[INFO|trainer.py:2056] 2024-07-03 13:38:42,080 >>   Total optimization steps = 80,000
+[INFO|trainer.py:2057] 2024-07-03 13:38:42,081 >>   Number of trainable parameters = 38,957,057
+[WARNING|modeling_utils.py:1188] 2024-07-03 13:38:57,168 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-03 13:38:57,460 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-03 13:38:57,952 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-03 13:38:58,059 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[INFO|trainer.py:3614] 2024-07-03 13:41:48,072 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 13:41:48,073 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 13:41:48,073 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 13:45:15,830 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 13:45:15,832 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 13:45:15,832 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 13:48:43,979 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 13:48:43,990 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 13:48:43,991 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 13:52:10,305 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 13:52:10,306 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 13:52:10,306 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 13:55:37,331 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 13:55:37,332 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 13:55:37,332 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 13:59:04,556 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 13:59:04,559 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 13:59:04,559 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:02:31,868 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:02:31,869 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:02:31,869 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:05:58,496 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:05:58,496 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:05:58,496 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:09:24,861 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:09:24,861 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:09:24,861 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:12:51,538 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:12:51,538 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:12:51,538 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:16:18,452 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:16:18,452 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:16:18,452 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:19:44,667 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:19:44,667 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:19:44,667 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:23:10,520 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:23:10,520 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:23:10,520 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:26:36,724 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:26:36,724 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:26:36,726 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:30:02,234 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:30:02,234 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:30:02,234 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:33:27,960 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:33:27,960 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:33:27,960 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:36:53,477 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:36:53,477 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:36:53,477 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:40:19,631 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:40:19,631 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:40:19,631 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:43:45,546 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:43:45,546 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:43:45,546 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:47:12,177 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:47:12,178 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:47:12,178 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:50:37,497 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:50:37,497 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:50:37,497 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:54:03,092 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:54:03,092 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:54:03,092 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 14:57:28,791 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 14:57:28,791 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 14:57:28,791 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:00:54,552 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:00:54,552 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:00:54,552 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:04:20,892 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:04:20,892 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:04:20,892 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:07:47,901 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:07:47,902 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:07:47,902 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:11:16,244 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:11:16,245 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:11:16,245 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:14:45,254 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:14:45,255 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:14:45,255 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:18:11,699 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:18:11,699 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:18:11,699 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:21:37,961 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:21:37,963 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:21:37,963 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:25:05,237 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:25:05,237 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:25:05,237 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:28:30,925 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:28:30,925 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:28:30,925 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:31:56,151 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:31:56,151 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:31:56,151 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:35:23,048 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:35:23,048 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:35:23,048 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:38:48,612 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:38:48,612 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:38:48,612 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:42:14,007 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:42:14,007 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:42:14,007 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:45:41,137 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:45:41,137 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:45:41,137 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:49:08,015 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:49:08,015 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:49:08,015 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:52:34,867 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:52:34,867 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:52:34,867 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:56:01,164 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:56:01,164 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:56:01,164 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 15:59:30,378 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 15:59:30,379 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 15:59:30,379 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:02:55,975 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:02:55,978 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:02:55,978 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:06:22,206 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:06:22,206 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:06:22,206 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:09:48,255 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:09:48,256 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:09:48,256 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:13:13,633 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:13:13,633 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:13:13,633 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:16:41,127 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:16:41,127 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:16:41,127 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:20:08,758 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:20:08,758 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:20:08,758 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:23:36,220 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:23:36,220 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:23:36,220 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:27:01,683 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:27:01,683 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:27:01,683 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:30:27,227 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:30:27,228 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:30:27,228 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:33:54,063 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:33:54,064 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:33:54,064 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:37:21,825 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:37:21,825 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:37:21,826 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:40:48,185 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:40:48,185 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:40:48,185 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:44:14,676 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:44:14,677 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:44:14,677 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:47:41,381 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:47:41,381 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:47:41,382 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:51:07,861 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:51:07,861 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:51:07,861 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:54:35,415 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:54:35,415 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:54:35,415 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 16:58:01,601 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 16:58:01,601 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 16:58:01,601 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:01:27,531 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:01:27,531 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:01:27,531 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:04:53,785 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:04:53,785 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:04:53,785 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:08:20,739 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:08:20,739 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:08:20,739 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:11:49,042 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:11:49,043 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:11:49,043 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:15:15,398 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:15:15,399 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:15:15,399 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:18:42,921 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:18:42,921 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:18:42,921 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:22:10,594 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:22:10,594 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:22:10,594 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:25:38,355 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:25:38,355 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:25:38,355 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:29:08,313 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:29:08,313 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:29:08,313 >>   Batch size = 72
+[INFO|trainer.py:3614] 2024-07-03 17:32:37,692 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-03 17:32:37,692 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-07-03 17:32:37,692 >>   Batch size = 72
+ERROR: Unexpected bus error encountered in worker. This might be caused by insufficient shared memory (shm).
+ Traceback (most recent call last):
+  File "/home/share/huadjyin/home/weiyilin/project/DNALLM/omiclm/run/run_omicformer_train.py", line 464, in <module>
+    if __name__=='__main__':
+  File "/home/share/huadjyin/home/weiyilin/project/DNALLM/omiclm/run/run_omicformer_train.py", line 421, in main
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/transformers/trainer.py", line 1859, in train
+    return inner_training_loop(
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/transformers/trainer.py", line 2205, in _inner_training_loop
+    if (
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/data/_utils/signal_handling.py", line 66, in handler
+    _error_if_any_worker_fails()
+RuntimeError: DataLoader worker (pid 979863) is killed by signal: Bus error. It is possible that dataloader's workers are out of shared memory. Please try to raise your shared memory limit.
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 974421 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 974423 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 974424 closing signal SIGTERM
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 1 (pid: 974422) of binary: /home/HPCBase/tools/anaconda3/bin/python
+ERROR:torch.distributed.elastic.agent.server.api:Error waiting on exit barrier. Elapsed: 300.0716779232025 seconds
+Traceback (most recent call last):
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 920, in _exit_barrier
+    store_util.barrier(
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/elastic/utils/store.py", line 78, in barrier
+    synchronize(store, data, rank, world_size, key_prefix, barrier_timeout)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/share/huadjyin/home/baiyong01/.local/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+run_omicformer_train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-07-03_17:35:48
+  host      : cyclone001-agent-43
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 974422)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

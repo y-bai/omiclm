@@ -103,7 +103,7 @@ def main():
     logger.info(f"sc model pretrained path:{sc_model_dir}")
 
     logger.info(f"loading scRNA data from {raw_scrna_count_file_name}") 
-    adata_file_base_name = os.path.basename(raw_scrna_count_file_name).split('.')[0]
+    processed_cell_type = raw_data_config.processed_cell_type_name
 
     adata = sc.read_h5ad(raw_scrna_count_file_name)
     if 'log1p' in adata.uns_keys():
@@ -116,7 +116,7 @@ def main():
     adata_preprocessor = SCRNA_DATA_PREPROCESSOR_FOR_PRETRAINED_MODEL_MAP[pretrained_model_tokenizer_config.scrna_model_name](
         raw_adata_file_name=raw_scrna_count_file_name
     )
-    prep_out_dir = os.path.join(raw_data_config.raw_scrna_preprocessed_dir, adata_file_base_name)
+    prep_out_dir = os.path.join(raw_data_config.raw_scrna_preprocessed_dir, processed_cell_type)
     
     scrna_preprocess_args = dict(
         gene_name_id=os.path.join(pretrained_model_tokenizer_config.scrna_model_path, "gene_name_id_dict.pkl"),
@@ -156,7 +156,7 @@ def main():
                 local_files_only=True)
             
             tokenized_dataset = tokenizer(
-                adata_full_file_name = os.path.join(prep_out_dir, f"{adata_file_base_name}_preprocessed.h5ad"),
+                adata_full_file_name = os.path.join(prep_out_dir, f"{processed_cell_type}_preprocessed.h5ad"),
                 save_dataset_dir=pretrained_model_tokenizer_config.tokenized_scrna_dataset_dir,
                 cell_type_col=raw_data_config.raw_scrna_cell_type_var_name,
                 columns_to_keep=["sample", "adata_order"],
@@ -200,10 +200,10 @@ def main():
     sc_model = sc_model_cls.from_pretrained(**sc_model_init_args)
     embeded_adata = sc_model.extract_sample_embedding(**sc_model_embedding_args)
 
-    save_dir = os.path.join(pretrained_model_tokenizer_config.emb_scrna_dataset_dir, adata_file_base_name)
+    save_dir = os.path.join(pretrained_model_tokenizer_config.emb_scrna_dataset_dir, processed_cell_type)
     logger.info(f"save scRNA embedding at {save_dir}")
 
-    embeded_adata.write(save_dir + f"/{adata_file_base_name}_embedding.h5ad")
+    embeded_adata.write(save_dir + f"/{processed_cell_type}_embedding.h5ad")
 
     # embedding = embeded_adata.obsm['cell_embedding'].tolist()
     # sample = list(embeded_adata.obs['sample'])
@@ -227,5 +227,3 @@ if __name__=='__main__':
 
 
     
-
-

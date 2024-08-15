@@ -1,0 +1,241 @@
+cyclone001-agent-38
+07/01/2024 00:44:51 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+07/01/2024 00:44:51 - INFO - __main__ - >>> loading TOKENIZED SEQ data and split from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K
+07/01/2024 00:44:51 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+07/01/2024 00:44:51 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+07/01/2024 00:44:51 - WARNING - __main__ - Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True, 16-bits training: False
+07/01/2024 00:46:01 - INFO - __main__ - >>> spliting TRAIN DATASET into train (99.98%) and valiadtion (0.02%) datasets.
+07/01/2024 00:46:01 - INFO - datasets.arrow_dataset - Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-67c10577d82440ee.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-e13dffe3ff20bbe0.arrow
+07/01/2024 00:46:04 - INFO - __main__ - train dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 121595120
+})
+07/01/2024 00:46:04 - INFO - __main__ - validation dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 24324
+})
+07/01/2024 00:46:06 - INFO - __main__ - >>> loading EVAL DATASET
+07/01/2024 00:46:06 - INFO - __main__ - >>> loading SCRNA EMBEDDING data (h5ad) from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/embedding_datasets/scrna_dataset/scgpt/CD8_expression_5K/CD8_expression_5K_embedding.h5ad
+07/01/2024 00:46:07 - INFO - __main__ - >>> LOADED pretrained model and tokenizer from /home/share/huadjyin/home/weiyilin/project/DNALLM/HyenaDNA/hyenadna-medium-450k-seqlen
+07/01/2024 00:46:10 - INFO - __main__ - >>> OmicFormerConfig: 
+{
+  "dropout": 0.1,
+  "ffn_type": "gated_mlp",
+  "fusion_type": "cross_attn",
+  "hidden_dim": 512,
+  "initializer_range": 0.02,
+  "intermediate_hidden_dim": 768,
+  "moe_topk": 2,
+  "n_heads": 8,
+  "n_layers_encoder": 4,
+  "n_layers_fusion": 8,
+  "n_outputs": 1,
+  "n_residuals_per_layer": 2,
+  "num_experts": 4,
+  "out_pooling_mode": "adaptive",
+  "out_pooling_size": 4,
+  "pre_layer_type": "gated_mlp",
+  "seq_input_pooling_size": 320
+}
+07/01/2024 00:46:10 - INFO - __main__ - >>> OmicFormerPreTrainedModel: 
+OmicFormerPreTrainedModel(
+  (seq_emb_model): HyenaDNAPreTrainedModel(
+    (model): HyenaDNAModel(
+      (backbone): LMBackbone(
+        (embeddings): GPT2Embeddings(
+          (word_embeddings): Embedding(16, 256)
+        )
+        (layers): ModuleList(
+          (0): Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=256, out_features=768, bias=True)
+              (out_proj): Linear(in_features=256, out_features=256, bias=True)
+              (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=256, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.1, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=256, out_features=1024, bias=True)
+              (fc2): Linear(in_features=1024, out_features=256, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+          (1-7): 7 x Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=256, out_features=768, bias=True)
+              (out_proj): Linear(in_features=256, out_features=256, bias=True)
+              (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=256, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.0, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=256, out_features=1024, bias=True)
+              (fc2): Linear(in_features=1024, out_features=256, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (drop_f): Dropout(p=0.0, inplace=False)
+        (ln_f): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (model): OmicFormer(
+    (seq_input_proj): OmicInputProjection(
+      (pre_proj): Sequential(
+        (0): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=256, out_features=1536, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+        )
+      )
+    )
+    (scrna_input_proj): OmicInputProjection(
+      (pre_proj): Sequential(
+        (0): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=512, out_features=1536, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+        )
+      )
+    )
+    (seq_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (scrna_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (seq_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (scrna_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (fusion): TransformerEncoder(
+      (layers): ModuleList(
+        (0-7): 8 x EncoderBlock(
+          (self_attn): MHA(
+            (Wq): Linear(in_features=512, out_features=512, bias=True)
+            (Wkv): Linear(in_features=512, out_features=1024, bias=True)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (out_pooling): EmbeddingPooling(
+      (ada_pool): AdaptiveAvgPool1d(output_size=4)
+    )
+    (out_proj): OutputLayer(
+      (out): Sequential(
+        (0): Linear(in_features=2048, out_features=768, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=768, out_features=1, bias=True)
+      )
+    )
+  )
+)
+07/01/2024 00:46:10 - INFO - __main__ - num params: 45900801
+07/01/2024 00:46:10 - INFO - __main__ - num trainable params: 39350273
+07/01/2024 00:46:10 - INFO - __main__ - ^^^^^^^^tf32 is set: True
+07/01/2024 00:46:10 - INFO - __main__ - ^^^^^^^^fp16 = False
+07/01/2024 00:46:10 - INFO - __main__ - ^^^^^^^^Learning rate: 0.0006
+07/01/2024 00:46:10 - INFO - __main__ - ^^^^^^^^LR scheduler type : cosine
+07/01/2024 00:46:10 - INFO - __main__ - ^^^^^^^^use streaming : False
+07/01/2024 00:46:10 - WARNING - accelerate.utils.other - Detected kernel version 4.19.90, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+07/01/2024 00:46:11 - INFO - __main__ - >>>>>>>>>>>>>>>>Start training and evaluatoin......
+{'loss': 1.6099, 'grad_norm': 19.671541213989258, 'learning_rate': 2.9999999999999997e-05, 'epoch': 0.001157940140284448}
+{'eval_loss': 1.495280385017395, 'eval_mse': 0.6705456972122192, 'eval_spearmanr': 0.29879492207115355, 'eval_pvalue': 0.0, 'eval_runtime': 29.8426, 'eval_samples_per_second': 815.077, 'eval_steps_per_second': 2.346, 'epoch': 0.001157940140284448}
+{'loss': 1.4692, 'grad_norm': 16.151254653930664, 'learning_rate': 5.9999999999999995e-05, 'epoch': 0.002315880280568896}

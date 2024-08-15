@@ -29,10 +29,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from einops import rearrange
 
-from ..pretrained_model import (
-    PretrainedModelName,
-    PRETRAINED_MODEL_NAME_CLS_MAP,
-)
+import time
 
 from ._encoder import GatedMLP, MLP
 
@@ -61,7 +58,6 @@ class WeightedAvgPooling(nn.Module):
 class EmbeddingPooling(nn.Module):
     def __init__(
         self, 
-        d_model: int,
         pooling_seq_len: Optional[int]=100,
         pooling_mode: str='adaptive',    #  fisrt, last, mean, weight, adaptive
         device=None,
@@ -132,6 +128,8 @@ class EmbeddingPooling(nn.Module):
         #     retrive = lambda x: self.weight_pool(x).unsqueeze(-2)
         elif self.pooling_mode == 'max':
             retrive = lambda x: torch.max(x, dim=-2, keepdim=True).values
+        elif self.pooling_mode == 'sum':
+            retrive = lambda x: torch.sum(x, dim=-2, keepdim=True)
         else:
             raise NotImplementedError("mode must be ['last' | 'first' | 'mean' | 'adaptive' | 'weighted']")
         
@@ -142,23 +140,15 @@ class EmbeddingPooling(nn.Module):
         return x
     
 
-class OmicEmbedding(nn.Module):
+class OmicInputProjection(nn.Module):
     def __init__(
         self, 
-        model_name: str = None,
-        pretrained_model_name_or_path: str = None,
-        
-        emb_dim: int = 256,
-        emb_straction_kwargs: Dict = None,
-        emb_input: bool = False,
-
-        emb_pooling_len: int = 100,
-        emb_pooling_mode: str = 'adaptive',   # fisrt, last, mean, weight, adaptive
+        emb_dim_input: int = 256,    # embedding dim by the pretrained embedding model
 
         emb_proj_type: str = 'gated_mlp', # 'gated_mlp', 'mlp',
         emb_proj_hidden_dim: int = 512,
         emb_proj_dropout: float = 0.0,
-        hidden_dim: int = 512,
+        hidden_dim: int = 512,  # output dim of the embedding projection
 
         device=None,
         dtype=None, 
@@ -167,68 +157,24 @@ class OmicEmbedding(nn.Module):
         factory_kwargs = {'device': device, 'dtype': dtype}
         super().__init__(**kwargs)
 
-        self.emb_input = emb_input
-        self.emb_straction_kwargs = emb_straction_kwargs if emb_straction_kwargs is not None else {}
-
-        if not self.emb_input:
-            self.model = PRETRAINED_MODEL_NAME_CLS_MAP[PretrainedModelName(model_name)].from_pretrained(
-                pretrained_model_name_or_path, **factory_kwargs
-            )
-            for param in self.model.parameters():
-                param.requires_grad = False
-
-        self.pre_pooling = EmbeddingPooling(
-            d_model=emb_dim,
-            pooling_seq_len=emb_pooling_len,
-            pooling_mode=emb_pooling_mode,  
-            **factory_kwargs
-        )
-
         self.pre_proj = nn.Sequential(
-            nn.LayerNorm([emb_dim], **factory_kwargs), 
+            nn.LayerNorm([emb_dim_input], **factory_kwargs), 
             (MLP(
-                emb_dim, 
+                emb_dim_input, 
                 hidden_dim=emb_proj_hidden_dim, 
                 output_dim=hidden_dim, 
                 dropout=emb_proj_dropout,
                 **factory_kwargs) 
              if emb_proj_type == 'mlp' 
              else GatedMLP(
-                emb_dim, 
+                emb_dim_input, 
                 hidden_features=emb_proj_hidden_dim,
                 out_features=hidden_dim,
                 **factory_kwargs)
             )
         )
 
-    def forward(
-        self, 
-        input_ids=None,  
-        input_embedding=None, 
-        seq_len=None
-    ):
-        
-        if not self.emb_input:
-            # NOTE: the code here only used for embedding seq data. 
-            # For scRNA data, we need to use the `extract_sample_embedding` method to get the cell embedding in advance.
-            # This is due to the fact that the scRNA data is tokenized and embedded in a different way to the seq data.
-            # self.model.eval()
-            # with torch.no_grad():
-            embeddings = self.model.extract_sample_embedding(
-                input_ids, **self.emb_straction_kwargs,
-            )
-        else:
-            embeddings = input_embedding
-        
-        if seq_len is None:
-            seq_len = torch.tensor([embeddings.size(1)] * embeddings.size(0), device=embeddings.device)
-        
-        embeddings = torch.stack([
-            self.pre_pooling(embeddings[i, :seq_len[i], :])
-            for i in range(embeddings.size(0))
-        ])
-
-        embeddings = self.pre_proj(embeddings)
-
+    def forward(self, input_embedding):
+        embeddings = self.pre_proj(input_embedding)
         return embeddings
     

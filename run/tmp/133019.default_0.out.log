@@ -1,0 +1,14 @@
+cyclone001-agent-29
+07/26/2024 23:48:18 - INFO - __main__ - >>> merging SNP and SEQ data from /home/share/huadjyin/home/zhangwenxi/pythonproject/DNALLM/processed_data/caQTL_for_AI/CD4_Tfh-like_CXCR5.csv and /home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/all_sample-pos-seq.tsv
+07/26/2024 23:48:18 - INFO - __main__ - >>> fileter out samples without given cell type using /home/share/huadjyin/home/zhangwenxi/pythonproject/atac-data/Matrix/all-celltype-sample/CD4_Tfh-like_CXCR5_sample.csv
+07/26/2024 23:48:18 - INFO - __main__ - >>> fileter out SNPs with more than 1 alleles...
+07/27/2024 00:19:19 - INFO - __main__ - >>> merged, size: (154266, 9), data 
+             phenotype_id  ... snp_relative_pos
+0    chr1:3531321-3531822  ...               29
+1    chr1:8424476-8424977  ...              287
+2  chr1:11654527-11655028  ...              209
+3  chr1:11719231-11719732  ...              211
+4  chr1:18948346-18948847  ...              237
+
+[5 rows x 9 columns]
+07/27/2024 00:19:21 - INFO - __main__ - >>> saved to snp_seq_merged_filtered_CD4_Tfh-like_CXCR5.csv

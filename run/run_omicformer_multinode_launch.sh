@@ -1,8 +1,8 @@
 #!/bin/bash
 #DSUB -n job_omicformer
 #DSUB -A root.project.P24Z10200N0985
-#DSUB -R 'cpu=20;gpu=4;mem=100000'
-#DSUB -N 3
+#DSUB -R 'cpu=20;gpu=4;mem=120000'
+#DSUB -N 4
 #DSUB -eo tmp/%J.%I.err.log
 #DSUB -oo tmp/%J.%I.out.log
 
@@ -13,7 +13,7 @@ RANK_SCRIPT="run_omicformer_multinode_script.sh"
 JOB_PATH="/home/share/huadjyin/home/weiyilin/project/DNALLM/omiclm/run"
 
 ## Set NNODES
-NNODES=3
+NNODES=4
 
 ## Create nodefile
 JOB_ID=${BATCH_JOB_ID}

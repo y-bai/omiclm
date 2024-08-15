@@ -1,0 +1,70 @@
+gcc-12.2.0 loaded successful
+cuda-11.8.0 loaded successful
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-06-30 02:12:23,869 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-06-30 02:12:55,319 >> max_steps is given, it will override any value given in num_train_epochs
+[WARNING|trainer.py:577] 2024-06-30 02:12:55,319 >> max_steps is given, it will override any value given in num_train_epochs
+[WARNING|trainer.py:577] 2024-06-30 02:12:55,319 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:2048] 2024-06-30 02:12:55,631 >> ***** Running training *****
+[INFO|trainer.py:2049] 2024-06-30 02:12:55,631 >>   Num examples = 121,558,634
+[INFO|trainer.py:2050] 2024-06-30 02:12:55,631 >>   Num Epochs = 1
+[INFO|trainer.py:2051] 2024-06-30 02:12:55,632 >>   Instantaneous batch size per device = 72
+[INFO|trainer.py:2054] 2024-06-30 02:12:55,632 >>   Total train batch size (w. parallel, distributed & accumulation) = 576
+[INFO|trainer.py:2055] 2024-06-30 02:12:55,632 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:2056] 2024-06-30 02:12:55,632 >>   Total optimization steps = 60,000
+[INFO|trainer.py:2057] 2024-06-30 02:12:55,633 >>   Number of trainable parameters = 47,327,745
+  0%|          | 0/60000 [00:00<?, ?it/s][WARNING|modeling_utils.py:1188] 2024-06-30 02:13:15,556 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-06-30 02:13:15,582 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-06-30 02:13:15,609 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-06-30 02:13:16,657 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+  0%|          | 1/60000 [00:22<382:43:05, 22.96s/it]  0%|          | 2/60000 [00:30<236:10:01, 14.17s/it]  0%|          | 3/60000 [00:37<181:44:15, 10.90s/it]  0%|          | 4/60000 [00:45<160:26:19,  9.63s/it]  0%|          | 5/60000 [00:53<147:43:07,  8.86s/it]  0%|          | 6/60000 [01:00<139:57:04,  8.40s/it]  0%|          | 7/60000 [01:07<133:34:19,  8.02s/it]  0%|          | 8/60000 [01:14<125:40:38,  7.54s/it]  0%|          | 9/60000 [01:20<116:38:22,  7.00s/it]  0%|          | 10/60000 [01:26<114:26:38,  6.87s/it]  0%|          | 11/60000 [01:34<116:40:03,  7.00s/it]  0%|          | 12/60000 [01:42<121:43:27,  7.30s/it]  0%|          | 13/60000 [01:48<118:20:08,  7.10s/it]  0%|          | 14/60000 [01:55<115:08:05,  6.91s/it]  0%|          | 15/60000 [02:03<122:10:30,  7.33s/it]  0%|          | 16/60000 [02:10<119:46:49,  7.19s/it]  0%|          | 17/60000 [02:18<125:42:03,  7.54s/it]  0%|          | 18/60000 [02:24<118:08:18,  7.09s/it]  0%|          | 19/60000 [02:31<117:05:11,  7.03s/it]  0%|          | 20/60000 [02:38<114:15:35,  6.86s/it]  0%|          | 21/60000 [02:45<115:41:36,  6.94s/it]  0%|          | 22/60000 [02:53<122:10:25,  7.33s/it]  0%|          | 23/60000 [03:00<118:44:18,  7.13s/it]  0%|          | 24/60000 [03:07<120:52:18,  7.26s/it]  0%|          | 25/60000 [03:15<123:27:20,  7.41s/it]  0%|          | 26/60000 [03:23<125:56:29,  7.56s/it]  0%|          | 27/60000 [03:30<121:34:51,  7.30s/it]  0%|          | 28/60000 [03:36<118:03:43,  7.09s/it]  0%|          | 29/60000 [03:44<122:22:44,  7.35s/it]  0%|          | 30/60000 [03:50<116:52:37,  7.02s/it]  0%|          | 31/60000 [03:59<125:50:10,  7.55s/it]  0%|          | 32/60000 [04:06<123:10:27,  7.39s/it]  0%|          | 33/60000 [04:12<116:46:33,  7.01s/it]  0%|          | 34/60000 [04:19<114:48:00,  6.89s/it]  0%|          | 35/60000 [04:25<109:36:18,  6.58s/it]  0%|          | 36/60000 [04:32<111:38:07,  6.70s/it]  0%|          | 37/60000 [04:40<118:14:59,  7.10s/it]  0%|          | 38/60000 [04:47<117:27:14,  7.05s/it]  0%|          | 39/60000 [04:54<117:24:19,  7.05s/it]  0%|          | 40/60000 [05:01<116:54:59,  7.02s/it]  0%|          | 41/60000 [05:07<114:02:06,  6.85s/it]  0%|          | 42/60000 [05:14<115:46:24,  6.95s/it]  0%|          | 43/60000 [05:21<116:10:35,  6.98s/it]  0%|          | 44/60000 [05:28<116:32:17,  7.00s/it]  0%|          | 45/60000 [05:36<119:27:51,  7.17s/it]  0%|          | 46/60000 [05:43<117:58:12,  7.08s/it]  0%|          | 47/60000 [05:51<121:40:47,  7.31s/it]  0%|          | 48/60000 [05:57<114:50:27,  6.90s/it]  0%|          | 49/60000 [06:04<116:31:40,  7.00s/it]  0%|          | 50/60000 [06:11<116:58:35,  7.02s/it]                                                        0%|          | 50/60000 [06:11<116:58:35,  7.02s/it][INFO|trainer.py:3614] 2024-06-30 02:19:07,164 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-06-30 02:19:07,165 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-06-30 02:19:07,165 >>   Batch size = 72
+
+  0%|          | 0/212 [00:00<?, ?it/s][A
+  1%|          | 2/212 [00:07<12:30,  3.57s/it][A
+  1%|▏         | 3/212 [00:07<07:58,  2.29s/it][A
+  2%|▏         | 4/212 [00:14<13:57,  4.03s/it][A
+  2%|▏         | 5/212 [00:15<09:49,  2.85s/it][A
+  3%|▎         | 6/212 [00:21<13:44,  4.00s/it][A
+  3%|▎         | 7/212 [00:22<10:43,  3.14s/it][A
+  4%|▍         | 8/212 [00:28<13:22,  3.94s/it][A
+  4%|▍         | 9/212 [00:31<12:44,  3.77s/it][A
+  5%|▍         | 10/212 [00:38<15:22,  4.57s/it][A
+  5%|▌         | 11/212 [00:39<11:23,  3.40s/it][A
+  6%|▌         | 12/212 [00:45<14:27,  4.34s/it][A
+  6%|▌         | 13/212 [00:45<10:11,  3.07s/it][A
+  7%|▋         | 14/212 [00:52<13:53,  4.21s/it][A
+  7%|▋         | 15/212 [00:53<10:09,  3.09s/it][AWARNING:torch.distributed.elastic.agent.server.api:Received 15 death signal, shutting down workers
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1192244 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1192245 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1192246 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1192247 closing signal SIGTERM

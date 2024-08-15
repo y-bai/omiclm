@@ -247,7 +247,3 @@ class ScGPTDataProcessor(SCRNAInputDataProcessorBase):
 
 
         
-
-
-
-

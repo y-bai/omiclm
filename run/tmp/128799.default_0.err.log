@@ -1,0 +1,74 @@
+gcc-12.2.0 loaded successful
+cuda-11.8.0 loaded successful
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+[INFO|configuration_utils.py:724] 2024-07-03 17:34:54,274 >> loading configuration file /home/share/huadjyin/home/weiyilin/project/DNALLM/omicformer_pretrained/v1/config.json
+[INFO|configuration_utils.py:789] 2024-07-03 17:34:54,277 >> Model config OmicFormerConfig {
+  "architectures": [
+    "OmicFormer"
+  ],
+  "dropout": 0.1,
+  "ffn_type": "gated_mlp",
+  "fusion_type": "cross_attn",
+  "hidden_dim": 512,
+  "initializer_range": 0.02,
+  "intermediate_hidden_dim": 768,
+  "model_type": "omicformer",
+  "moe_topk": 2,
+  "n_heads": 8,
+  "n_layers_encoder": 4,
+  "n_layers_fusion": 8,
+  "n_outputs": 1,
+  "n_residuals_per_layer": 2,
+  "num_experts": 4,
+  "out_pooling_mode": "adaptive",
+  "out_pooling_size": 3,
+  "pre_layer_type": "gated_mlp",
+  "seq_input_pooling_size": 501,
+  "transformers_version": "4.40.2",
+  "use_cache": false
+}
+
+[INFO|modeling_utils.py:3426] 2024-07-03 17:34:54,279 >> loading weights file /home/share/huadjyin/home/weiyilin/project/DNALLM/omicformer_pretrained/v1/pytorch_model.bin
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+[INFO|modeling_utils.py:4170] 2024-07-03 17:34:55,972 >> All model checkpoint weights were used when initializing OmicFormerPreTrainedModel.
+
+[INFO|modeling_utils.py:4178] 2024-07-03 17:34:55,972 >> All the weights of OmicFormerPreTrainedModel were initialized from the model checkpoint at /home/share/huadjyin/home/weiyilin/project/DNALLM/omicformer_pretrained/v1.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use OmicFormerPreTrainedModel for predictions without further training.
+[INFO|training_args.py:1997] 2024-07-03 17:34:55,983 >> PyTorch: setting up devices
+[INFO|training_args.py:1690] 2024-07-03 17:34:56,296 >> The default value for the training argument `--report_to` will change in v5 (from all installed integrations to none). In v5, you will need to use `--report_to all` to get the same behavior as now. You should start updating your code and make this info disappear :-).
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[INFO|trainer.py:3614] 2024-07-03 17:35:03,957 >> ***** Running Prediction *****
+[INFO|trainer.py:3616] 2024-07-03 17:35:03,957 >>   Num examples = 200
+[INFO|trainer.py:3619] 2024-07-03 17:35:03,958 >>   Batch size = 72
+[INFO|trainer_utils.py:797] 2024-07-03 17:35:04,528 >> The following columns in the test set don't have a corresponding argument in `OmicFormerPreTrainedModel.forward` and have been ignored: peak_value. If peak_value are not expected by `OmicFormerPreTrainedModel.forward`,  you can safely ignore this message.
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+Listing files in /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train
+Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-e13dffe3ff20bbe0.arrow
+Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow
+Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-67c10577d82440ee.arrow
+Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+Listing files in /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/test

@@ -1,0 +1,467 @@
+cyclone001-agent-43
+--nproc_per_node 4 --nnodes 2 --node_rank 0 --master_addr cyclone001-agent-43 --master_port 30342
+
+torchrun.sh ---------------
+NNODES=2, 
+HOST=cyclone001-agent-43,
+HOSTFILE=/home/share/huadjyin/home/weiyilin/project/DNALLM/omiclm/run/tmp/128737.nodefile, 
+MASTER_IP=cyclone001-agent-43, 
+HOST_RANK=1, 
+NODE_RANK=0
+---------------------------
+07/03/2024 13:37:19 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 13:37:19 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 13:37:19 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 13:37:19 - WARNING - __main__ - Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 13:37:19 - INFO - __main__ - >>> loading TOKENIZED SEQ data and split from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K
+07/03/2024 13:38:04 - INFO - __main__ - >>> spliting TRAIN DATASET into train (99.95%) and valiadtion (0.05%) datasets.
+07/03/2024 13:38:04 - INFO - datasets.arrow_dataset - Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+07/03/2024 13:38:08 - INFO - __main__ - train dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 121558634
+})
+07/03/2024 13:38:08 - INFO - __main__ - validation dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 60810
+})
+cyclone001-agent-43:974421:974421 [0] NCCL INFO Bootstrap : Using eth0:172.16.6.36<0>
+cyclone001-agent-43:974421:974421 [0] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+cyclone001-agent-43:974421:974421 [0] NCCL INFO cudaDriverVersion 11060
+cyclone001-agent-43:974423:974423 [2] NCCL INFO cudaDriverVersion 11060
+NCCL version 2.14.3+cuda11.8
+cyclone001-agent-43:974422:974422 [1] NCCL INFO cudaDriverVersion 11060
+cyclone001-agent-43:974424:974424 [3] NCCL INFO cudaDriverVersion 11060
+cyclone001-agent-43:974421:978755 [0] NCCL INFO NCCL_IB_DISABLE set by environment to 0.
+cyclone001-agent-43:974422:974422 [1] NCCL INFO Bootstrap : Using eth0:172.16.6.36<0>
+cyclone001-agent-43:974423:974423 [2] NCCL INFO Bootstrap : Using eth0:172.16.6.36<0>
+cyclone001-agent-43:974424:974424 [3] NCCL INFO Bootstrap : Using eth0:172.16.6.36<0>
+cyclone001-agent-43:974422:974422 [1] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+cyclone001-agent-43:974423:974423 [2] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+cyclone001-agent-43:974424:974424 [3] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+cyclone001-agent-43:974422:978756 [1] NCCL INFO NCCL_IB_DISABLE set by environment to 0.
+cyclone001-agent-43:974424:978758 [3] NCCL INFO NCCL_IB_DISABLE set by environment to 0.
+cyclone001-agent-43:974423:978757 [2] NCCL INFO NCCL_IB_DISABLE set by environment to 0.
+cyclone001-agent-43:974423:978757 [2] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [RO]; OOB eth0:172.16.6.36<0>
+cyclone001-agent-43:974422:978756 [1] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [RO]; OOB eth0:172.16.6.36<0>
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Using network IB
+cyclone001-agent-43:974424:978758 [3] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [RO]; OOB eth0:172.16.6.36<0>
+cyclone001-agent-43:974421:978755 [0] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_3:1/RoCE [RO]; OOB eth0:172.16.6.36<0>
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Using network IB
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Using network IB
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Using network IB
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Setting affinity for GPU 1 to ffffffff
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Setting affinity for GPU 2 to ffffffff,00000000,00000000
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Setting affinity for GPU 3 to ffffffff,00000000,00000000
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Setting affinity for GPU 0 to ffffffff
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Trees [0] -1/-1/-1->3->2 [1] -1/-1/-1->3->2
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Trees [0] 3/-1/-1->2->1 [1] 3/-1/-1->2->1
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Trees [0] 2/-1/-1->1->0 [1] 2/-1/-1->1->0
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 00/02 :    0   1   2   3   4   5   6   7
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 01/02 :    0   1   2   3   4   5   6   7
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Trees [0] 1/4/-1->0->-1 [1] 1/-1/-1->0->4
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Channel 00 : 2[81000] -> 3[82000] via SHM/direct/direct
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Channel 01 : 2[81000] -> 3[82000] via SHM/direct/direct
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 00/0 : 7[82000] -> 0[1000] [receive] via NET/IB/0
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Channel 00 : 1[2000] -> 2[81000] via SHM/direct/direct
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Channel 01 : 1[2000] -> 2[81000] via SHM/direct/direct
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 01/0 : 7[82000] -> 0[1000] [receive] via NET/IB/0
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 00 : 0[1000] -> 1[2000] via SHM/direct/direct
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 01 : 0[1000] -> 1[2000] via SHM/direct/direct
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Connected all rings
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Channel 00 : 1[2000] -> 0[1000] via SHM/direct/direct
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Channel 01 : 1[2000] -> 0[1000] via SHM/direct/direct
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Channel 00/0 : 3[82000] -> 4[1000] [send] via NET/IB/0
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Channel 01/0 : 3[82000] -> 4[1000] [send] via NET/IB/0
+cyclone001-agent-43:974424:978779 [3] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Connected all rings
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Channel 00 : 3[82000] -> 2[81000] via SHM/direct/direct
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Channel 01 : 3[82000] -> 2[81000] via SHM/direct/direct
+cyclone001-agent-43:974421:978778 [0] NCCL INFO NCCL_IB_GID_INDEX set by environment to 3.
+cyclone001-agent-43:974421:978778 [0] NCCL INFO NCCL_IB_TIMEOUT set by environment to 23.
+cyclone001-agent-43:974421:978778 [0] NCCL INFO NCCL_IB_RETRY_CNT set by environment to 7.
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Connected all rings
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Connected all rings
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Channel 00 : 2[81000] -> 1[2000] via SHM/direct/direct
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Channel 01 : 2[81000] -> 1[2000] via SHM/direct/direct
+cyclone001-agent-43:974424:978758 [3] NCCL INFO Connected all trees
+cyclone001-agent-43:974424:978758 [3] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+cyclone001-agent-43:974424:978758 [3] NCCL INFO 2 coll channels, 2 p2p channels, 2 p2p channels per peer
+cyclone001-agent-43:974423:978757 [2] NCCL INFO Connected all trees
+cyclone001-agent-43:974423:978757 [2] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+cyclone001-agent-43:974423:978757 [2] NCCL INFO 2 coll channels, 2 p2p channels, 2 p2p channels per peer
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 00/0 : 4[1000] -> 0[1000] [receive] via NET/IB/0
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 01/0 : 4[1000] -> 0[1000] [receive] via NET/IB/0
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 00/0 : 0[1000] -> 4[1000] [send] via NET/IB/0
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Channel 01/0 : 0[1000] -> 4[1000] [send] via NET/IB/0
+cyclone001-agent-43:974421:978755 [0] NCCL INFO Connected all trees
+cyclone001-agent-43:974421:978755 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+cyclone001-agent-43:974421:978755 [0] NCCL INFO 2 coll channels, 2 p2p channels, 2 p2p channels per peer
+cyclone001-agent-43:974422:978756 [1] NCCL INFO Connected all trees
+cyclone001-agent-43:974422:978756 [1] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+cyclone001-agent-43:974422:978756 [1] NCCL INFO 2 coll channels, 2 p2p channels, 2 p2p channels per peer
+cyclone001-agent-43:974422:978756 [1] NCCL INFO comm 0x66cf4b90 rank 1 nranks 8 cudaDev 1 busId 2000 - Init COMPLETE
+cyclone001-agent-43:974421:978755 [0] NCCL INFO comm 0x6e0399b0 rank 0 nranks 8 cudaDev 0 busId 1000 - Init COMPLETE
+cyclone001-agent-43:974424:978758 [3] NCCL INFO comm 0x74f082c0 rank 3 nranks 8 cudaDev 3 busId 82000 - Init COMPLETE
+cyclone001-agent-43:974423:978757 [2] NCCL INFO comm 0x7b07a020 rank 2 nranks 8 cudaDev 2 busId 81000 - Init COMPLETE
+07/03/2024 13:38:10 - INFO - __main__ - >>> loading EVAL DATASET
+07/03/2024 13:38:11 - INFO - __main__ - >>> loading SCRNA EMBEDDING data (h5ad) from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/embedding_datasets/scrna_dataset/scgpt/CD8_expression_5K/CD8_expression_5K_embedding.h5ad
+07/03/2024 13:38:12 - INFO - __main__ - >>> LOADED pretrained model and tokenizer from /home/share/huadjyin/home/weiyilin/project/DNALLM/HyenaDNA/hyenadna-medium-450k-seqlen
+07/03/2024 13:38:17 - INFO - __main__ - >>> OmicFormerConfig: 
+{
+  "dropout": 0.1,
+  "embeding_l2norm": true,
+  "ffn_type": "gated_mlp",
+  "fusion_type": "cross_attn",
+  "hidden_dim": 512,
+  "initializer_range": 0.02,
+  "intermediate_hidden_dim": 768,
+  "moe_topk": 2,
+  "n_heads": 8,
+  "n_layers_encoder": 4,
+  "n_layers_fusion": 8,
+  "n_outputs": 1,
+  "num_experts": 4,
+  "out_pooling_mode": "adaptive",
+  "out_pooling_size": 3,
+  "pre_layer_type": "gated_mlp",
+  "seq_input_pooling_size": 501
+}
+07/03/2024 13:38:17 - INFO - __main__ - >>> OmicFormerPreTrainedModel: 
+OmicFormerPreTrainedModel(
+  (seq_emb_model): HyenaDNAPreTrainedModel(
+    (model): HyenaDNAModel(
+      (backbone): LMBackbone(
+        (embeddings): GPT2Embeddings(
+          (word_embeddings): Embedding(16, 256)
+        )
+        (layers): ModuleList(
+          (0): Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=256, out_features=768, bias=True)
+              (out_proj): Linear(in_features=256, out_features=256, bias=True)
+              (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=256, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.1, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=256, out_features=1024, bias=True)
+              (fc2): Linear(in_features=1024, out_features=256, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+          (1-7): 7 x Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=256, out_features=768, bias=True)
+              (out_proj): Linear(in_features=256, out_features=256, bias=True)
+              (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=256, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.0, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=256, out_features=1024, bias=True)
+              (fc2): Linear(in_features=1024, out_features=256, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (drop_f): Dropout(p=0.0, inplace=False)
+        (ln_f): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (model): OmicFormer(
+    (seq_input_proj): OmicInputProjection(
+      (pre_proj): Sequential(
+        (0): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=256, out_features=1536, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+        )
+      )
+    )
+    (scrna_input_proj): OmicInputProjection(
+      (pre_proj): Sequential(
+        (0): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=512, out_features=1536, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+        )
+      )
+    )
+    (seq_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (scrna_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (seq_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (scrna_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (fusion): TransformerEncoder(
+      (layers): ModuleList(
+        (0-7): 8 x EncoderBlock(
+          (self_attn): MHA(
+            (Wq): Linear(in_features=512, out_features=512, bias=True)
+            (Wkv): Linear(in_features=512, out_features=1024, bias=True)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (out_pooling): EmbeddingPooling(
+      (ada_pool): AdaptiveAvgPool1d(output_size=3)
+    )
+    (out_proj): OutputLayer(
+      (out): Sequential(
+        (0): Linear(in_features=1536, out_features=768, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=768, out_features=1, bias=True)
+      )
+    )
+  )
+)
+07/03/2024 13:38:17 - INFO - __main__ - num params: 45507585
+07/03/2024 13:38:17 - INFO - __main__ - num trainable params: 38957057
+07/03/2024 13:38:17 - INFO - __main__ - ^^^^^^^^tf32 is set: True
+07/03/2024 13:38:17 - INFO - __main__ - ^^^^^^^^fp16 = False
+07/03/2024 13:38:17 - INFO - __main__ - ^^^^^^^^Learning rate: 0.0006
+07/03/2024 13:38:17 - INFO - __main__ - ^^^^^^^^LR scheduler type : cosine
+07/03/2024 13:38:17 - INFO - __main__ - ^^^^^^^^use streaming : False
+07/03/2024 13:38:17 - WARNING - accelerate.utils.other - Detected kernel version 4.19.90, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+07/03/2024 13:38:21 - INFO - __main__ - >>>>>>>>>>>>>>>>Start training and evaluatoin......
+cyclone001-agent-43:974424:978781 [3] NCCL INFO NCCL_IB_TIMEOUT set by environment to 23.
+cyclone001-agent-43:974424:978781 [3] NCCL INFO NCCL_IB_RETRY_CNT set by environment to 7.
+{'loss': 9.3995, 'grad_norm': 0.15233232080936432, 'learning_rate': 2.9999999999999997e-05, 'epoch': 0.0023692191053828657}
+{'eval_loss': 9.342720985412598, 'eval_mse': 0.78959156489638, 'eval_pearsonr': 0.37963410827160393, 'eval_spearmanr': 0.2893727096472493, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013731294195033711, 'eval_scrna_acc': 0.014060187469166256, 'eval_runtime': 36.5302, 'eval_samples_per_second': 1664.651, 'eval_steps_per_second': 2.902, 'epoch': 0.0023692191053828657}
+{'loss': 9.2774, 'grad_norm': 0.41262829303741455, 'learning_rate': 5.9999999999999995e-05, 'epoch': 0.0047384382107657315}
+{'eval_loss': 9.209733009338379, 'eval_mse': 0.6565240586256564, 'eval_pearsonr': 0.4888504180533195, 'eval_spearmanr': 0.31041142883004036, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013665515540207203, 'eval_scrna_acc': 0.014257523433645782, 'eval_runtime': 35.7073, 'eval_samples_per_second': 1703.013, 'eval_steps_per_second': 2.969, 'epoch': 0.0047384382107657315}
+{'loss': 9.1979, 'grad_norm': 0.19212496280670166, 'learning_rate': 8.999999999999999e-05, 'epoch': 0.007107657316148598}
+{'eval_loss': 9.144115447998047, 'eval_mse': 0.5908503913457617, 'eval_pearsonr': 0.5277023012704873, 'eval_spearmanr': 0.3174464679376992, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014043742805459627, 'eval_scrna_acc': 0.013764183522446965, 'eval_runtime': 36.1283, 'eval_samples_per_second': 1683.169, 'eval_steps_per_second': 2.934, 'epoch': 0.007107657316148598}
+{'loss': 9.136, 'grad_norm': 3.861720085144043, 'learning_rate': 0.00011999999999999999, 'epoch': 0.009476876421531463}
+{'eval_loss': 9.131850242614746, 'eval_mse': 0.578624133240431, 'eval_pearsonr': 0.5583983152912575, 'eval_spearmanr': 0.31930058678244727, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013501068903140932, 'eval_scrna_acc': 0.013435290248314422, 'eval_runtime': 35.8451, 'eval_samples_per_second': 1696.468, 'eval_steps_per_second': 2.957, 'epoch': 0.009476876421531463}
+{'loss': 9.1179, 'grad_norm': 0.5714022517204285, 'learning_rate': 0.00015, 'epoch': 0.011846095526914329}
+{'eval_loss': 9.098067283630371, 'eval_mse': 0.5448134882208746, 'eval_pearsonr': 0.5721231285028681, 'eval_spearmanr': 0.3313995493113539, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013895740832099983, 'eval_scrna_acc': 0.012761059036342707, 'eval_runtime': 37.2529, 'eval_samples_per_second': 1632.357, 'eval_steps_per_second': 2.845, 'epoch': 0.011846095526914329}
+{'loss': 9.1166, 'grad_norm': 0.14548805356025696, 'learning_rate': 0.00017999999999999998, 'epoch': 0.014215314632297195}
+{'eval_loss': 9.122424125671387, 'eval_mse': 0.5691483274422418, 'eval_pearsonr': 0.5646487381394809, 'eval_spearmanr': 0.3343563244362722, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013764183522446965, 'eval_scrna_acc': 0.013385956257194541, 'eval_runtime': 36.6205, 'eval_samples_per_second': 1660.547, 'eval_steps_per_second': 2.895, 'epoch': 0.014215314632297195}
+{'loss': 9.121, 'grad_norm': 3.0264828205108643, 'learning_rate': 0.00020999999999999998, 'epoch': 0.01658453373768006}
+{'eval_loss': 9.11532974243164, 'eval_mse': 0.5620975222924703, 'eval_pearsonr': 0.5823903084643641, 'eval_spearmanr': 0.32201441994125535, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013895740832099983, 'eval_scrna_acc': 0.013879296168393356, 'eval_runtime': 35.4147, 'eval_samples_per_second': 1717.083, 'eval_steps_per_second': 2.993, 'epoch': 0.01658453373768006}
+{'loss': 9.12, 'grad_norm': 2.7993881702423096, 'learning_rate': 0.00023999999999999998, 'epoch': 0.018953752843062926}
+{'eval_loss': 9.153833389282227, 'eval_mse': 0.6005716955538454, 'eval_pearsonr': 0.5482923396445939, 'eval_spearmanr': 0.3317094807354692, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013714849531327084, 'eval_scrna_acc': 0.013764183522446965, 'eval_runtime': 33.5807, 'eval_samples_per_second': 1810.863, 'eval_steps_per_second': 3.157, 'epoch': 0.018953752843062926}
+{'loss': 9.0925, 'grad_norm': 2.739738941192627, 'learning_rate': 0.00027, 'epoch': 0.021322971948445794}
+{'eval_loss': 9.068485260009766, 'eval_mse': 0.5151778256639313, 'eval_pearsonr': 0.6075304288796755, 'eval_spearmanr': 0.33819598357234604, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013649070876500576, 'eval_scrna_acc': 0.013237954283834896, 'eval_runtime': 36.7174, 'eval_samples_per_second': 1656.163, 'eval_steps_per_second': 2.887, 'epoch': 0.021322971948445794}
+{'loss': 9.0796, 'grad_norm': 1.1603035926818848, 'learning_rate': 0.0003, 'epoch': 0.023692191053828658}
+{'eval_loss': 9.075787544250488, 'eval_mse': 0.522485682532972, 'eval_pearsonr': 0.6152771742876636, 'eval_spearmanr': 0.33903720627874306, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013879296168393356, 'eval_scrna_acc': 0.013484624239434303, 'eval_runtime': 37.0611, 'eval_samples_per_second': 1640.803, 'eval_steps_per_second': 2.86, 'epoch': 0.023692191053828658}
+{'loss': 9.0757, 'grad_norm': 3.8473052978515625, 'learning_rate': 0.00033, 'epoch': 0.026061410159211523}
+{'eval_loss': 9.083227157592773, 'eval_mse': 0.5298713484316201, 'eval_pearsonr': 0.5957942254608644, 'eval_spearmanr': 0.3340038695297353, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013829962177273475, 'eval_scrna_acc': 0.014487748725538563, 'eval_runtime': 36.4652, 'eval_samples_per_second': 1667.617, 'eval_steps_per_second': 2.907, 'epoch': 0.026061410159211523}
+{'loss': 9.0745, 'grad_norm': 0.5084415674209595, 'learning_rate': 0.00035999999999999997, 'epoch': 0.02843062926459439}
+{'eval_loss': 9.044347763061523, 'eval_mse': 0.4910184558591832, 'eval_pearsonr': 0.6268793669836054, 'eval_spearmanr': 0.3420140013877103, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014043742805459627, 'eval_scrna_acc': 0.014750863344844599, 'eval_runtime': 34.184, 'eval_samples_per_second': 1778.903, 'eval_steps_per_second': 3.101, 'epoch': 0.02843062926459439}
+{'loss': 9.0567, 'grad_norm': 0.35118526220321655, 'learning_rate': 0.00039, 'epoch': 0.030799848369977255}
+{'eval_loss': 9.031911849975586, 'eval_mse': 0.4785935025893559, 'eval_pearsonr': 0.6362266888577058, 'eval_spearmanr': 0.3473477304961499, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014125966123992764, 'eval_scrna_acc': 0.013928630159513239, 'eval_runtime': 35.0777, 'eval_samples_per_second': 1733.581, 'eval_steps_per_second': 3.022, 'epoch': 0.030799848369977255}
+{'loss': 9.0481, 'grad_norm': 0.3656657040119171, 'learning_rate': 0.00041999999999999996, 'epoch': 0.03316906747536012}
+{'eval_loss': 9.033940315246582, 'eval_mse': 0.4805966717465101, 'eval_pearsonr': 0.6357400005715256, 'eval_spearmanr': 0.34623466079394166, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013994408814339747, 'eval_scrna_acc': 0.014323302088472292, 'eval_runtime': 34.7631, 'eval_samples_per_second': 1749.27, 'eval_steps_per_second': 3.049, 'epoch': 0.03316906747536012}
+{'loss': 9.0431, 'grad_norm': 0.625553548336029, 'learning_rate': 0.00045, 'epoch': 0.035538286580742984}
+{'eval_loss': 9.042437553405762, 'eval_mse': 0.4891479905944897, 'eval_pearsonr': 0.6356032118187306, 'eval_spearmanr': 0.3484259613574792, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013714849531327084, 'eval_scrna_acc': 0.014175300115112645, 'eval_runtime': 35.4252, 'eval_samples_per_second': 1716.577, 'eval_steps_per_second': 2.992, 'epoch': 0.035538286580742984}
+{'loss': 9.0388, 'grad_norm': 0.8651547431945801, 'learning_rate': 0.00047999999999999996, 'epoch': 0.03790750568612585}
+{'eval_loss': 9.017931938171387, 'eval_mse': 0.46464085910424174, 'eval_pearsonr': 0.6498899391982365, 'eval_spearmanr': 0.3504723133882689, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014323302088472292, 'eval_scrna_acc': 0.013747738858740338, 'eval_runtime': 33.6875, 'eval_samples_per_second': 1805.122, 'eval_steps_per_second': 3.147, 'epoch': 0.03790750568612585}
+{'loss': 9.0378, 'grad_norm': 0.4138442277908325, 'learning_rate': 0.0005099999999999999, 'epoch': 0.04027672479150872}
+{'eval_loss': 9.015369415283203, 'eval_mse': 0.4620518012954623, 'eval_pearsonr': 0.6526248488669768, 'eval_spearmanr': 0.3554303423740527, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014191744778819274, 'eval_scrna_acc': 0.014273968097352409, 'eval_runtime': 34.1252, 'eval_samples_per_second': 1781.968, 'eval_steps_per_second': 3.106, 'epoch': 0.04027672479150872}
+{'loss': 9.0214, 'grad_norm': 1.2003527879714966, 'learning_rate': 0.00054, 'epoch': 0.04264594389689159}
+{'eval_loss': 9.018109321594238, 'eval_mse': 0.46484755411606127, 'eval_pearsonr': 0.6556445325046154, 'eval_spearmanr': 0.3548921100284512, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013747738858740338, 'eval_scrna_acc': 0.013764183522446965, 'eval_runtime': 34.8853, 'eval_samples_per_second': 1743.14, 'eval_steps_per_second': 3.039, 'epoch': 0.04264594389689159}
+{'loss': 9.016, 'grad_norm': 0.39509981870651245, 'learning_rate': 0.00057, 'epoch': 0.04501516300227445}
+{'eval_loss': 9.005175590515137, 'eval_mse': 0.4518844049644775, 'eval_pearsonr': 0.6622809904365723, 'eval_spearmanr': 0.35859898287570907, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014142410787699391, 'eval_scrna_acc': 0.014175300115112645, 'eval_runtime': 34.9576, 'eval_samples_per_second': 1739.536, 'eval_steps_per_second': 3.032, 'epoch': 0.04501516300227445}
+{'loss': 9.0162, 'grad_norm': 0.9082629680633545, 'learning_rate': 0.0006, 'epoch': 0.047384382107657316}
+{'eval_loss': 9.007970809936523, 'eval_mse': 0.45462900074919066, 'eval_pearsonr': 0.6618135503659989, 'eval_spearmanr': 0.35819369734303874, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013895740832099983, 'eval_scrna_acc': 0.01320506495642164, 'eval_runtime': 33.753, 'eval_samples_per_second': 1801.62, 'eval_steps_per_second': 3.14, 'epoch': 0.047384382107657316}
+{'loss': 9.0198, 'grad_norm': 0.5491118431091309, 'learning_rate': 0.0005999994069699677, 'epoch': 0.049753601213040184}
+{'eval_loss': 8.997389793395996, 'eval_mse': 0.4440265395965592, 'eval_pearsonr': 0.6688476970215443, 'eval_spearmanr': 0.3564715568323796, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013895740832099983, 'eval_scrna_acc': 0.013797072849860221, 'eval_runtime': 34.8125, 'eval_samples_per_second': 1746.787, 'eval_steps_per_second': 3.045, 'epoch': 0.049753601213040184}
+{'loss': 8.9991, 'grad_norm': 0.5120707750320435, 'learning_rate': 0.0005999976278822156, 'epoch': 0.052122820318423045}
+{'eval_loss': 8.998017311096191, 'eval_mse': 0.44471890182189494, 'eval_pearsonr': 0.6708064308051319, 'eval_spearmanr': 0.362259968648906, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013862851504686729, 'eval_scrna_acc': 0.013583292221674067, 'eval_runtime': 33.2838, 'eval_samples_per_second': 1827.015, 'eval_steps_per_second': 3.185, 'epoch': 0.052122820318423045}
+{'loss': 8.9934, 'grad_norm': 0.8826795220375061, 'learning_rate': 0.0005999946627437774, 'epoch': 0.05449203942380591}
+{'eval_loss': 8.987762451171875, 'eval_mse': 0.43448797377428916, 'eval_pearsonr': 0.6795818607701818, 'eval_spearmanr': 0.36441692053676417, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013829962177273475, 'eval_scrna_acc': 0.014076632132872883, 'eval_runtime': 34.2282, 'eval_samples_per_second': 1776.603, 'eval_steps_per_second': 3.097, 'epoch': 0.05449203942380591}
+{'loss': 8.9869, 'grad_norm': 1.6159145832061768, 'learning_rate': 0.0005999905115663757, 'epoch': 0.05686125852918878}
+{'eval_loss': 9.002345085144043, 'eval_mse': 0.4490518303129757, 'eval_pearsonr': 0.6828123765001536, 'eval_spearmanr': 0.3650283599582876, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013862851504686729, 'eval_scrna_acc': 0.013879296168393356, 'eval_runtime': 36.0878, 'eval_samples_per_second': 1685.058, 'eval_steps_per_second': 2.937, 'epoch': 0.05686125852918878}
+{'loss': 8.9873, 'grad_norm': 0.8828980922698975, 'learning_rate': 0.0005999851743664225, 'epoch': 0.05923047763457164}
+{'eval_loss': 8.973295211791992, 'eval_mse': 0.4199255338181148, 'eval_pearsonr': 0.6912614824678233, 'eval_spearmanr': 0.3659559069896836, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.01397796415063312, 'eval_scrna_acc': 0.013928630159513239, 'eval_runtime': 35.6008, 'eval_samples_per_second': 1708.106, 'eval_steps_per_second': 2.977, 'epoch': 0.05923047763457164}
+{'loss': 8.9771, 'grad_norm': 0.672958254814148, 'learning_rate': 0.0005999786511650185, 'epoch': 0.06159969673995451}
+{'eval_loss': 8.974669456481934, 'eval_mse': 0.42132700005992374, 'eval_pearsonr': 0.6912342368022195, 'eval_spearmanr': 0.3670355253709829, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.01368196020391383, 'eval_scrna_acc': 0.013517513566847559, 'eval_runtime': 36.1652, 'eval_samples_per_second': 1681.451, 'eval_steps_per_second': 2.931, 'epoch': 0.06159969673995451}
+{'loss': 8.9783, 'grad_norm': 1.5572304725646973, 'learning_rate': 0.0005999709419879534, 'epoch': 0.06396891584533737}
+{'eval_loss': 8.975326538085938, 'eval_mse': 0.4219949801482093, 'eval_pearsonr': 0.6901637343127801, 'eval_spearmanr': 0.36746539784640275, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014175300115112645, 'eval_scrna_acc': 0.013599736885380694, 'eval_runtime': 36.5582, 'eval_samples_per_second': 1663.374, 'eval_steps_per_second': 2.899, 'epoch': 0.06396891584533737}
+{'loss': 8.9688, 'grad_norm': 2.8704910278320312, 'learning_rate': 0.0005999620468657057, 'epoch': 0.06633813495072025}
+{'eval_loss': 8.973759651184082, 'eval_mse': 0.4204676624505834, 'eval_pearsonr': 0.697319793285188, 'eval_spearmanr': 0.36951216745940835, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014027298141753, 'eval_scrna_acc': 0.01361618154908732, 'eval_runtime': 35.4982, 'eval_samples_per_second': 1713.043, 'eval_steps_per_second': 2.986, 'epoch': 0.06633813495072025}
+{'loss': 8.9727, 'grad_norm': 1.1835570335388184, 'learning_rate': 0.0005999519658334426, 'epoch': 0.0687073540561031}
+{'eval_loss': 8.954778671264648, 'eval_mse': 0.4014730577061256, 'eval_pearsonr': 0.7083302884925715, 'eval_spearmanr': 0.3718904015340768, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013632626212793948, 'eval_scrna_acc': 0.013665515540207203, 'eval_runtime': 35.8757, 'eval_samples_per_second': 1695.019, 'eval_steps_per_second': 2.955, 'epoch': 0.0687073540561031}
+{'loss': 8.9683, 'grad_norm': 1.223408818244934, 'learning_rate': 0.0005999406989310196, 'epoch': 0.07107657316148597}
+{'eval_loss': 8.947251319885254, 'eval_mse': 0.393919812578461, 'eval_pearsonr': 0.7147114882564787, 'eval_spearmanr': 0.37285058951803635, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013829962177273475, 'eval_scrna_acc': 0.014273968097352409, 'eval_runtime': 34.4438, 'eval_samples_per_second': 1765.484, 'eval_steps_per_second': 3.077, 'epoch': 0.07107657316148597}
+{'loss': 8.9573, 'grad_norm': 0.5400155782699585, 'learning_rate': 0.0005999282462029811, 'epoch': 0.07344579226686884}
+{'eval_loss': 8.95836353302002, 'eval_mse': 0.4050550254457742, 'eval_pearsonr': 0.7078848281391689, 'eval_spearmanr': 0.36897378563950795, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014158855451406018, 'eval_scrna_acc': 0.014060187469166256, 'eval_runtime': 33.2027, 'eval_samples_per_second': 1831.479, 'eval_steps_per_second': 3.193, 'epoch': 0.07344579226686884}
+{'loss': 8.9479, 'grad_norm': 0.6783836483955383, 'learning_rate': 0.0005999146076985591, 'epoch': 0.0758150113722517}
+{'eval_loss': 8.948701858520508, 'eval_mse': 0.3953761557358716, 'eval_pearsonr': 0.714358133105512, 'eval_spearmanr': 0.37286662792218017, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014043742805459627, 'eval_scrna_acc': 0.014010853478046374, 'eval_runtime': 33.2484, 'eval_samples_per_second': 1828.959, 'eval_steps_per_second': 3.188, 'epoch': 0.0758150113722517}
+{'loss': 8.9433, 'grad_norm': 0.5195688009262085, 'learning_rate': 0.0005998997834716741, 'epoch': 0.07818423047763458}
+{'eval_loss': 8.930309295654297, 'eval_mse': 0.3769727298388432, 'eval_pearsonr': 0.728362976129831, 'eval_spearmanr': 0.3754130176669874, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014027298141753, 'eval_scrna_acc': 0.013862851504686729, 'eval_runtime': 34.9155, 'eval_samples_per_second': 1741.634, 'eval_steps_per_second': 3.036, 'epoch': 0.07818423047763458}
+{'loss': 8.936, 'grad_norm': 0.8034222722053528, 'learning_rate': 0.0005998837735809341, 'epoch': 0.08055344958301744}
+{'eval_loss': 8.935934066772461, 'eval_mse': 0.382642432732072, 'eval_pearsonr': 0.7272589776249754, 'eval_spearmanr': 0.3770291628274437, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013945074823219866, 'eval_scrna_acc': 0.014027298141753, 'eval_runtime': 36.1237, 'eval_samples_per_second': 1683.384, 'eval_steps_per_second': 2.934, 'epoch': 0.08055344958301744}
+{'loss': 8.9371, 'grad_norm': 0.7441149353981018, 'learning_rate': 0.0005998665780896347, 'epoch': 0.0829226686884003}
+{'eval_loss': 8.927891731262207, 'eval_mse': 0.37452521308679004, 'eval_pearsonr': 0.7314653530821879, 'eval_spearmanr': 0.3792170816195293, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013895740832099983, 'eval_scrna_acc': 0.013550402894260813, 'eval_runtime': 35.4556, 'eval_samples_per_second': 1715.101, 'eval_steps_per_second': 2.99, 'epoch': 0.0829226686884003}
+{'loss': 8.9298, 'grad_norm': 0.8482956290245056, 'learning_rate': 0.0005998481970657588, 'epoch': 0.08529188779378317}
+{'eval_loss': 8.937962532043457, 'eval_mse': 0.3846345061544086, 'eval_pearsonr': 0.7235888021319967, 'eval_spearmanr': 0.3742705877173778, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013731294195033711, 'eval_scrna_acc': 0.01315573096530176, 'eval_runtime': 36.261, 'eval_samples_per_second': 1677.01, 'eval_steps_per_second': 2.923, 'epoch': 0.08529188779378317}
+{'loss': 8.9133, 'grad_norm': 0.7644656896591187, 'learning_rate': 0.0005998286305819766, 'epoch': 0.08766110689916604}
+{'eval_loss': 8.914366722106934, 'eval_mse': 0.3610541075772978, 'eval_pearsonr': 0.7419099815932876, 'eval_spearmanr': 0.37907695613653475, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013665515540207203, 'eval_scrna_acc': 0.01409307679657951, 'eval_runtime': 35.8241, 'eval_samples_per_second': 1697.459, 'eval_steps_per_second': 2.959, 'epoch': 0.08766110689916604}
+{'loss': 8.9092, 'grad_norm': 0.5638642311096191, 'learning_rate': 0.0005998078787156446, 'epoch': 0.0900303260045489}
+{'eval_loss': 8.91988468170166, 'eval_mse': 0.3666191310731608, 'eval_pearsonr': 0.7422695496503691, 'eval_spearmanr': 0.3797742978805794, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013813517513566848, 'eval_scrna_acc': 0.013665515540207203, 'eval_runtime': 35.517, 'eval_samples_per_second': 1712.138, 'eval_steps_per_second': 2.984, 'epoch': 0.0900303260045489}
+{'loss': 8.9082, 'grad_norm': 0.7005881667137146, 'learning_rate': 0.0005997859415488061, 'epoch': 0.09239954510993177}
+{'eval_loss': 8.906086921691895, 'eval_mse': 0.35276829379512, 'eval_pearsonr': 0.7572984937859205, 'eval_spearmanr': 0.38351742922751003, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013797072849860221, 'eval_scrna_acc': 0.014241078769939155, 'eval_runtime': 35.084, 'eval_samples_per_second': 1733.268, 'eval_steps_per_second': 3.021, 'epoch': 0.09239954510993177}
+{'loss': 8.8908, 'grad_norm': 0.6253746747970581, 'learning_rate': 0.0005997628191681904, 'epoch': 0.09476876421531463}
+{'eval_loss': 8.890563011169434, 'eval_mse': 0.33726299334053916, 'eval_pearsonr': 0.7633601808981516, 'eval_spearmanr': 0.38337400512186354, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014027298141753, 'eval_scrna_acc': 0.013221509620128268, 'eval_runtime': 36.2174, 'eval_samples_per_second': 1679.029, 'eval_steps_per_second': 2.927, 'epoch': 0.09476876421531463}
+{'loss': 8.8917, 'grad_norm': 0.7901098132133484, 'learning_rate': 0.0005997385116652129, 'epoch': 0.0971379833206975}
+{'eval_loss': 8.885552406311035, 'eval_mse': 0.33224179245139057, 'eval_pearsonr': 0.7674123703045519, 'eval_spearmanr': 0.38464183690800147, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013945074823219866, 'eval_scrna_acc': 0.014224634106232528, 'eval_runtime': 33.6689, 'eval_samples_per_second': 1806.115, 'eval_steps_per_second': 3.148, 'epoch': 0.0971379833206975}
+{'loss': 8.8855, 'grad_norm': 0.5926108360290527, 'learning_rate': 0.0005997130191359737, 'epoch': 0.09950720242608037}
+{'eval_loss': 8.903397560119629, 'eval_mse': 0.35008777533877955, 'eval_pearsonr': 0.7611660335186111, 'eval_spearmanr': 0.38082191015446204, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013961519486926493, 'eval_scrna_acc': 0.013649070876500576, 'eval_runtime': 35.1036, 'eval_samples_per_second': 1732.301, 'eval_steps_per_second': 3.02, 'epoch': 0.09950720242608037}
+{'loss': 8.8772, 'grad_norm': 0.6189481616020203, 'learning_rate': 0.0005996863416812585, 'epoch': 0.10187642153146323}
+{'eval_loss': 8.875531196594238, 'eval_mse': 0.3222910808170673, 'eval_pearsonr': 0.7768478123892874, 'eval_spearmanr': 0.38609784957670507, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013747738858740338, 'eval_scrna_acc': 0.01397796415063312, 'eval_runtime': 34.8502, 'eval_samples_per_second': 1744.898, 'eval_steps_per_second': 3.042, 'epoch': 0.10187642153146323}
+{'loss': 8.8674, 'grad_norm': 0.5766897201538086, 'learning_rate': 0.0005996584794065377, 'epoch': 0.10424564063684609}
+{'eval_loss': 8.864108085632324, 'eval_mse': 0.3108524254807729, 'eval_pearsonr': 0.7846208144331444, 'eval_spearmanr': 0.3908072030974945, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013994408814339747, 'eval_scrna_acc': 0.013928630159513239, 'eval_runtime': 35.4574, 'eval_samples_per_second': 1715.014, 'eval_steps_per_second': 2.989, 'epoch': 0.10424564063684609}
+{'loss': 8.857, 'grad_norm': 0.8837073445320129, 'learning_rate': 0.0005996294324219655, 'epoch': 0.10661485974222897}
+{'eval_loss': 8.866353034973145, 'eval_mse': 0.31303087751358727, 'eval_pearsonr': 0.7878731866463842, 'eval_spearmanr': 0.39172588871830755, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013912185495806612, 'eval_scrna_acc': 0.013797072849860221, 'eval_runtime': 36.9921, 'eval_samples_per_second': 1643.862, 'eval_steps_per_second': 2.865, 'epoch': 0.10661485974222897}
+{'loss': 8.8535, 'grad_norm': 0.8214377760887146, 'learning_rate': 0.0005995992008423803, 'epoch': 0.10898407884761183}
+{'eval_loss': 8.855319023132324, 'eval_mse': 0.302029911319088, 'eval_pearsonr': 0.7910634819608398, 'eval_spearmanr': 0.38700209202691727, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013912185495806612, 'eval_scrna_acc': 0.014010853478046374, 'eval_runtime': 35.5178, 'eval_samples_per_second': 1712.1, 'eval_steps_per_second': 2.984, 'epoch': 0.10898407884761183}
+{'loss': 8.8574, 'grad_norm': 0.8244494199752808, 'learning_rate': 0.0005995677847873036, 'epoch': 0.11135329795299469}
+{'eval_loss': 8.847346305847168, 'eval_mse': 0.29404166305449925, 'eval_pearsonr': 0.7981415699576289, 'eval_spearmanr': 0.3926071921483359, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014158855451406018, 'eval_scrna_acc': 0.014175300115112645, 'eval_runtime': 36.7454, 'eval_samples_per_second': 1654.903, 'eval_steps_per_second': 2.885, 'epoch': 0.11135329795299469}
+{'loss': 8.8419, 'grad_norm': 0.6554208397865295, 'learning_rate': 0.0005995351843809397, 'epoch': 0.11372251705837756}
+{'eval_loss': 8.860849380493164, 'eval_mse': 0.3075708307925444, 'eval_pearsonr': 0.798876543041005, 'eval_spearmanr': 0.3906815099743981, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013879296168393356, 'eval_scrna_acc': 0.014290412761059036, 'eval_runtime': 34.9543, 'eval_samples_per_second': 1739.702, 'eval_steps_per_second': 3.033, 'epoch': 0.11372251705837756}
+{'loss': 8.8399, 'grad_norm': 0.9075122475624084, 'learning_rate': 0.0005995013997521756, 'epoch': 0.11609173616376042}
+{'eval_loss': 8.831052780151367, 'eval_mse': 0.27772568521603036, 'eval_pearsonr': 0.8093536978191957, 'eval_spearmanr': 0.39526405231436595, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013862851504686729, 'eval_scrna_acc': 0.013961519486926493, 'eval_runtime': 35.7954, 'eval_samples_per_second': 1698.824, 'eval_steps_per_second': 2.961, 'epoch': 0.11609173616376042}
+{'loss': 8.8258, 'grad_norm': 1.1366562843322754, 'learning_rate': 0.0005994664310345798, 'epoch': 0.11846095526914328}
+{'eval_loss': 8.829219818115234, 'eval_mse': 0.275842967387466, 'eval_pearsonr': 0.8113194430873985, 'eval_spearmanr': 0.39952511996840023, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013928630159513239, 'eval_scrna_acc': 0.014339746752178919, 'eval_runtime': 35.4958, 'eval_samples_per_second': 1713.162, 'eval_steps_per_second': 2.986, 'epoch': 0.11846095526914328}
+{'loss': 8.8213, 'grad_norm': 0.6038787364959717, 'learning_rate': 0.0005994302783664025, 'epoch': 0.12083017437452616}
+{'eval_loss': 8.825876235961914, 'eval_mse': 0.2726433308523406, 'eval_pearsonr': 0.817946712445003, 'eval_spearmanr': 0.4015875827568201, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013862851504686729, 'eval_scrna_acc': 0.014356191415885546, 'eval_runtime': 36.6864, 'eval_samples_per_second': 1657.563, 'eval_steps_per_second': 2.889, 'epoch': 0.12083017437452616}
+{'loss': 8.8115, 'grad_norm': 0.6376960873603821, 'learning_rate': 0.0005993929418905743, 'epoch': 0.12319939347990902}
+{'eval_loss': 8.812273979187012, 'eval_mse': 0.25899643478585116, 'eval_pearsonr': 0.8233193414484659, 'eval_spearmanr': 0.4003047544797813, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014109521460286137, 'eval_scrna_acc': 0.013747738858740338, 'eval_runtime': 36.2253, 'eval_samples_per_second': 1678.662, 'eval_steps_per_second': 2.926, 'epoch': 0.12319939347990902}
+{'loss': 8.8093, 'grad_norm': 0.5632579326629639, 'learning_rate': 0.0005993544217547063, 'epoch': 0.1255686125852919}
+{'eval_loss': 8.809916496276855, 'eval_mse': 0.2566316686081497, 'eval_pearsonr': 0.8267449377374897, 'eval_spearmanr': 0.40107066496970545, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013764183522446965, 'eval_scrna_acc': 0.013961519486926493, 'eval_runtime': 36.4576, 'eval_samples_per_second': 1667.966, 'eval_steps_per_second': 2.907, 'epoch': 0.1255686125852919}
+{'loss': 8.8055, 'grad_norm': 0.6313393115997314, 'learning_rate': 0.0005993147181110891, 'epoch': 0.12793783169067474}
+{'eval_loss': 8.813929557800293, 'eval_mse': 0.2606409469820159, 'eval_pearsonr': 0.8272374759691327, 'eval_spearmanr': 0.40285728579992885, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013780628186153594, 'eval_scrna_acc': 0.01397796415063312, 'eval_runtime': 35.516, 'eval_samples_per_second': 1712.185, 'eval_steps_per_second': 2.985, 'epoch': 0.12793783169067474}
+{'loss': 8.8083, 'grad_norm': 0.5206627249717712, 'learning_rate': 0.0005992738311166925, 'epoch': 0.13030705079605762}
+{'eval_loss': 8.812277793884277, 'eval_mse': 0.2589692697214984, 'eval_pearsonr': 0.8257032505511495, 'eval_spearmanr': 0.40278095663766283, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.01397796415063312, 'eval_scrna_acc': 0.01397796415063312, 'eval_runtime': 37.001, 'eval_samples_per_second': 1643.47, 'eval_steps_per_second': 2.865, 'epoch': 0.13030705079605762}
+{'loss': 8.7993, 'grad_norm': 0.5931426882743835, 'learning_rate': 0.0005992317609331643, 'epoch': 0.1326762699014405}
+{'eval_loss': 8.802700996398926, 'eval_mse': 0.24941544183983336, 'eval_pearsonr': 0.8303679570677595, 'eval_spearmanr': 0.4071046884473558, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013945074823219866, 'eval_scrna_acc': 0.014208189442525901, 'eval_runtime': 37.9838, 'eval_samples_per_second': 1600.946, 'eval_steps_per_second': 2.791, 'epoch': 0.1326762699014405}
+{'loss': 8.7971, 'grad_norm': 0.4913399815559387, 'learning_rate': 0.0005991885077268308, 'epoch': 0.13504548900682334}
+{'eval_loss': 8.796493530273438, 'eval_mse': 0.24319622797728405, 'eval_pearsonr': 0.8358665918902439, 'eval_spearmanr': 0.4098984026483279, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013945074823219866, 'eval_scrna_acc': 0.013879296168393356, 'eval_runtime': 34.9236, 'eval_samples_per_second': 1741.23, 'eval_steps_per_second': 3.035, 'epoch': 0.13504548900682334}
+{'loss': 8.7904, 'grad_norm': 0.6101364493370056, 'learning_rate': 0.0005991440716686948, 'epoch': 0.1374147081122062}
+{'eval_loss': 8.784466743469238, 'eval_mse': 0.23118063749366416, 'eval_pearsonr': 0.8441876546810558, 'eval_spearmanr': 0.41168496343636085, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013829962177273475, 'eval_scrna_acc': 0.013731294195033711, 'eval_runtime': 35.5594, 'eval_samples_per_second': 1710.097, 'eval_steps_per_second': 2.981, 'epoch': 0.1374147081122062}
+{'loss': 8.7795, 'grad_norm': 0.5728337168693542, 'learning_rate': 0.0005990984529344357, 'epoch': 0.1397839272175891}
+{'eval_loss': 8.797918319702148, 'eval_mse': 0.244611999055962, 'eval_pearsonr': 0.8387808517055838, 'eval_spearmanr': 0.40926570187823136, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013797072849860221, 'eval_scrna_acc': 0.014175300115112645, 'eval_runtime': 34.4718, 'eval_samples_per_second': 1764.053, 'eval_steps_per_second': 3.075, 'epoch': 0.1397839272175891}
+{'loss': 8.7828, 'grad_norm': 0.824415922164917, 'learning_rate': 0.0005990516517044087, 'epoch': 0.14215314632297193}
+{'eval_loss': 8.782814979553223, 'eval_mse': 0.22951074880066286, 'eval_pearsonr': 0.847939818260934, 'eval_spearmanr': 0.41025984461262976, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013994408814339747, 'eval_scrna_acc': 0.014701529353724716, 'eval_runtime': 37.278, 'eval_samples_per_second': 1631.255, 'eval_steps_per_second': 2.843, 'epoch': 0.14215314632297193}
+{'loss': 8.7802, 'grad_norm': 0.4905264973640442, 'learning_rate': 0.0005990036681636441, 'epoch': 0.1445223654283548}
+{'eval_loss': 8.781874656677246, 'eval_mse': 0.22851953397520616, 'eval_pearsonr': 0.8496671826940894, 'eval_spearmanr': 0.4150382158693737, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013780628186153594, 'eval_scrna_acc': 0.014421970070712054, 'eval_runtime': 36.641, 'eval_samples_per_second': 1659.616, 'eval_steps_per_second': 2.893, 'epoch': 0.1445223654283548}
+{'loss': 8.7715, 'grad_norm': 0.5922539234161377, 'learning_rate': 0.0005989545025018464, 'epoch': 0.14689158453373768}
+{'eval_loss': 8.777129173278809, 'eval_mse': 0.2238191825139082, 'eval_pearsonr': 0.8506723237549131, 'eval_spearmanr': 0.4157027271899003, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013945074823219866, 'eval_scrna_acc': 0.014257523433645782, 'eval_runtime': 34.6477, 'eval_samples_per_second': 1755.095, 'eval_steps_per_second': 3.059, 'epoch': 0.14689158453373768}
+{'loss': 8.7682, 'grad_norm': 0.7205942869186401, 'learning_rate': 0.0005989041549133938, 'epoch': 0.14926080363912056}
+{'eval_loss': 8.774428367614746, 'eval_mse': 0.22115294371715216, 'eval_pearsonr': 0.8522598589358356, 'eval_spearmanr': 0.41286808082647075, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014109521460286137, 'eval_scrna_acc': 0.013665515540207203, 'eval_runtime': 37.2442, 'eval_samples_per_second': 1632.738, 'eval_steps_per_second': 2.846, 'epoch': 0.14926080363912056}
+{'loss': 8.766, 'grad_norm': 0.5989805459976196, 'learning_rate': 0.000598852625597337, 'epoch': 0.1516300227445034}
+{'eval_loss': 8.76702880859375, 'eval_mse': 0.2137562186831781, 'eval_pearsonr': 0.8572324349629584, 'eval_spearmanr': 0.41735445817223055, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014043742805459627, 'eval_scrna_acc': 0.013945074823219866, 'eval_runtime': 36.8582, 'eval_samples_per_second': 1649.837, 'eval_steps_per_second': 2.876, 'epoch': 0.1516300227445034}
+{'loss': 8.765, 'grad_norm': 0.9463157653808594, 'learning_rate': 0.000598799914757399, 'epoch': 0.15399924184988628}
+{'eval_loss': 8.766752243041992, 'eval_mse': 0.21344348281002323, 'eval_pearsonr': 0.8575977336683414, 'eval_spearmanr': 0.4182581937966572, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013714849531327084, 'eval_scrna_acc': 0.014257523433645782, 'eval_runtime': 36.9128, 'eval_samples_per_second': 1647.397, 'eval_steps_per_second': 2.872, 'epoch': 0.15399924184988628}
+{'loss': 8.7569, 'grad_norm': 0.3817187547683716, 'learning_rate': 0.0005987460226019738, 'epoch': 0.15636846095526916}
+{'eval_loss': 8.758578300476074, 'eval_mse': 0.20525579457800674, 'eval_pearsonr': 0.8626884799525406, 'eval_spearmanr': 0.420197155042278, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013928630159513239, 'eval_scrna_acc': 0.014339746752178919, 'eval_runtime': 37.9095, 'eval_samples_per_second': 1604.083, 'eval_steps_per_second': 2.796, 'epoch': 0.15636846095526916}
+{'loss': 8.7578, 'grad_norm': 0.6467134356498718, 'learning_rate': 0.0005986909493441259, 'epoch': 0.158737680060652}
+{'eval_loss': 8.762831687927246, 'eval_mse': 0.2095313615250828, 'eval_pearsonr': 0.8602235961327012, 'eval_spearmanr': 0.42016531540336904, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.013829962177273475, 'eval_scrna_acc': 0.015161979937510279, 'eval_runtime': 38.6316, 'eval_samples_per_second': 1574.1, 'eval_steps_per_second': 2.744, 'epoch': 0.158737680060652}
+{'loss': 8.7606, 'grad_norm': 0.40698009729385376, 'learning_rate': 0.0005986346952015892, 'epoch': 0.16110689916603488}
+{'eval_loss': 8.75822925567627, 'eval_mse': 0.20494516629368748, 'eval_pearsonr': 0.8633034073792467, 'eval_spearmanr': 0.4237072311513949, 'eval_spearmanr_pvalue': 0.0, 'eval_seq_acc': 0.014109521460286137, 'eval_scrna_acc': 0.014372636079592173, 'eval_runtime': 37.6876, 'eval_samples_per_second': 1613.527, 'eval_steps_per_second': 2.813, 'epoch': 0.16110689916603488}
+cyclone001-agent-43:974422:978776 [1] NCCL INFO [Service thread] Connection closed by localRank 1
+cyclone001-agent-43:974422:974422 [1] NCCL INFO comm 0x66cf4b90 rank 1 nranks 8 cudaDev 1 busId 2000 - Abort COMPLETE

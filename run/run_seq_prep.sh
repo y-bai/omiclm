@@ -1,7 +1,7 @@
 #!/bin/bash
 #DSUB -n job_prep
 #DSUB -A root.project.P24Z10200N0985
-#DSUB -R 'cpu=50;gpu=0;mem=100000'
+#DSUB -R 'cpu=60;gpu=0;mem=100000'
 #DSUB -eo %J.%I.err.log
 #DSUB -oo %J.%I.out.log
 
@@ -29,6 +29,7 @@ rm $NODEFILE
 
 # 2. Convert tokenized HF seq dataset into json file, which is used for training with huge data
 python hf_dataset_to_json.py
+# python add_norm_peak_seq_datasets.py
 
 # 3. embed seq data (optional)
 # NOTE: this would generate too many and large embedding files because there is (501, 256) for each seq with 501 length.

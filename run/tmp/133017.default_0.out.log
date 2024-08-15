@@ -1,0 +1,14 @@
+cyclone001-agent-43
+07/26/2024 23:43:46 - INFO - __main__ - >>> merging SNP and SEQ data from /home/share/huadjyin/home/zhangwenxi/pythonproject/DNALLM/processed_data/caQTL_for_AI/cMono_IFI44L.csv and /home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/all_sample-pos-seq.tsv
+07/26/2024 23:43:46 - INFO - __main__ - >>> fileter out samples without given cell type using /home/share/huadjyin/home/zhangwenxi/pythonproject/atac-data/Matrix/all-celltype-sample/cMono_IFI44L_sample.csv
+07/26/2024 23:43:46 - INFO - __main__ - >>> fileter out SNPs with more than 1 alleles...
+07/27/2024 00:14:45 - INFO - __main__ - >>> merged, size: (182196, 9), data 
+           phenotype_id  ... snp_relative_pos
+0  chr1:1614200-1614701  ...              170
+1  chr1:2246031-2246532  ...              257
+2  chr1:8424476-8424977  ...              287
+3  chr1:9163860-9164361  ...              160
+4  chr1:9644631-9645132  ...              280
+
+[5 rows x 9 columns]
+07/27/2024 00:14:48 - INFO - __main__ - >>> saved to snp_seq_merged_filtered_cMono_IFI44L.csv

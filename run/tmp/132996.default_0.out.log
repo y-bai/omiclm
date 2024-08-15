@@ -1,0 +1,13 @@
+cyclone001-agent-63
+07/26/2024 18:53:03 - INFO - __main__ - >>> merging SNP and SEQ data from /home/share/huadjyin/home/zhangwenxi/pythonproject/DNALLM/processed_data/caQTL_for_AI/CD8_CTL_GZMB.csv and /home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/all_sample-pos-seq.tsv
+07/26/2024 18:53:03 - INFO - __main__ - >>> fileter out samples without given cell type using /home/share/huadjyin/home/zhangwenxi/pythonproject/atac-data/Matrix/all-celltype-sample/CD8_CTL_GZMB_sample.csv
+07/26/2024 18:53:03 - INFO - __main__ - >>> fileter out SNPs with more than 1 alleles...
+07/26/2024 19:24:12 - INFO - __main__ - >>> merged, size: (355662, 9), data 
+             phenotype_id  ... snp_relative_pos
+0    chr1:2050048-2050549  ...              349
+1    chr1:3810120-3810621  ...              167
+2  chr1:10525152-10525653  ...              318
+3  chr1:11693104-11693605  ...              205
+4  chr1:11719231-11719732  ...              211
+
+[5 rows x 9 columns]

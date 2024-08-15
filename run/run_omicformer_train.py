@@ -19,7 +19,7 @@
                 See the License for the specific language governing permissions and
                 limitations under the License.
 
-@Desc    :   	None
+@Desc    :   	v2
 
 """
 
@@ -46,11 +46,17 @@ import evaluate
 from tqdm import tqdm
 from dataclasses import dataclass
 import scanpy as sc
- 
+
+from sklearn.metrics import mean_squared_error
+from scipy import stats
+
+import time
+
 from transformers import (
     HfArgumentParser,
     EvalPrediction,
-    set_seed
+    set_seed,
+    TrainerCallback
 )
 
 from datasets import Dataset, DatasetDict, load_dataset, load_from_disk
@@ -60,6 +66,7 @@ from transformers.trainer_utils import get_last_checkpoint
 sys.path.append(
     str(Path(__file__).resolve().parents[1]) #
 )
+
 from omic_config import (
     OmicRawDataConfig,
     OmicPretrainedModelAndTokenizationConfig,
@@ -72,6 +79,7 @@ from omic_models import (
     OmicFormerPreTrainedModel,
 
     PretrainedModelName,
+    PRETRAINED_MODEL_NAME_CLS_MAP,
     PRETRAINED_TOKENIZER_NAME_CLS_MAP,
 )
 
@@ -79,6 +87,7 @@ from omic_dataset_collator import OmicDataset, OmicDataCollator
 
 check_min_version("4.39.3")
 logger = logging.getLogger(__name__)
+
 
 def main():
     parser = HfArgumentParser((
@@ -132,8 +141,6 @@ def main():
     #################################################################
     # load TOKENIZED SEQ dataset and SCRNA embedding data
     #################################################################
-    raw_scrna_count_file_name = raw_data_config.raw_scrna_file_name
-    adata_file_base_name = os.path.basename(raw_scrna_count_file_name).split('.')[0]
 
     if pretrained_model_tokenizer_config.seq_model_name == PretrainedModelName.HYENADNA:
         tokenizer_cls = PRETRAINED_TOKENIZER_NAME_CLS_MAP[pretrained_model_tokenizer_config.seq_model_name]
@@ -146,11 +153,12 @@ def main():
     
     with training_config.main_process_first(desc="loading seq data and model"):
 
-        seq_tokenized_dataset_dir = pretrained_model_tokenizer_config.tokenized_seq_dataset_dir
+        seq_tokenized_dataset_dir = pretrained_model_tokenizer_config.tokenized_seq_dataset_dir + f"/{raw_data_config.processed_cell_type_name}"
         logger.info(f">>> loading TOKENIZED SEQ data and split from {seq_tokenized_dataset_dir}")
+        
         seq_hf_ds = load_from_disk(seq_tokenized_dataset_dir)
 
-        logger.info(f"seq tokenized datasets: \n{seq_hf_ds}")
+        # logger.info(f"seq tokenized datasets: \n{seq_hf_ds}")
         # >>> SEQ tokenized data:
         # DatasetDict({
         #     train: Dataset({
@@ -162,36 +170,53 @@ def main():
         #         num_rows: 4208429
         #     })
         # })
+        test_ratio = 0.0005
+        logger.info(f">>> spliting TRAIN DATASET into train ({100 - test_ratio * 100}%) and valiadtion ({test_ratio * 100}%) datasets.")
+        train_val_dataset = seq_hf_ds['train'].train_test_split(test_size=test_ratio, shuffle=True, seed=training_config.data_seed)
+        trn_dataset = train_val_dataset['train']
+        val_dataset = train_val_dataset['test']
 
-        logger.info(f">>> spliting TRAIN DATASET into train (99.95%) and valiadtion (0.05%) datasets.")
-        train_val_dataset = seq_hf_ds['train'].train_test_split(test_size=0.0005, shuffle=True, seed=training_config.data_seed)
+        # trn_dataset = load_dataset(
+        #     'json', 
+        #     data_files=[seq_tokenized_dataset_dir + f"_json/train/train_{i}_500.json" for i in range(500)],
+        #     split='train',
+        #     trust_remote_code=True,
+        #     num_proc=10,
+        # )
         
-        _trn_dataset = train_val_dataset['train']
-        if pretrained_model_tokenizer_config.use_streaming:
-            trn_dataset = _trn_dataset.to_iterable_dataset(num_shards=len(_trn_dataset))
-        else:
-            trn_dataset = copy.deepcopy(_trn_dataset)
-        del _trn_dataset
-        gc.collect()
+        # val_dataset = load_dataset(
+        #     'json', 
+        #     data_files=[seq_tokenized_dataset_dir + f"_json/validation/validation_{i}_500.json" for i in range(500)],
+        #     split='train',
+        #     trust_remote_code=True,
+        #     num_proc=5,
+        # )
+
+        # _trn_dataset = train_val_dataset['train']
+        # if pretrained_model_tokenizer_config.use_streaming:
+        #     trn_dataset = _trn_dataset.to_iterable_dataset(num_shards=len(_trn_dataset))
+        # else:
+        #     trn_dataset = copy.deepcopy(_trn_dataset)
+        # del _trn_dataset
+        # gc.collect()
         logger.info(f"train dataset: \n{trn_dataset}")
+        # # Dataset({
+        # #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
+        # #     num_rows: 111750940
+        # # })
 
-        # Dataset({
-        #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
-        #     num_rows: 111750940
-        # })
-
-        _val_dataset = train_val_dataset['test']
-        if pretrained_model_tokenizer_config.use_streaming:
-            val_dataset = _val_dataset.to_iterable_dataset(num_shards=len(_val_dataset))
-        else:
-            val_dataset = copy.deepcopy(_val_dataset)
-        del _val_dataset
-        gc.collect()
+        # _val_dataset = train_val_dataset['test']
+        # if pretrained_model_tokenizer_config.use_streaming:
+        #     val_dataset = _val_dataset.to_iterable_dataset(num_shards=len(_val_dataset))
+        # else:
+        #     val_dataset = copy.deepcopy(_val_dataset)
+        # del _val_dataset
+        # gc.collect()
         logger.info(f"validation dataset: \n{val_dataset}")
-        # Dataset({
-        #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
-        #     num_rows: 12416772
-        # })
+        # # Dataset({
+        # #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
+        # #     num_rows: 12416772
+        # # })
 
         # # this is only for precidtion
         # tst_dataset = seq_hf_ds['test']
@@ -217,68 +242,124 @@ def main():
                 val_dataset = val_dataset.take(training_config.max_eval_samples)
         
         def preprocess_logits_for_metrics(logits, labels):
-
-            if isinstance(logits, tuple):
-                logits = logits[0]
-            return logits
+            
+            # return tuple
+            # (tensor([[0.8408],
+            #                 [0.8091],
+            #                 [0.6606],
+            #                 [0.7168],
+            #                 [0.7876],
+            #                 [0.8872],
+            #                 [0.7251],
+            #                 [0.6470],
+            #                 [0.8345],
+            #                 [0.7446],
+            #                 ....], device='cuda:0'),(..))
+            # if isinstance(logits, tuple):
+            #     logits = logits[0]
+            # return logits.squeeze()
+            
+            peak_pred = logits[0].squeeze()
+            print(f"batch size: {len(peak_pred)}") 
+            
+            return (peak_pred,)
+            # seq_emb = logits[1].mean(dim=1) if logits[1].dim() == 3 else logits[1]
+            # scrna_emb = logits[2].mean(dim=1) if logits[2].dim() == 3 else logits[2]
+            
+            # # Adapted from https://sachinruk.github.io/blog/2021-03-07-clip.html
+            # simliarity = seq_emb @ scrna_emb.t()
+            # simliarity = simliarity * torch.exp(torch.tensor(training_config.clip_temprature, device=simliarity.device, dtype=simliarity.dtype))   # (n_seq, n_sc)
+            # y = torch.arange(len(simliarity), device=simliarity.device) 
+            # seq2scrna_match_idx = simliarity.argmax(dim=0).squeeze()
+            # scrna2seq_match_idx = simliarity.argmax(dim=1).squeeze()
+            # return (peak_pred, y, seq2scrna_match_idx, scrna2seq_match_idx)
         
         metric_mse = evaluate.load("metrics/mse")
         metric_r = evaluate.load("metrics/pearsonr")
-        # metric = evaluate.MetricWrapper(metric, preprocess_logits_for_metrics)
-        # metric_name = "mse"
-        # metric_args = {"metric_name": metric_name, "metric": metric}
+        spearmanr = evaluate.load("metrics/spearmanr")
+
         def compute_metrics_fn(eval_pred: EvalPrediction):
             logits, ture_peak = eval_pred
+            
+            peak_pred = logits[0]
+            # y = logits[1]
+            # seq2scrna_match_idx = logits[2]
+            # scrna2seq_match_idx = logits[3]
+            # seq_acc = (seq2scrna_match_idx == y).sum() / len(y)
+            # scrna_acc = (scrna2seq_match_idx == y).sum() / len(y)
 
-            return {**metric_mse.compute(predictions=logits, references=ture_peak),
-                    **metric_r.compute(predictions=logits, references=ture_peak, return_pvalue=True)}
-    
+            return {
+                **metric_mse.compute(predictions=peak_pred, references=ture_peak),
+                **metric_r.compute(predictions=peak_pred, references=ture_peak),
+                **spearmanr.compute(predictions=peak_pred, references=ture_peak, return_pvalue=True),
+                # "seq_acc": seq_acc,
+                # "scrna_acc": scrna_acc,
+            }
+            # _mse = mean_squared_error(ture_peak, logits)
+            # _spearmanr = stats.spearmanr(ture_peak, logits)
+            # return {"mse": _mse, "spearmanr": _spearmanr.statistic, "pvalue": _spearmanr.pvalue}
 
-    scrna_embedding_dataset_dir = os.path.join(pretrained_model_tokenizer_config.emb_scrna_dataset_dir, adata_file_base_name)
+    scrna_embedding_dataset_dir = os.path.join(pretrained_model_tokenizer_config.emb_scrna_dataset_dir, raw_data_config.processed_cell_type_name)
     
     # logger.info(f">>> SCRNA EMBEDDING dataset:\n{scrna_embedding_dataset_trn}")
-    ac_data_file_name = os.path.join(scrna_embedding_dataset_dir, f"{adata_file_base_name}_embedding.h5ad")
+    ac_data_file_name = os.path.join(scrna_embedding_dataset_dir, f"{raw_data_config.processed_cell_type_name}_embedding.h5ad")
     logger.info(f">>> loading SCRNA EMBEDDING data (h5ad) from {ac_data_file_name}")
     sc_adata = sc.read_h5ad(ac_data_file_name)
     
-    trn_pt_ds: torch.utils.data.Dataset = OmicDataset(trn_dataset, sc_adata)
-    val_pt_ds: torch.utils.data.Dataset = OmicDataset(val_dataset, sc_adata)
-
-    seq_input_pooling_size = 512
-    scrna_input_pooling_size = 200
+    trn_pt_ds: torch.utils.data.Dataset = OmicDataset(
+        trn_dataset, 
+        sc_adata,
+        peak_value_feature=pretrained_model_tokenizer_config.peak_value_col_name,
+    )
     
-    omic_data_collator = OmicDataCollator(seq_pad_token_id=4, sc_max_cnt=scrna_input_pooling_size, seq_max_len=seq_input_pooling_size)
+    val_pt_ds: torch.utils.data.Dataset = OmicDataset(
+        val_dataset, 
+        sc_adata,
+        peak_value_feature=pretrained_model_tokenizer_config.peak_value_col_name,
+    )
+
+    ####################################################################
+    # SEQ embedding model
+    #
+    ####################################################################
+    logger.info(f">>> LOADED pretrained model and tokenizer from {pretrained_model_tokenizer_config.seq_model_path}")
+    seq_emb_model = (PRETRAINED_MODEL_NAME_CLS_MAP[
+        pretrained_model_tokenizer_config.seq_model_name
+        ].from_pretrained(pretrained_model_tokenizer_config.seq_model_path, use_cache=True)
+    ) if not pretrained_model_tokenizer_config.seq_input_has_embedding else None
+    seq_emb_model.requires_grad_(False)
+
+    # logger.info(f">>> LOADED pretrained model and tokenizer from {pretrained_model_tokenizer_config.scrna_model_path}")
+    # scrna_emb_model = (PRETRAINED_MODEL_NAME_CLS_MAP[
+    #     pretrained_model_tokenizer_config.scrna_model_name
+    #     ].from_pretrained(pretrained_model_tokenizer_config.scrna_model_path, use_cache=True)
+    # ) if not pretrained_model_tokenizer_config.scrna_input_has_embedding else None
+    
+    seq_input_pooling_size = 501    # max seq length for seq tokenized data of `input_ids`
+    scrna_input_pooling_size = 200  # pooling size of cell conts after scrna embeddings
+    
+    omic_data_collator = OmicDataCollator(
+        seq_pad_token_id=4, 
+        sc_max_cnt=scrna_input_pooling_size, 
+        seq_max_len=seq_input_pooling_size,
+        seq_emb_model=seq_emb_model,
+        )
 
     omicformer_config = dict(
-        seq_model_name=pretrained_model_tokenizer_config.seq_model_name.value,
-        seq_pretrained_model_name_or_path=pretrained_model_tokenizer_config.seq_model_path,
-        seq_emb_dim=256,
-        seq_emb_extraction_kwargs=None,
-
-        scrna_model_name=pretrained_model_tokenizer_config.scrna_model_name.value,
-        scrna_pretrained_model_name_or_path=pretrained_model_tokenizer_config.scrna_model_path,
-        scrna_emb_dim=512, 
-        scrna_emb_extraction_kwargs=None,
-
-        seq_emb_input=False,
-        scrna_emb_input=True,
-
-        seq_input_pooling_size=seq_input_pooling_size,     # pooling seq length after seq embedding by pretrained model 
-        scrna_input_pooling_size=scrna_input_pooling_size,   # number of cells after pooling after scrna embedding by pretrained model
+        architectures = ["OmicFormer"],
         
-        seq_input_pooling_mode='adaptive',   # fisrt, last, mean, weight, adaptive, max
-        scrna_input_pooling_mode='adaptive', # fisrt, last, mean, weight, adaptive, max
+        seq_input_pooling_size=seq_input_pooling_size,     # pooling seq length after seq embedding by pretrained model 
 
         pre_layer_type='gated_mlp',  # 'gated_mlp', 'mlp
 
-        ffn_type=pretrained_model_tokenizer_config.attn_ffn_type, # 'moe', 'mlp
-        hidden_dim=512,
-        intermediate_hidden_dim=768,
+        ffn_type=pretrained_model_tokenizer_config.attn_ffn_type, # 'moe', 'mlp', gated_mlp
+        hidden_dim=512,   # 512
+        intermediate_hidden_dim=768,  # 768
         
         n_layers_encoder=4,
         
         n_heads=8, 
-        num_experts=6,
+        num_experts=pretrained_model_tokenizer_config.n_experts,
         moe_topk=2,
         dropout=0.1,
 
@@ -288,17 +369,32 @@ def main():
         
         n_layers_fusion=8,
 
-        n_residuals_per_layer=2,     # Change to 2 if we have MLP, otherwise 1. Not used for now
+        embeding_l2norm = True,
 
-        out_pooling_size=4,
+        out_pooling_size=3,
         out_pooling_mode='adaptive',   # fisrt, last, mean, weight, adaptive, max
         n_outputs= 1,
     )
-    omic_model = OmicFormerPreTrainedModel(OmicFormerConfig(**omicformer_config))
+    omic_model = OmicFormerPreTrainedModel(
+        OmicFormerConfig(**omicformer_config),
+        
+        seq_emb_model=seq_emb_model,
+        # seq_emb_dim=int(seq_emb_model.config.d_model) if seq_emb_model is not None else pretrained_model_tokenizer_config.seq_model_d_dim, # 256
+        seq_emb_dim=pretrained_model_tokenizer_config.seq_model_d_dim,
+        seq_emb_extraction_kwargs=None,
+
+        scrna_emb_model=None,
+        # scrna_emb_dim=int(scrna_emb_model.config.d_model) if scrna_emb_model is not None else pretrained_model_tokenizer_config.scrna_model_d_dim, # 256,
+        scrna_emb_dim=pretrained_model_tokenizer_config.scrna_model_d_dim, 
+        scrna_emb_extraction_kwargs=None,
+    )
+    
     omic_model.config.use_cache = False
     logger.info(f">>> OmicFormerConfig: \n{json.dumps(omicformer_config, indent=2, sort_keys=True)}")
     logger.info(f">>> OmicFormerPreTrainedModel: \n{omic_model}")
 
+    logger.info(f"num params: {omic_model.num_parameters()}")
+    logger.info(f"num trainable params: {omic_model.num_parameters(only_trainable=True)}")
     logger.info(f"^^^^^^^^tf32 is set: {torch.backends.cuda.matmul.allow_tf32}")
     logger.info(f"^^^^^^^^fp16 = {training_config.fp16}")
     logger.info(f"^^^^^^^^Learning rate: {training_config.learning_rate}")
@@ -315,14 +411,6 @@ def main():
         compute_metrics=compute_metrics_fn if training_config.do_eval else None,
         preprocess_logits_for_metrics=preprocess_logits_for_metrics if training_config.do_eval else None,
     )
-
-    # trainer = OmicFormerTrainer(
-    #     model=omic_model,
-    #     args=training_config,
-    #     train_dataset=trn_pt_ds if training_config.do_train else None, 
-    #     tokenizer=tokenizer,
-    #     data_collator=omic_data_collator,
-    # )
 
     ####################################################################
     # Training and evaluation
@@ -354,6 +442,9 @@ def main():
 
     # Evaluation
     if training_config.do_eval:
+
+        logger.info(">>> OmicFormer Start evaluation......")
+
         metrics = trainer.evaluate()
 
         max_eval_samples = training_config.max_eval_samples if training_config.max_eval_samples is not None else len(val_pt_ds)

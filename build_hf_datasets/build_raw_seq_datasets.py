@@ -79,7 +79,7 @@ def main():
             "train": raw_ds_config.raw_seq_plain_file_name_for_train,
             "test": raw_ds_config.raw_seq_plain_file_name_for_test
         },
-        num_proc=15,
+        num_proc=50,
     )
     logger.info(f"generted HF datasets: \n{hf_ds}")
     # DatasetDict({

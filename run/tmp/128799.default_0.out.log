@@ -1,0 +1,410 @@
+cyclone001-agent-129
+07/03/2024 17:34:02 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 17:34:02 - INFO - __main__ - >>> loading TOKENIZED SEQ data and split from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K
+07/03/2024 17:34:02 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 17:34:02 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+07/03/2024 17:34:49 - INFO - __main__ - test dataset: 
+Dataset({
+    features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+    num_rows: 200
+})
+07/03/2024 17:34:50 - INFO - __main__ - >>> loading SCRNA EMBEDDING data (h5ad) from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/embedding_datasets/scrna_dataset/scgpt/CD8_expression_5K/CD8_expression_5K_embedding.h5ad
+07/03/2024 17:34:51 - INFO - __main__ - >>> LOADED pretrained model and tokenizer from /home/share/huadjyin/home/weiyilin/project/DNALLM/HyenaDNA/hyenadna-medium-450k-seqlen
+07/03/2024 17:34:55 - INFO - __main__ - >>> OmicFormerPreTrainedModel: 
+OmicFormerPreTrainedModel(
+  (seq_emb_model): HyenaDNAPreTrainedModel(
+    (model): HyenaDNAModel(
+      (backbone): LMBackbone(
+        (embeddings): GPT2Embeddings(
+          (word_embeddings): Embedding(16, 256)
+        )
+        (layers): ModuleList(
+          (0): Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=256, out_features=768, bias=True)
+              (out_proj): Linear(in_features=256, out_features=256, bias=True)
+              (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=256, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.1, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=256, out_features=1024, bias=True)
+              (fc2): Linear(in_features=1024, out_features=256, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+          (1-7): 7 x Block(
+            (mixer): HyenaOperator(
+              (dropout): Dropout(p=0.0, inplace=False)
+              (in_proj): Linear(in_features=256, out_features=768, bias=True)
+              (out_proj): Linear(in_features=256, out_features=256, bias=True)
+              (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+              (filter_fn): HyenaFilter(
+                (dropout): Dropout(p=0.0, inplace=False)
+                (pos_emb): PositionalEmbedding()
+                (implicit_filter): Sequential(
+                  (0): Linear(in_features=5, out_features=64, bias=True)
+                  (1): Sin()
+                  (2): Linear(in_features=64, out_features=64, bias=True)
+                  (3): Sin()
+                  (4): Linear(in_features=64, out_features=64, bias=True)
+                  (5): Sin()
+                  (6): Linear(in_features=64, out_features=256, bias=False)
+                )
+                (modulation): ExponentialModulation()
+              )
+            )
+            (dropout1): Dropout(p=0.0, inplace=False)
+            (drop_path1): StochasticDepth(p=0.0, mode=row)
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=256, out_features=1024, bias=True)
+              (fc2): Linear(in_features=1024, out_features=256, bias=True)
+            )
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (drop_path2): StochasticDepth(p=0.0, mode=row)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (drop_f): Dropout(p=0.0, inplace=False)
+        (ln_f): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (model): OmicFormer(
+    (seq_input_proj): OmicInputProjection(
+      (pre_proj): Sequential(
+        (0): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=256, out_features=1536, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+        )
+      )
+    )
+    (scrna_input_proj): OmicInputProjection(
+      (pre_proj): Sequential(
+        (0): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (1): GatedMLP(
+          (fc1): Linear(in_features=512, out_features=1536, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+        )
+      )
+    )
+    (seq_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (scrna_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (seq_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (scrna_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (fusion): TransformerEncoder(
+      (layers): ModuleList(
+        (0-7): 8 x EncoderBlock(
+          (self_attn): MHA(
+            (Wq): Linear(in_features=512, out_features=512, bias=True)
+            (Wkv): Linear(in_features=512, out_features=1024, bias=True)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (out_pooling): EmbeddingPooling(
+      (ada_pool): AdaptiveAvgPool1d(output_size=3)
+    )
+    (out_proj): OutputLayer(
+      (out): Sequential(
+        (0): Linear(in_features=1536, out_features=768, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=768, out_features=1, bias=True)
+      )
+    )
+  )
+)
+07/03/2024 17:34:55 - INFO - __main__ - num params: 45507585
+07/03/2024 17:34:55 - INFO - __main__ - num trainable params: 38957057
+07/03/2024 17:34:56 - WARNING - accelerate.utils.other - Detected kernel version 4.19.90, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+07/03/2024 17:35:32 - INFO - __main__ - pred_out: PredictionOutput(predictions=array([[0.06339081],
+       [0.03653059],
+       [0.03355462],
+       [0.03787908],
+       [0.04026503],
+       [0.50587493],
+       [0.7091575 ],
+       [0.90565705],
+       [0.39809197],
+       [0.05858437],
+       [0.03471292],
+       [0.02971747],
+       [0.04781597],
+       [0.4342307 ],
+       [0.6265454 ],
+       [3.2366154 ],
+       [1.7221285 ],
+       [2.5102446 ],
+       [1.7405094 ],
+       [3.4632711 ],
+       [1.5417756 ],
+       [5.020199  ],
+       [0.06166413],
+       [0.04368716],
+       [0.0347875 ],
+       [0.24392028],
+       [0.08390265],
+       [0.03151393],
+       [0.03193875],
+       [3.9630775 ],
+       [0.04209841],
+       [0.04034128],
+       [0.04990474],
+       [0.0671719 ],
+       [0.04285258],
+       [0.13526477],
+       [0.07112427],
+       [0.16640764],
+       [0.0578725 ],
+       [0.0527891 ],
+       [0.06104932],
+       [0.05142562],
+       [0.04418343],
+       [1.7294531 ],
+       [0.04261009],
+       [0.03421858],
+       [0.03628683],
+       [0.1140968 ],
+       [2.5793488 ],
+       [0.5730847 ],
+       [0.20492962],
+       [0.13697499],
+       [0.05067161],
+       [0.05565462],
+       [0.0658821 ],
+       [0.64232373],
+       [0.9716703 ],
+       [0.10479696],
+       [0.54029447],
+       [0.09365939],
+       [0.04786456],
+       [0.09089927],
+       [0.55835277],
+       [0.23708443],
+       [0.06436715],
+       [0.06290804],
+       [0.26875284],
+       [0.0817102 ],
+       [0.03915481],
+       [2.5655458 ],
+       [1.4575137 ],
+       [0.1430685 ],
+       [0.06906395],
+       [2.3666089 ],
+       [0.5164728 ],
+       [0.06034794],
+       [0.7081033 ],
+       [0.2647122 ],
+       [0.38484383],
+       [0.06896788],
+       [0.02868095],
+       [0.05630845],
+       [0.03997366],
+       [0.2397513 ],
+       [0.74112606],
+       [1.1319491 ],
+       [1.8372399 ],
+       [1.0900558 ],
+       [0.05576687],
+       [0.20863062],
+       [4.479465  ],
+       [0.14195472],
+       [2.604684  ],
+       [1.1789038 ],
+       [0.4253077 ],
+       [0.06656188],
+       [0.15169527],
+       [0.06223472],
+       [1.3730683 ],
+       [0.11391471],
+       [0.06925486],
+       [0.08311798],
+       [2.6649895 ],
+       [0.2308056 ],
+       [0.05817033],
+       [0.05849378],
+       [1.5848283 ],
+       [0.10655221],
+       [3.0014553 ],
+       [0.17419851],
+       [1.9124495 ],
+       [1.7683799 ],
+       [0.71101207],
+       [0.07938921],
+       [0.4736526 ],
+       [0.13981192],
+       [0.04524627],
+       [0.23908447],
+       [0.04866277],
+       [0.05071697],
+       [0.629668  ],
+       [0.05248272],
+       [4.5962667 ],
+       [1.5119532 ],
+       [0.10497047],
+       [0.14061604],
+       [0.05865153],
+       [0.0626119 ],
+       [0.54009134],
+       [0.10445064],
+       [0.04740932],
+       [0.06862105],
+       [0.0579351 ],
+       [1.5102078 ],
+       [1.4871916 ],
+       [0.05904878],
+       [0.10588546],
+       [0.06765183],
+       [0.09072754],
+       [0.26281297],
+       [0.0427755 ],
+       [0.06837519],
+       [0.06171249],
+       [0.07716878],
+       [0.46504718],
+       [0.08127663],
+       [0.08632257],
+       [0.0403173 ],
+       [3.090427  ],
+       [0.81045693],
+       [0.6872388 ],
+       [2.2691488 ],
+       [0.63436615],
+       [2.5644405 ],
+       [1.5729858 ],
+       [0.49482286],
+       [0.30215183],
+       [0.05886386],
+       [1.1363577 ],
+       [0.06728521],
+       [0.55589855],
+       [0.86611986],
+       [0.08678747],
+       [0.89621764],
+       [3.90437   ],
+       [0.05384931],
+       [0.05487759],
+       [0.06430499],
+       [0.24325258],
+       [0.05768839],
+       [0.42913425],
+       [0.09243431],
+       [0.10748942],
+       [0.04414543],
+       [0.04344684],
+       [0.30429775],
+       [2.6999474 ],
+       [0.05914082],
+       [0.05498586],
+       [0.04781915],
+       [0.06776696],
+       [0.04972111],
+       [1.4272472 ],
+       [0.78359056],
+       [0.20633052],
+       [0.20110996],
+       [0.05404298],
+       [0.06023479],
+       [0.13818124],
+       [2.4698415 ],
+       [3.8858345 ],
+       [1.498661  ],
+       [3.4274473 ],
+       [1.5310289 ],
+       [0.11682912],
+       [0.05554025],
+       [0.05666301],
+       [0.05946214],
+       [0.05211195],
+       [0.06498075]], dtype=float32), label_ids=None, metrics={'test_runtime': 28.1665, 'test_samples_per_second': 7.101, 'test_steps_per_second': 0.036})
+07/03/2024 17:35:32 - INFO - datasets.arrow_dataset - Listing files in /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train
+07/03/2024 17:35:32 - INFO - datasets.arrow_dataset - Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-e13dffe3ff20bbe0.arrow
+07/03/2024 17:35:32 - INFO - datasets.arrow_dataset - Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow
+07/03/2024 17:35:32 - INFO - datasets.arrow_dataset - Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-67c10577d82440ee.arrow
+07/03/2024 17:35:32 - INFO - datasets.arrow_dataset - Removing /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+07/03/2024 17:35:32 - INFO - datasets.arrow_dataset - Listing files in /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/test
+07/03/2024 17:35:32 - INFO - __main__ - <<<<<<<<<<<<<<<<Done

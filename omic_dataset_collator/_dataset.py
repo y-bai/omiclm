@@ -24,15 +24,16 @@
 """
 import os
 from typing import Any, Dict, List, Mapping, NewType, Optional, Sequence, Union
+from dataclasses import dataclass
 import logging
-import numpy as np
+from scipy.sparse import issparse
 import itertools
-from itertools import chain
 
 import torch
 import torch.nn.functional as F
 import torch.utils.data
 import datasets
+import copy
 
 from anndata import AnnData
 
@@ -86,7 +87,7 @@ class OmicIterableDataset(torch.utils.data.IterableDataset):
             return None
         
         _cell_embedding = cell_adata.X.tolist()
-        _cell_ids = cell_adata.obs_names.to_list()
+        # _cell_ids = cell_adata.obs_names.to_list()
 
         # print(i_seq_token_ds["input_ids"])
 
@@ -125,6 +126,7 @@ class OmicDataset(torch.utils.data.Dataset):
         self,
         seq_tokenized_dataset: datasets.Dataset,
         scrna_embedding_data: AnnData,
+        peak_value_feature:str="log1p_norm_peak_value",
     ) -> None:
         """OmicDataset derived from torch.utils.data.Dataset 
 
@@ -139,12 +141,20 @@ class OmicDataset(torch.utils.data.Dataset):
                 num_rows: 111750940
             })
 
+        scrna_embedding_data : AnnData
+            The scRNA embedding data. saved in the AnnData format.
+        
+        peak_value_feature : str, default="log1p_norm_peak_value"
+            The feature name of the peak value in the seq_tokenized_dataset.
+        
+
         """
 
         super().__init__()
 
         self.seq_token_ds = seq_tokenized_dataset
         self.scrna_embedding_data = scrna_embedding_data
+        self.peak_value_feature = peak_value_feature
 
     def __len__(self):
         return len(self.seq_token_ds)
@@ -152,20 +162,19 @@ class OmicDataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
 
         _seq_ds = self.seq_token_ds[index]
-        _seq_sampleid = _seq_ds["sample"]
 
-        if 'sample' not in self.scrna_embedding_data.obs.keys():
-            raise ValueError("The sample is not found in the scRNA embedding adata.obs.keys().")
+        _seq_sampleid = _seq_ds["sample"]
+        # pos = _seq_ds["pos"]
+        _seq_peak_value = _seq_ds[self.peak_value_feature]
 
         cell_adata = self.scrna_embedding_data[
             self.scrna_embedding_data.obs['sample'] == _seq_sampleid]
         if cell_adata.shape[0] == 0:
             # raise ValueError(f"Not found scRNA embedding for sample {_seq_sampleid}")
-            logger.warning(f"Not found scRNA embedding for sample {_seq_sampleid}")
+            # logger.warning(f"Not found scRNA embedding for sample {_seq_sampleid}")
             return None
         
-        _cell_embedding = cell_adata.X 
-        _cell_ids = cell_adata.obs_names.to_list()
+        _cell_embedding = cell_adata.X # cell_adata.X.A.tolist() if issparse(cell_adata.X) else cell_adata.X.tolist() 
 
         # get corresponding scRNA embedding according the `_seq_sampleid`
         # _scrna_ds = self.scrna_emb_ds.filter(
@@ -188,15 +197,16 @@ class OmicDataset(torch.utils.data.Dataset):
 
         return dict(
             seq_input_ids=_seq_ds["input_ids"],
-            peak_value=_seq_ds["peak_value"],
+            # peak_value=_seq_ds["peak_value"],
+            peak_value=_seq_peak_value,  # scalar
             cell_embedding =_cell_embedding, # 2d list
-            # # the followings are not used in the model forward, just for recording the sample and id.
+            sample_record_id=_seq_ds["record_id"], # used for predicion
+            # # >>> the followings are not used in the model forward, just for recording the sample and id.
             # sample=_seq_sampleid,
             # pos=_seq_ds["pos"] if "pos" in _seq_ds else None,
-            # cell_id = _cell_ids  # list
         )
 
-
+@dataclass
 class OmicDataCollator:
     """We only padded on the right side for seq data.
     
@@ -206,12 +216,21 @@ class OmicDataCollator:
         seq_pad_token_id:int=4,         
         sc_max_cnt: int=512, 
         seq_max_len: int=512,
+
+        seq_emb_model=None,
+
     ): 
         self.seq_pad_token_id = seq_pad_token_id
         self.sc_max_cnt = sc_max_cnt
         self.seq_max_len = seq_max_len
 
+        if seq_emb_model is not None:
+            self.seq_emb_model = seq_emb_model
+
     def __call__(self, examples: List[InputDataClass]):
+
+        # Handle example is None
+        examples = [example for example in examples if example is not None]
 
         if not isinstance(examples[0], Mapping):
             examples = [vars(example) for example in examples]
@@ -219,7 +238,7 @@ class OmicDataCollator:
         batch = {}
 
         # get the max length in the batch
-        logger.info(f"Start to collate the batch with {len(examples)} examples")
+        # logger.info(f"Start to collate the batch with {len(examples)} examples")
 
         _seq_len = [len(example['seq_input_ids']) if len(example['seq_input_ids']) <= self.seq_max_len else self.seq_max_len for example in examples]
         # max_seq_len = max(_seq_len)
@@ -254,19 +273,28 @@ class OmicDataCollator:
             if v is not None and not isinstance(v, str):
                 if k == "seq_input_ids":
                     # add pad_token_id on right side
-                    batch[k] = torch.tensor([f[k] + (max_seq_len - len(f[k])) * [self.seq_pad_token_id] if len(f[k]) < max_seq_len else f[k][:max_seq_len] 
+                    # batch[k] = torch.tensor([ f[k] + (max_seq_len - len(f[k])) * [self.seq_pad_token_id] if len(f[k]) < max_seq_len else f[k][:max_seq_len] 
+                    #                         for f in examples])
+                    
+                    # add pad_token_id on left side
+                    batch[k] = torch.tensor([(max_seq_len - len(f[k])) * [self.seq_pad_token_id] + f[k] if len(f[k]) < max_seq_len else f[k][-max_seq_len:] 
                                             for f in examples])
+
                 elif k == "cell_embedding":
                     # we just simply aggregate the cell embedding into fixed number of cells
+                    # t_start = time.time()
                     batch[k] = torch.stack(
                         [
-                            F.adaptive_avg_pool1d(torch.tensor(f[k]).T,  min_cell_cnt).T
+                            (F.adaptive_avg_pool1d(torch.tensor(f[k]).transpose(1, 0),  min_cell_cnt)).transpose(1, 0)
                             for f in examples
                         ]
                     )
-                else:
+                    # t_end = time.time()
+                    # print(f"Collate time: {t_end - t_start}")
+
+                else: # "peak_value" and /or "sample_record_id" key
                     batch[k] = torch.tensor([f[k] for f in examples])
 
-        batch['seq_len'] = torch.tensor(_seq_len)       
+        batch['seq_len'] = torch.tensor(_seq_len)
 
         return batch

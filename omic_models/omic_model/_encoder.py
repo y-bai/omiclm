@@ -50,6 +50,7 @@ class EncoderBlock(nn.Module):
         dropout=0.0,
         num_experts=8,
         moe_topk=4,
+        use_flash_attn=False,
         device=None,
         dtype=None,
     ):
@@ -73,7 +74,7 @@ class EncoderBlock(nn.Module):
             cross_attn=cross_attn,
             dropout=dropout,
             dwconv=dwconv,
-            # use_flash_attn=True,  # qkv.dtype in [torch.float16, torch.bfloat16]
+            use_flash_attn=use_flash_attn,  # if True, assert qkv.dtype in [torch.float16, torch.bfloat16]
             **factory_kwargs,
         ) if flash_attn_available else nn.MultiheadAttention(
             embed_dim=input_dim, 
@@ -106,7 +107,8 @@ class EncoderBlock(nn.Module):
                 in_features=input_dim, 
                 hidden_features=ffn_dim, 
                 out_features=None, 
-                return_residual=False, 
+                return_residual=False,
+                multiple_of=128, 
                 **factory_kwargs
             )
         else:
@@ -119,6 +121,7 @@ class EncoderBlock(nn.Module):
 
     def forward(self, x, x_kv=None, key_padding_mask=None):
         # Attention part
+
         z = self.norm1(x)
 
         if flash_attn_available and key_padding_mask is None:
@@ -156,6 +159,7 @@ class TransformerEncoder(nn.Module):
         dropout=0.1,
         num_experts=8,
         moe_topk=4, 
+        use_flash_attn=False,
         device=None, 
         dtype=None
     ):
@@ -176,17 +180,18 @@ class TransformerEncoder(nn.Module):
                     dropout=dropout,
                     num_experts=num_experts,
                     moe_topk=moe_topk,
+                    use_flash_attn=use_flash_attn,
                     **factory_kwargs,
                 ) for _ in range(num_layers)
             ]
         )
 
-        self.norm = nn.LayerNorm([input_dim], **factory_kwargs)
+        self.norm = nn.LayerNorm([input_dim], **factory_kwargs) 
     
     def forward(self, x, x_kv=None, key_padding_mask=None):
         for l in self.layers:
             x = l(x, x_kv=x_kv, key_padding_mask=key_padding_mask)
-        x = self.norm(x)
+        x = self.norm(x)  # or F.normalize(x, p=2, dim=-1)
         return x
 
     def get_attention_maps(self, x, x_kv=None, key_padding_mask=None):
@@ -293,7 +298,7 @@ class SwitchMoE(nn.Module):
                 input_dim=input_dim, 
                 hidden_dim=ffn_dim, 
                 output_dim=output_dim, 
-                dropout=dropout, 
+                dropout=0.0, 
                 **factory_kwargs
             ) for _ in range(num_experts)
         ])
@@ -346,8 +351,10 @@ class OutputLayer(nn.Module):
             # nn.LayerNorm(input_dim, **factory_kwargs), # LayerNorm is not necessary, and may cause the model to diverge (grad norm = inf)
             nn.Linear(input_dim, intermediate_dim, **factory_kwargs),
             nn.GELU(),
+            # nn.ReLU(),
             nn.Dropout(dropout),
-            nn.Linear(intermediate_dim, n_out, **factory_kwargs)
+            nn.Linear(intermediate_dim, n_out, **factory_kwargs),
+            # nn.ReLU(),
         )
     
     def forward(self, x):

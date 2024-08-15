@@ -23,10 +23,12 @@
 @Desc    :   	None
 
 """
+import torch
 import torch.nn as nn
 from transformers import Trainer
+import time
 
-from ._loss import MSLELoss, MSEMSLELoss
+from ._loss import MSLELoss, MSEMSLELoss, CLIPLoss
 
 class OmicFormerTrainer(Trainer):
     
@@ -42,14 +44,37 @@ class OmicFormerTrainer(Trainer):
         How the loss is computed by Trainer. By default, all models return the loss in the first element.
         """
 
+        # t_start = time.time()
         peak_value = inputs.pop("peak_value")
-        loss_fct = MSEMSLELoss(alpha=self.args.msle_alpha, beta=self.args.msle_beta, auxiliary_loss=self.args.auxiliary_loss)
-        # loss_fct = nn.MSELoss()
+        # loss_fct = MSEMSLELoss(alpha=self.args.msle_alpha, beta=self.args.msle_beta, auxiliary_loss=self.args.auxiliary_loss)
+        # NOTE we use MSELoss for log1p_norm_peak_value
+        if self.args.loss_fn_name == "mse":
+            loss_fct = nn.MSELoss()
+        elif self.args.loss_fn_name == "msle_mse":
+             loss_fct = MSEMSLELoss(alpha=self.args.loss_alpha, beta=self.args.loss_beta, auxiliary_loss=self.args.auxiliary_loss)
+        elif self.args.loss_fn_name == "msle":
+            loss_fct = MSLELoss() 
+        elif self.args.loss_fn_name == "clip_mse":
+            loss_fct_mse = nn.MSELoss()
+            loss_fct_clip = CLIPLoss(temprature=self.args.clip_temprature)
+        else:
+            raise ValueError(f"loss_fn_name: {self.args.loss_fn_name} is not supported! Using 'mse', 'msle_mse' or 'msle'.")
         
         outputs = model(**inputs)
 
-        loss = loss_fct(outputs['logits'].view(-1, self.model.config.n_outputs).contiguous(), 
+        if self.args.loss_fn_name == "clip_mse":
+            loss_mse = loss_fct_mse(outputs['logits'].view(-1, self.model.config.n_outputs).contiguous(), 
                         peak_value.view(-1, self.model.config.n_outputs).contiguous())
+            loss_clip = loss_fct_clip(outputs["seq_emb"], outputs["scrna_emb"])
+
+            loss = self.args.loss_alpha * loss_mse + self.args.loss_beta * loss_clip
+        else:
+            loss = loss_fct(outputs['logits'].view(-1, self.model.config.n_outputs).contiguous(), 
+                        peak_value.view(-1, self.model.config.n_outputs).contiguous())
+        
+        # torch.cuda.current_stream().synchronize()  
+        # t_seq_emd_end = time.time()
+        # print(f"LOSS time: {t_seq_emd_end - t_start}")
 
         # if running on single GPU with DDP (multi GPU setup), then the following error will be raised:
         #   RuntimeError: Expected to have finished reduction in the prior iteration before starting a new one. 

@@ -1,0 +1,712 @@
+cyclone001-agent-37
+06/30/2024 02:11:32 - WARNING - __main__ - Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 02:11:32 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 02:11:32 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 02:11:32 - INFO - __main__ - >>> loading TOKENIZED SEQ data and split from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K
+06/30/2024 02:11:32 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+06/30/2024 02:12:13 - INFO - __main__ - seq tokenized datasets: 
+DatasetDict({
+    train: Dataset({
+        features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+        num_rows: 121619444
+    })
+    test: Dataset({
+        features: ['sample', 'pos', 'peak_value', 'sum_peak_value', 'record_id', 'input_ids', 'norm_peak_value', 'log1p_norm_peak_value'],
+        num_rows: 6756697
+    })
+})
+06/30/2024 02:12:13 - INFO - __main__ - >>> spliting TRAIN DATASET into train (99.95%) and valiadtion (0.05%) datasets.
+06/30/2024 02:12:13 - INFO - datasets.arrow_dataset - Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+06/30/2024 02:12:18 - INFO - __main__ - >>> loading EVAL DATASET
+06/30/2024 02:12:18 - INFO - __main__ - >>> loading SCRNA EMBEDDING data (h5ad) from /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/embedding_datasets/scrna_dataset/scgpt/CD8_expression_5K/CD8_expression_5K_embedding.h5ad
+06/30/2024 02:12:21 - INFO - __main__ - >>> LOADED pretrained model and tokenizer from /home/share/huadjyin/home/weiyilin/project/DNALLM/HyenaDNA/hyenadna-medium-160k-seqlen
+06/30/2024 02:12:21 - INFO - __main__ - >>> NO pretrained model loaded, scrna_emb_model is None. Using scrna_input_has_embedding=True.
+06/30/2024 02:12:23 - INFO - __main__ - >>> OmicFormerConfig: 
+{
+  "dropout": 0.1,
+  "ffn_type": "gated_mlp",
+  "fusion_type": "cross_attn",
+  "hidden_dim": 512,
+  "initializer_range": 0.02,
+  "intermediate_hidden_dim": 768,
+  "moe_topk": 2,
+  "n_heads": 8,
+  "n_layers_encoder": 6,
+  "n_layers_fusion": 8,
+  "n_outputs": 1,
+  "n_residuals_per_layer": 2,
+  "num_experts": 4,
+  "out_pooling_mode": "adaptive",
+  "out_pooling_size": 3,
+  "pre_layer_type": "mlp",
+  "scrna_input_pooling_mode": "adaptive",
+  "scrna_input_pooling_size": 200,
+  "seq_input_pooling_mode": "adaptive",
+  "seq_input_pooling_size": 512
+}
+06/30/2024 02:12:23 - INFO - __main__ - >>> OmicFormerPreTrainedModel: 
+OmicFormerPreTrainedModel(
+  (model): OmicFormer(
+    (seq_embedding): OmicEmbedding(
+      (emb_model): HyenaDNAPreTrainedModel(
+        (model): HyenaDNAModel(
+          (backbone): LMBackbone(
+            (embeddings): GPT2Embeddings(
+              (word_embeddings): Embedding(16, 256)
+            )
+            (layers): ModuleList(
+              (0): Block(
+                (mixer): HyenaOperator(
+                  (dropout): Dropout(p=0.0, inplace=False)
+                  (in_proj): Linear(in_features=256, out_features=768, bias=True)
+                  (out_proj): Linear(in_features=256, out_features=256, bias=True)
+                  (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+                  (filter_fn): HyenaFilter(
+                    (dropout): Dropout(p=0.0, inplace=False)
+                    (pos_emb): PositionalEmbedding()
+                    (implicit_filter): Sequential(
+                      (0): Linear(in_features=5, out_features=64, bias=True)
+                      (1): Sin()
+                      (2): Linear(in_features=64, out_features=64, bias=True)
+                      (3): Sin()
+                      (4): Linear(in_features=64, out_features=64, bias=True)
+                      (5): Sin()
+                      (6): Linear(in_features=64, out_features=256, bias=False)
+                    )
+                    (modulation): ExponentialModulation()
+                  )
+                )
+                (dropout1): Dropout(p=0.1, inplace=False)
+                (drop_path1): StochasticDepth(p=0.0, mode=row)
+                (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+                (mlp): Mlp(
+                  (fc1): Linear(in_features=256, out_features=1024, bias=True)
+                  (fc2): Linear(in_features=1024, out_features=256, bias=True)
+                )
+                (dropout2): Dropout(p=0.0, inplace=False)
+                (drop_path2): StochasticDepth(p=0.0, mode=row)
+                (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+              )
+              (1-7): 7 x Block(
+                (mixer): HyenaOperator(
+                  (dropout): Dropout(p=0.0, inplace=False)
+                  (in_proj): Linear(in_features=256, out_features=768, bias=True)
+                  (out_proj): Linear(in_features=256, out_features=256, bias=True)
+                  (short_filter): Conv1d(768, 768, kernel_size=(3,), stride=(1,), padding=(2,), groups=768)
+                  (filter_fn): HyenaFilter(
+                    (dropout): Dropout(p=0.0, inplace=False)
+                    (pos_emb): PositionalEmbedding()
+                    (implicit_filter): Sequential(
+                      (0): Linear(in_features=5, out_features=64, bias=True)
+                      (1): Sin()
+                      (2): Linear(in_features=64, out_features=64, bias=True)
+                      (3): Sin()
+                      (4): Linear(in_features=64, out_features=64, bias=True)
+                      (5): Sin()
+                      (6): Linear(in_features=64, out_features=256, bias=False)
+                    )
+                    (modulation): ExponentialModulation()
+                  )
+                )
+                (dropout1): Dropout(p=0.0, inplace=False)
+                (drop_path1): StochasticDepth(p=0.0, mode=row)
+                (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+                (mlp): Mlp(
+                  (fc1): Linear(in_features=256, out_features=1024, bias=True)
+                  (fc2): Linear(in_features=1024, out_features=256, bias=True)
+                )
+                (dropout2): Dropout(p=0.0, inplace=False)
+                (drop_path2): StochasticDepth(p=0.0, mode=row)
+                (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+              )
+            )
+            (drop_f): Dropout(p=0.0, inplace=False)
+            (ln_f): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (pre_pooling): EmbeddingPooling(
+        (ada_pool): AdaptiveAvgPool1d(output_size=512)
+      )
+      (pre_proj): Sequential(
+        (0): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (1): MLP(
+          (fc1): Linear(in_features=256, out_features=768, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+          (act): GELU(approximate='none')
+          (dropout): Dropout(p=0.0, inplace=False)
+        )
+      )
+    )
+    (scrna_embedding): OmicEmbedding(
+      (pre_pooling): EmbeddingPooling(
+        (ada_pool): AdaptiveAvgPool1d(output_size=200)
+      )
+      (pre_proj): Sequential(
+        (0): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (1): MLP(
+          (fc1): Linear(in_features=512, out_features=768, bias=True)
+          (fc2): Linear(in_features=768, out_features=512, bias=True)
+          (act): GELU(approximate='none')
+          (dropout): Dropout(p=0.0, inplace=False)
+        )
+      )
+    )
+    (seq_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (scrna_emb_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    (seq_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-5): 6 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (scrna_encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-5): 6 x EncoderBlock(
+          (self_attn): MHA(
+            (Wqkv): Linear(in_features=512, out_features=1536, bias=True)
+            (dwconv_qkv): Conv1d(1536, 1536, kernel_size=(3,), stride=(1,), padding=(2,), groups=1536)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (fusion): TransformerEncoder(
+      (layers): ModuleList(
+        (0-7): 8 x EncoderBlock(
+          (self_attn): MHA(
+            (Wq): Linear(in_features=512, out_features=512, bias=True)
+            (Wkv): Linear(in_features=512, out_features=1024, bias=True)
+            (inner_attn): SelfAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (inner_cross_attn): CrossAttention(
+              (drop): Dropout(p=0.1, inplace=False)
+            )
+            (out_proj): Linear(in_features=512, out_features=512, bias=True)
+          )
+          (ffn): GatedMLP(
+            (fc1): Linear(in_features=512, out_features=1536, bias=True)
+            (fc2): Linear(in_features=768, out_features=512, bias=True)
+          )
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+    (out_pooling): EmbeddingPooling(
+      (ada_pool): AdaptiveAvgPool1d(output_size=3)
+    )
+    (out_proj): OutputLayer(
+      (out): Sequential(
+        (0): Linear(in_features=1536, out_features=768, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=768, out_features=1, bias=True)
+      )
+    )
+  )
+)
+06/30/2024 02:12:23 - INFO - __main__ - ^^^^^^^^tf32 is set: True
+06/30/2024 02:12:23 - INFO - __main__ - ^^^^^^^^fp16 = False
+06/30/2024 02:12:23 - INFO - __main__ - ^^^^^^^^Learning rate: 0.0006
+06/30/2024 02:12:23 - INFO - __main__ - ^^^^^^^^LR scheduler type : cosine
+06/30/2024 02:12:23 - INFO - __main__ - ^^^^^^^^use streaming : False
+06/30/2024 02:12:23 - WARNING - accelerate.utils.other - Detected kernel version 4.19.90, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+06/30/2024 02:12:23 - INFO - __main__ - >>>>>>>>>>>>>>>>Start training and evaluatoin......
+seq embedding time: 4.210863351821899
+seq embedding time: 2.341609239578247
+seq embedding time: 3.981870412826538
+seq embedding time: 5.034393548965454
+seq embedding time: 0.04910707473754883
+seq embedding time: 0.04625558853149414
+seq embedding time: 0.054644107818603516
+seq embedding time: 0.046788930892944336
+seq embedding time: 0.036562204360961914
+seq embedding time: 0.35246872901916504seq embedding time: 0.35299110412597656
+
+seq embedding time: 0.3546590805053711
+seq embedding time: 0.04770851135253906
+seq embedding time: 0.04788088798522949
+seq embedding time: 0.04876255989074707
+seq embedding time: 0.04864001274108887
+seq embedding time: 0.03842782974243164
+seq embedding time: 0.03787064552307129
+seq embedding time: 0.04095149040222168
+seq embedding time: 0.03763008117675781
+seq embedding time: 0.04808449745178223
+seq embedding time: 0.047934770584106445
+seq embedding time: 0.048514366149902344
+seq embedding time: 0.04796457290649414
+seq embedding time: 0.03676104545593262seq embedding time: 0.037859201431274414
+
+seq embedding time: 0.03905510902404785
+seq embedding time: 0.037409305572509766
+seq embedding time: 0.03470754623413086
+seq embedding time: 0.04788374900817871
+seq embedding time: 0.04780077934265137
+seq embedding time: 0.039678096771240234
+seq embedding time: 0.03975415229797363
+seq embedding time: 0.0371096134185791seq embedding time: 0.04105639457702637
+
+seq embedding time: 0.039998531341552734
+seq embedding time: 0.03469538688659668
+seq embedding time: 0.0479581356048584
+seq embedding time: 0.04859209060668945
+seq embedding time: 0.048407793045043945
+seq embedding time: 0.044115543365478516
+seq embedding time: 0.039431095123291016
+seq embedding time: 0.04247450828552246
+seq embedding time: 0.03775787353515625
+seq embedding time: 0.03466176986694336
+seq embedding time: 0.04752755165100098
+seq embedding time: 0.048517465591430664
+seq embedding time: 0.04811525344848633
+seq embedding time: 0.03774094581604004seq embedding time: 0.03638052940368652seq embedding time: 0.036836862564086914
+
+
+seq embedding time: 0.03708982467651367
+seq embedding time: 0.03476667404174805
+seq embedding time: 0.03510785102844238
+seq embedding time: 0.04817032814025879
+seq embedding time: 0.048470497131347656
+seq embedding time: 0.055327653884887695
+seq embedding time: 0.05546855926513672
+seq embedding time: 0.054062843322753906
+seq embedding time: 0.0375518798828125
+seq embedding time: 0.03555035591125488
+seq embedding time: 0.03504180908203125
+seq embedding time: 0.04765915870666504
+seq embedding time: 0.048441171646118164
+seq embedding time: 0.038580894470214844seq embedding time: 0.038900136947631836
+
+seq embedding time: 0.03900504112243652
+seq embedding time: 0.03727316856384277
+seq embedding time: 0.03542470932006836
+seq embedding time: 0.03487801551818848
+seq embedding time: 0.04783296585083008
+seq embedding time: 0.04885745048522949
+seq embedding time: 0.04124784469604492
+seq embedding time: 0.04057931900024414
+seq embedding time: 0.03705739974975586
+seq embedding time: 0.04038882255554199
+seq embedding time: 0.04799461364746094
+seq embedding time: 0.04809403419494629
+seq embedding time: 0.047733306884765625
+seq embedding time: 0.04828953742980957
+seq embedding time: 0.04205965995788574
+seq embedding time: 0.041608333587646484
+seq embedding time: 0.04036593437194824
+seq embedding time: 0.03747868537902832
+seq embedding time: 0.04756665229797363
+seq embedding time: 0.04931449890136719
+seq embedding time: 0.04758477210998535
+seq embedding time: 0.04820513725280762
+seq embedding time: 0.037413597106933594
+seq embedding time: 0.03837871551513672
+seq embedding time: 0.038773298263549805
+seq embedding time: 0.0374603271484375
+seq embedding time: 0.04755735397338867
+seq embedding time: 0.049185752868652344
+seq embedding time: 0.04770469665527344
+seq embedding time: 0.04816794395446777
+seq embedding time: 0.04095172882080078seq embedding time: 0.039858341217041016
+seq embedding time: 0.04041028022766113
+seq embedding time: 0.03737688064575195
+
+seq embedding time: 0.03546643257141113
+seq embedding time: 0.03642416000366211
+seq embedding time: 0.03582286834716797
+seq embedding time: 0.0482478141784668
+seq embedding time: 0.04201197624206543
+seq embedding time: 0.04044985771179199
+seq embedding time: 0.03992009162902832
+seq embedding time: 0.03754377365112305
+seq embedding time: 0.03499794006347656
+seq embedding time: 0.035247087478637695
+seq embedding time: 0.047684669494628906
+seq embedding time: 0.04836392402648926
+seq embedding time: 0.041581153869628906seq embedding time: 0.03997516632080078
+
+seq embedding time: 0.04014754295349121
+seq embedding time: 0.03845810890197754
+seq embedding time: 0.03670668601989746
+seq embedding time: 0.04833722114562988
+seq embedding time: 0.047654151916503906
+seq embedding time: 0.04821586608886719
+seq embedding time: 0.04952192306518555
+seq embedding time: 0.049767494201660156
+seq embedding time: 0.04682421684265137
+seq embedding time: 0.03794693946838379
+seq embedding time: 0.036661624908447266
+seq embedding time: 0.035294294357299805
+seq embedding time: 0.047844648361206055
+seq embedding time: 0.04946732521057129
+seq embedding time: 0.04140758514404297seq embedding time: 0.04049086570739746
+
+seq embedding time: 0.042182207107543945
+seq embedding time: 0.03792405128479004
+seq embedding time: 0.03593707084655762
+seq embedding time: 0.035433053970336914
+seq embedding time: 0.047794342041015625
+seq embedding time: 0.04859018325805664
+seq embedding time: 0.041147708892822266
+seq embedding time: 0.03891587257385254
+seq embedding time: 0.037586212158203125
+seq embedding time: 0.04114890098571777
+seq embedding time: 0.03591108322143555
+seq embedding time: 0.03669238090515137
+seq embedding time: 0.04768729209899902
+seq embedding time: 0.048500776290893555
+seq embedding time: 0.041448354721069336
+seq embedding time: 0.043229103088378906
+seq embedding time: 0.0403437614440918
+seq embedding time: 0.037442684173583984
+seq embedding time: 0.03693366050720215
+seq embedding time: 0.035604000091552734
+seq embedding time: 0.04871106147766113
+seq embedding time: 0.047870635986328125
+seq embedding time: 0.04907727241516113
+seq embedding time: 0.04723620414733887seq embedding time: 0.05063343048095703
+
+seq embedding time: 0.03800177574157715
+seq embedding time: 0.036695003509521484
+seq embedding time: 0.034737348556518555
+seq embedding time: 0.04786276817321777
+seq embedding time: 0.04850053787231445
+seq embedding time: 0.04132652282714844
+seq embedding time: 0.04098033905029297
+seq embedding time: 0.037308454513549805
+seq embedding time: 0.04007291793823242
+seq embedding time: 0.036830902099609375
+seq embedding time: 0.0477139949798584
+seq embedding time: 0.04325366020202637
+seq embedding time: 0.047510385513305664
+seq embedding time: 0.03887128829956055
+seq embedding time: 0.037995338439941406
+seq embedding time: 0.0373234748840332seq embedding time: 0.04029726982116699
+
+seq embedding time: 0.0353696346282959
+seq embedding time: 0.04765152931213379
+seq embedding time: 0.0481722354888916
+seq embedding time: 0.04769587516784668
+seq embedding time: 0.040526628494262695
+seq embedding time: 0.03748512268066406
+seq embedding time: 0.04057478904724121
+seq embedding time: 0.038146257400512695
+seq embedding time: 0.0368504524230957
+seq embedding time: 0.04754137992858887
+seq embedding time: 0.04821014404296875
+seq embedding time: 0.04819035530090332
+seq embedding time: 0.040453433990478516
+seq embedding time: 0.037750959396362305
+seq embedding time: 0.040642499923706055
+seq embedding time: 0.0372774600982666
+seq embedding time: 0.03708648681640625
+seq embedding time: 0.04737401008605957
+seq embedding time: 0.0483088493347168
+seq embedding time: 0.047554969787597656
+seq embedding time: 0.04913783073425293
+seq embedding time: 0.0500493049621582seq embedding time: 0.042688608169555664
+
+seq embedding time: 0.037149667739868164
+seq embedding time: 0.03723621368408203
+seq embedding time: 0.03503918647766113
+seq embedding time: 0.0481419563293457
+seq embedding time: 0.04795122146606445
+seq embedding time: 0.04208564758300781
+seq embedding time: 0.03745865821838379
+seq embedding time: 0.04294538497924805
+seq embedding time: 0.04198026657104492
+seq embedding time: 0.035881757736206055
+seq embedding time: 0.03655886650085449
+seq embedding time: 0.0481719970703125
+seq embedding time: 0.04791069030761719
+seq embedding time: 0.04508352279663086
+seq embedding time: 0.03743767738342285seq embedding time: 0.04484748840332031
+
+seq embedding time: 0.04453754425048828
+seq embedding time: 0.03568720817565918
+seq embedding time: 0.03679180145263672
+seq embedding time: 0.035440921783447266
+seq embedding time: 0.04770922660827637
+seq embedding time: 0.03975248336791992
+seq embedding time: 0.03778696060180664
+seq embedding time: 0.03789710998535156
+seq embedding time: 0.040287017822265625
+seq embedding time: 0.0359804630279541
+seq embedding time: 0.036463260650634766
+seq embedding time: 0.0361788272857666
+seq embedding time: 0.04764699935913086
+seq embedding time: 0.03685474395751953seq embedding time: 0.037313222885131836
+
+seq embedding time: 0.038454532623291016
+seq embedding time: 0.038645267486572266
+seq embedding time: 0.03710150718688965
+seq embedding time: 0.03624582290649414
+seq embedding time: 0.03529715538024902
+seq embedding time: 0.04774117469787598
+seq embedding time: 0.03777170181274414
+seq embedding time: 0.03690838813781738
+seq embedding time: 0.03707122802734375
+seq embedding time: 0.03728032112121582
+seq embedding time: 0.035654306411743164
+seq embedding time: 0.03614401817321777
+seq embedding time: 0.03530430793762207
+seq embedding time: 0.04770708084106445
+seq embedding time: 0.036707162857055664
+seq embedding time: 0.03698897361755371
+seq embedding time: 0.03790593147277832
+seq embedding time: 0.03747868537902832
+seq embedding time: 0.035736083984375
+seq embedding time: 0.03635978698730469
+seq embedding time: 0.03524947166442871
+seq embedding time: 0.04780077934265137
+seq embedding time: 0.037195444107055664
+seq embedding time: 0.03734016418457031seq embedding time: 0.03808331489562988
+
+seq embedding time: 0.038458824157714844
+seq embedding time: 0.035814762115478516
+seq embedding time: 0.036586761474609375
+seq embedding time: 0.0363161563873291
+seq embedding time: 0.04786348342895508
+seq embedding time: 0.03723549842834473seq embedding time: 0.03757643699645996
+
+seq embedding time: 0.03777575492858887
+seq embedding time: 0.03906416893005371
+seq embedding time: 0.03566598892211914
+seq embedding time: 0.037084102630615234
+seq embedding time: 0.03631258010864258
+seq embedding time: 0.04804706573486328
+seq embedding time: 0.03817629814147949
+seq embedding time: 0.037386178970336914seq embedding time: 0.03848719596862793seq embedding time: 0.038491249084472656
+
+
+seq embedding time: 0.03597378730773926
+seq embedding time: 0.036858320236206055
+seq embedding time: 0.04832339286804199
+seq embedding time: 0.047837018966674805
+seq embedding time: 0.03697323799133301
+seq embedding time: 0.03760242462158203
+seq embedding time: 0.03846025466918945seq embedding time: 0.038468360900878906
+
+seq embedding time: 0.03593897819519043
+seq embedding time: 0.036219120025634766
+seq embedding time: 0.048224687576293945
+seq embedding time: 0.04781603813171387
+seq embedding time: 0.03750300407409668seq embedding time: 0.041547298431396484seq embedding time: 0.04024982452392578
+
+
+seq embedding time: 0.039781808853149414
+seq embedding time: 0.03618121147155762
+seq embedding time: 0.03684115409851074
+seq embedding time: 0.04813385009765625
+seq embedding time: 0.0477757453918457
+seq embedding time: 0.03733038902282715seq embedding time: 0.03833174705505371seq embedding time: 0.038326263427734375
+
+
+seq embedding time: 0.037792205810546875
+seq embedding time: 0.036103248596191406
+seq embedding time: 0.03636360168457031
+seq embedding time: 0.048235177993774414
+seq embedding time: 0.04773545265197754
+seq embedding time: 0.03735160827636719
+seq embedding time: 0.03913283348083496
+seq embedding time: 0.03989720344543457
+seq embedding time: 0.04067516326904297
+seq embedding time: 0.03625202178955078
+seq embedding time: 0.03633284568786621
+seq embedding time: 0.04813718795776367
+seq embedding time: 0.03657126426696777
+seq embedding time: 0.03724837303161621seq embedding time: 0.03824043273925781seq embedding time: 0.038495779037475586
+seq embedding time: 0.038515567779541016
+
+
+seq embedding time: 0.03635740280151367
+seq embedding time: 0.03661370277404785
+seq embedding time: 0.04844212532043457
+seq embedding time: 0.04799175262451172
+seq embedding time: 0.03957772254943848seq embedding time: 0.03972983360290527
+
+seq embedding time: 0.037116289138793945seq embedding time: 0.03970837593078613
+
+seq embedding time: 0.03650212287902832
+seq embedding time: 0.0358128547668457
+seq embedding time: 0.04824566841125488
+seq embedding time: 0.04785895347595215
+seq embedding time: 0.03803133964538574seq embedding time: 0.03715038299560547
+seq embedding time: 0.0373532772064209
+
+seq embedding time: 0.037471771240234375
+seq embedding time: 0.035860538482666016
+seq embedding time: 0.03583693504333496
+seq embedding time: 0.048174142837524414
+seq embedding time: 0.04780077934265137
+seq embedding time: 0.042223453521728516
+seq embedding time: 0.04102945327758789
+seq embedding time: 0.04123115539550781
+seq embedding time: 0.03737330436706543
+seq embedding time: 0.03555464744567871
+seq embedding time: 0.036174774169921875
+seq embedding time: 0.04834485054016113
+seq embedding time: 0.04808664321899414
+seq embedding time: 0.040349483489990234
+seq embedding time: 0.03702664375305176
+seq embedding time: 0.039676666259765625
+seq embedding time: 0.040056705474853516
+seq embedding time: 0.03580737113952637
+seq embedding time: 0.03601336479187012
+seq embedding time: 0.04816031455993652
+seq embedding time: 0.048172712326049805
+seq embedding time: 0.5371088981628418
+seq embedding time: 0.5376756191253662
+seq embedding time: 0.03766942024230957
+seq embedding time: 0.5377540588378906
+seq embedding time: 0.035959482192993164
+seq embedding time: 0.03607177734375
+seq embedding time: 0.048012495040893555
+seq embedding time: 0.047637224197387695
+seq embedding time: 1.0981438159942627seq embedding time: 1.0983600616455078
+
+seq embedding time: 1.0974328517913818
+seq embedding time: 0.03792977333068848
+seq embedding time: 0.03624367713928223
+seq embedding time: 0.03584551811218262
+seq embedding time: 0.04798769950866699
+seq embedding time: 0.048073768615722656
+seq embedding time: 0.03717184066772461
+seq embedding time: 0.06553387641906738seq embedding time: 0.06562232971191406
+
+seq embedding time: 0.06509709358215332
+seq embedding time: 0.03605341911315918
+seq embedding time: 0.03661775588989258
+seq embedding time: 0.04796457290649414
+seq embedding time: 0.04811215400695801
+seq embedding time: 0.0368351936340332
+seq embedding time: 0.5368397235870361seq embedding time: 0.5367865562438965
+
+seq embedding time: 0.5369925498962402
+seq embedding time: 0.036168575286865234seq embedding time: 0.036163330078125
+
+seq embedding time: 0.048389434814453125
+seq embedding time: 0.04753923416137695
+seq embedding time: 0.037001609802246094
+seq embedding time: 0.038170814514160156
+seq embedding time: 0.03870272636413574
+seq embedding time: 0.03828835487365723
+seq embedding time: 0.03617668151855469
+seq embedding time: 0.036081790924072266
+seq embedding time: 0.048128366470336914
+seq embedding time: 0.04818892478942871
+seq embedding time: 0.036734580993652344
+seq embedding time: 0.30431342124938965seq embedding time: 0.30431175231933594
+
+seq embedding time: 0.3033311367034912
+seq embedding time: 0.03569912910461426
+seq embedding time: 0.0373384952545166
+seq embedding time: 0.048151493072509766
+seq embedding time: 0.04827761650085449
+seq embedding time: 0.03711104393005371seq embedding time: 0.862727165222168seq embedding time: 0.8617665767669678
+
+
+seq embedding time: 0.8626148700714111
+seq embedding time: 0.03624224662780762seq embedding time: 0.03609013557434082
+
+seq embedding time: 0.04871082305908203
+seq embedding time: 0.04796910285949707
+{'loss': 0.8038, 'grad_norm': 11.440516471862793, 'learning_rate': 2.9999999999999997e-05, 'epoch': 0.0}
+seq embedding time: 0.04968428611755371
+seq embedding time: 0.049118995666503906
+seq embedding time: 0.04867053031921387
+seq embedding time: 0.049333810806274414
+seq embedding time: 0.048940420150756836
+seq embedding time: 0.04824066162109375
+seq embedding time: 0.04802536964416504
+seq embedding time: 0.04909110069274902
+seq embedding time: 0.036310434341430664seq embedding time: 0.03656888008117676
+
+seq embedding time: 0.03838348388671875
+seq embedding time: 0.03574633598327637
+seq embedding time: 0.04960751533508301
+seq embedding time: 0.048131465911865234
+seq embedding time: 0.048026323318481445
+seq embedding time: 0.04831242561340332
+seq embedding time: 0.03578448295593262
+seq embedding time: 0.03680276870727539
+seq embedding time: 0.04405856132507324
+seq embedding time: 0.03507733345031738
+seq embedding time: 0.04831862449645996
+seq embedding time: 0.04816174507141113
+seq embedding time: 0.04865097999572754
+seq embedding time: 0.048322200775146484
+seq embedding time: 0.040372371673583984
+seq embedding time: 0.035370588302612305
+seq embedding time: 0.035272836685180664
+seq embedding time: 0.035753488540649414
+seq embedding time: 0.04838728904724121
+seq embedding time: 0.03720688819885254
+seq embedding time: 0.03513503074645996
+seq embedding time: 0.048204898834228516
+seq embedding time: 0.048126935958862305
+seq embedding time: 0.048227787017822266
+seq embedding time: 0.04778337478637695
+seq embedding time: 0.049550533294677734
+seq embedding time: 0.04831504821777344
+seq embedding time: 0.047835350036621094
+seq embedding time: 0.04860854148864746
+seq embedding time: 0.04808187484741211
+seq embedding time: 0.03484225273132324
+seq embedding time: 0.03616046905517578
+seq embedding time: 0.045935630798339844
+seq embedding time: 0.0356135368347168
+seq embedding time: 0.04815316200256348
+seq embedding time: 0.04783749580383301
+seq embedding time: 0.048047542572021484
+seq embedding time: 0.04828166961669922
+seq embedding time: 0.035176753997802734
+seq embedding time: 0.03565788269042969
+seq embedding time: 0.03541707992553711
+seq embedding time: 0.04764866828918457
+seq embedding time: 0.04827284812927246
+seq embedding time: 0.047865867614746094
+seq embedding time: 0.04762578010559082
+seq embedding time: 0.04802370071411133
+seq embedding time: 0.034860849380493164seq embedding time: 0.03506183624267578
+
+seq embedding time: 0.03566694259643555
+seq embedding time: 0.03890538215637207

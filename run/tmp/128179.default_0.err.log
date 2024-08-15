@@ -1,0 +1,46 @@
+gcc-12.2.0 loaded successful
+cuda-11.8.0 loaded successful
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-3e61ea8dd6d33517.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-4d391ab6f165eb30.arrow
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-06-30 20:50:16,093 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-06-30 20:51:01,375 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-06-30 20:51:02,328 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:2048] 2024-06-30 20:51:02,642 >> ***** Running training *****
+[INFO|trainer.py:2049] 2024-06-30 20:51:02,642 >>   Num examples = 121,558,634
+[INFO|trainer.py:2050] 2024-06-30 20:51:02,642 >>   Num Epochs = 1
+[INFO|trainer.py:2051] 2024-06-30 20:51:02,642 >>   Instantaneous batch size per device = 72
+[INFO|trainer.py:2054] 2024-06-30 20:51:02,642 >>   Total train batch size (w. parallel, distributed & accumulation) = 432
+[INFO|trainer.py:2055] 2024-06-30 20:51:02,642 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:2056] 2024-06-30 20:51:02,642 >>   Total optimization steps = 60,000
+[INFO|trainer.py:2057] 2024-06-30 20:51:02,642 >>   Number of trainable parameters = 1,445,633
+[WARNING|modeling_utils.py:1188] 2024-06-30 20:51:25,694 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-06-30 20:51:25,694 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-06-30 20:51:25,712 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[INFO|trainer.py:3614] 2024-06-30 20:57:56,487 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-06-30 20:57:56,489 >>   Num examples = 60810
+[INFO|trainer.py:3619] 2024-06-30 20:57:56,489 >>   Batch size = 72
+WARNING:torch.distributed.elastic.agent.server.api:Received 15 death signal, shutting down workers
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 36735 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 36736 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 36737 closing signal SIGTERM

@@ -67,3 +67,57 @@ class MSEMSLELoss(nn.Module):
         loss = self.alpha * self.au_loss(input, target) + self.beta * self.msle_loss(input, target)
         # loss = self.alpha * au_loss
         return loss
+    
+class CLIPLoss(nn.Module):
+    """
+    CLIP loss
+
+    Adapted from:
+
+    """
+
+    def __init__(
+        self,
+        temprature: float = 0.07, # default value from CLIP paper, or 2.6592
+        **kwargs
+    ) -> None:
+        super().__init__(**kwargs)
+
+        self.temprature = nn.Parameter(
+            torch.ones([]) * temprature, requires_grad=False
+        )
+    def forward(self, seq_embedding: torch.Tensor, scrna_embedding: torch.Tensor) -> torch.Tensor:
+        # seq_embedding: (batch_size, seq_lenth, embeding_dim)
+        # scrna_embedding: (batch_size, sc_cnt, embeding_dim)
+
+        if seq_embedding.dim() == 3:
+            seq_embedding, _ = seq_embedding.max(dim=1)       # (n_seq [or batch size], embeding_dim)
+        if scrna_embedding.dim() == 3:
+            scrna_embedding, _ = scrna_embedding.max(dim=1)   # (n_sc [or batch_size], embeding_dim)
+
+        loss = self._clip_loss(seq_embedding, scrna_embedding)
+
+        return loss
+    
+    def _clip_loss(
+        self,
+        seq_embedding: torch.Tensor,
+        scrna_embedding: torch.Tensor,
+    ) -> torch.Tensor:
+        # similarity: (n_sc, n_seq)
+        similarity_logit = (seq_embedding @ scrna_embedding.t()) * torch.exp(self.temprature)   # (n_seq, n_sc)
+        seq_loss = self._contrastive_loss_v1(similarity_logit, dim=0)
+        scrna_loss = self._contrastive_loss_v1(similarity_logit, dim=1)
+        # seq_loss = self._contrastive_loss_v2(similarity_logit)
+        # scrna_loss = self._contrastive_loss_v2(similarity_logit.t())
+        return (seq_loss + scrna_loss) / 2
+
+    # Adapted from https://sachinruk.github.io/blog/2021-03-07-clip.html
+    def _contrastive_loss_v1(self, logits, dim):
+        neg_ce = torch.diag(F.log_softmax(logits, dim=dim))
+        return -neg_ce.mean()
+    
+    def _contrastive_loss_v2(self, logits):
+        return F.cross_entropy(logits, torch.arange(logits.shape[0], device=logits.device))
+
+

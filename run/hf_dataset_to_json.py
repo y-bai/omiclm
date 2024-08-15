@@ -77,9 +77,10 @@ logger = logging.getLogger(__name__)
 def main():
     parser = HfArgumentParser((
         OmicRawDataConfig, 
-        OmicPretrainedModelAndTokenizationConfig, 
-        OmicFormerTrainingArguments))
-    raw_ds_config, pretrained_model_tokenizer_config, training_config = parser.parse_args_into_dataclasses()
+        OmicPretrainedModelAndTokenizationConfig))
+    raw_data_config, pretrained_model_tokenizer_config = parser.parse_args_into_dataclasses()
+
+    training_config = TrainingArguments(output_dir="./tmp_dir")
 
     # Setup logging
     logging.basicConfig(
@@ -110,10 +111,10 @@ def main():
     # load TOKENIZED dataset
     #################################################################
 
-    tokenized_dataset_dir = pretrained_model_tokenizer_config.tokenized_seq_dataset_dir
+    tokenized_dataset_dir = pretrained_model_tokenizer_config.tokenized_seq_dataset_dir + f"/{raw_data_config.processed_cell_type_name}"
     logger.info(f"loading seq tokenized dataset from: {tokenized_dataset_dir}")
 
-    columns_to_remove = ['seq', 'attention_mask']
+    # columns_to_remove = ['seq', 'attention_mask']
 
     with training_config.main_process_first(desc="loading data and model"):
         seq_hf_ds = load_from_disk(tokenized_dataset_dir)
@@ -131,23 +132,23 @@ def main():
         #     })
         # })
 
-        train_val_dataset = seq_hf_ds['train'].train_test_split(test_size=0.1, shuffle=True, seed=42)
+        train_val_dataset = seq_hf_ds['train'].train_test_split(test_size=0.0005, shuffle=True, seed=42)
         
-        trn_dataset = train_val_dataset['train'].remove_columns(columns_to_remove)
+        trn_dataset = train_val_dataset['train']
         logger.info(f"train dataset: \n{trn_dataset}")
         # Dataset({
         #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
         #     num_rows: 111750940
         # })
 
-        val_dataset = train_val_dataset['test'].remove_columns(columns_to_remove)
+        val_dataset = train_val_dataset['test']
         logger.info(f"validation dataset: \n{val_dataset}")
         # Dataset({
         #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
         #     num_rows: 12416772
         # })
 
-        tst_dataset = seq_hf_ds['test'].remove_columns(columns_to_remove)
+        tst_dataset = seq_hf_ds['test']
         logger.info(f"test dataset: \n{tst_dataset}")
         # Dataset({
         #     features: ['sample', 'pos', 'seq', 'peak_value', 'input_ids', 'attention_mask', 'record_id'],
@@ -173,7 +174,7 @@ def main():
     
     n_shard = 500 # i.e, the number of generated json files for each dataset type, like chunks
     for _dstype, _token_ds in zip(dstype, tokenized_ds):
-        _shard_save_dir = os.path.join(f"{pretrained_model_tokenizer_config.tokenized_seq_dataset_dir}_json", _dstype)
+        _shard_save_dir = os.path.join(f"{tokenized_dataset_dir}_json", _dstype)
         if not os.path.exists(_shard_save_dir):
             os.makedirs(_shard_save_dir, exist_ok=True)
 

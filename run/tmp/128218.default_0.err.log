@@ -1,0 +1,170 @@
+gcc-12.2.0 loaded successful
+cuda-11.8.0 loaded successful
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+Loading cached split indices for dataset at /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-67c10577d82440ee.arrow and /home/share/huadjyin/home/weiyilin/project/DNALLM/datasets/tokenized_datasets/seq_dataset/hyenadna/CD8_expression_5K/train/cache-e13dffe3ff20bbe0.arrow
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-01 00:46:11,556 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-01 00:46:49,972 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-01 00:46:50,153 >> max_steps is given, it will override any value given in num_train_epochs
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, "__version__") or LooseVersion(
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py:6: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  ) < LooseVersion("1.15"):
+[WARNING|trainer.py:577] 2024-07-01 00:46:50,561 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:2048] 2024-07-01 00:46:51,155 >> ***** Running training *****
+[INFO|trainer.py:2049] 2024-07-01 00:46:51,155 >>   Num examples = 121,595,120
+[INFO|trainer.py:2050] 2024-07-01 00:46:51,155 >>   Num Epochs = 2
+[INFO|trainer.py:2051] 2024-07-01 00:46:51,155 >>   Instantaneous batch size per device = 88
+[INFO|trainer.py:2054] 2024-07-01 00:46:51,155 >>   Total train batch size (w. parallel, distributed & accumulation) = 2,816
+[INFO|trainer.py:2055] 2024-07-01 00:46:51,155 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2056] 2024-07-01 00:46:51,155 >>   Total optimization steps = 60,000
+[INFO|trainer.py:2057] 2024-07-01 00:46:51,157 >>   Number of trainable parameters = 39,350,273
+[WARNING|modeling_utils.py:1188] 2024-07-01 00:47:07,507 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-01 00:47:08,014 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-01 00:47:08,543 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[WARNING|modeling_utils.py:1188] 2024-07-01 00:47:08,954 >> Could not estimate the number of tokens of the input, floating-point operations will not be computed
+[INFO|trainer.py:3614] 2024-07-01 00:49:53,135 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-01 00:49:53,138 >>   Num examples = 24324
+[INFO|trainer.py:3619] 2024-07-01 00:49:53,139 >>   Batch size = 88
+[INFO|trainer.py:3614] 2024-07-01 00:53:11,027 >> ***** Running Evaluation *****
+[INFO|trainer.py:3616] 2024-07-01 00:53:11,029 >>   Num examples = 24324
+[INFO|trainer.py:3619] 2024-07-01 00:53:11,029 >>   Batch size = 88
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789976_1233447675_8>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789982_899946911_8>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789973_200267576_16>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789972_240830935_12>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789971_334193202_12>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789977_3768132681_16>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789975_273923657_12>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789978_460885413_12>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789989_3100076147_12>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789976_1768487269_9>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789974_1002960294_12>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789982_3360873602_9>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789971_70739190_13>: No space left on device (28)
+Traceback (most recent call last):
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/home/HPCBase/tools/anaconda3/lib/python3.9/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 369, in reduce_storage
+    fd, size = storage._share_fd_cpu_()
+RuntimeError: unable to write to file </torch_789974_1288517184_13>: No space left on device (28)
+WARNING:torch.distributed.elastic.agent.server.api:Received 15 death signal, shutting down workers
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 764918 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 764919 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 764920 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 764921 closing signal SIGTERM

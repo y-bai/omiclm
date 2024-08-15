@@ -1,0 +1,14 @@
+cyclone001-agent-48
+07/26/2024 23:55:54 - INFO - __main__ - >>> merging SNP and SEQ data from /home/share/huadjyin/home/zhangwenxi/pythonproject/DNALLM/processed_data/caQTL_for_AI/pDC_IRF4.csv and /home/share/huadjyin/home/weiyilin/project/DNALLM/processed_data/all_sample-pos-seq.tsv
+07/26/2024 23:55:54 - INFO - __main__ - >>> fileter out samples without given cell type using /home/share/huadjyin/home/zhangwenxi/pythonproject/atac-data/Matrix/all-celltype-sample/pDC_IRF4_sample.csv
+07/26/2024 23:55:54 - INFO - __main__ - >>> fileter out SNPs with more than 1 alleles...
+07/27/2024 00:27:23 - INFO - __main__ - >>> merged, size: (71250, 9), data 
+             phenotype_id  ... snp_relative_pos
+1  chr1:11907616-11908117  ...              232
+2  chr1:21293536-21294037  ...              311
+4  chr1:26281884-26282385  ...              274
+5  chr1:36400387-36400888  ...              198
+6  chr1:42157681-42158182  ...              338
+
+[5 rows x 9 columns]
+07/27/2024 00:27:24 - INFO - __main__ - >>> saved to snp_seq_merged_filtered_pDC_IRF4.csv

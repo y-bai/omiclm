@@ -986,7 +986,6 @@ class HyenaDNAPreTrainedModel(PreTrainedModel):
     def extract_sample_embedding(self, input_ids, **kwargs):
 
         return self.model(input_ids, **kwargs)
-
     
     def forward(self, input_ids, record_id=None, row_index=None, **kwargs):
         

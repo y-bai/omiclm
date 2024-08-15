@@ -169,7 +169,7 @@ def main():
             dd.save_to_disk(pretrained_model_tokenizer_config.tokenized_seq_dataset_dir)
             dd.cleanup_cache_files()
         else:
-            _tokenized_ds.save_to_disk(pretrained_model_tokenizer_config.tokenized_seq_dataset_dir)
+            _tokenized_ds.save_to_disk(pretrained_model_tokenizer_config.tokenized_seq_dataset_dir + f"/{raw_ds_config.processed_cell_type_name}")
             _tokenized_ds.cleanup_cache_files()
             # >>> SEQ tokenized data:
             # DatasetDict({

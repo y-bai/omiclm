@@ -84,7 +84,3 @@ class SCRNAInputDataProcessorBase:
         self
     ):
         return self.data_config
-
-
-
-

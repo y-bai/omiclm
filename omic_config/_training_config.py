@@ -43,15 +43,19 @@ PRETRAINED_SCRNA_MODEL_NAME = PretrainedModelName.SCGPT     # scRNA pretrained m
 SCRNA_MODEL_SIZE_INDICATOR = 512
 ##########################################################
 
-RAW_SCRNA_HAS_HVG = True
-RAW_SCRNA_CELL_TYPE_VAR_NAME = "celltype_l4"  # This is used for Geneformer when tokenization
+RAW_SCRNA_HAS_HVG = True  # whether the raw scRNA data has been preprocessed with highly variable genes. if not, set to False, and the model will do the preprocessing by selecting 5000 HVG. 
 
-USE_STREAMING = False
-MSLE_LOSS_ALPHA = 1.0   
-MSLE_LOSS_BETA = 5.0    
+# PROCESSED_CELL_TYPE_NAME = None # for CD8_expression_5K.h5ad, the cell type name is "CD8_expression_5K"
+PROCESSED_CELL_TYPE_NAME = "CD8_CTL_GZMB" # if None, then cell type name will used file name of the raw scRNA data file (ie, `RAW_SCRNA_DATA_FILE_NAME`)
+
+PEAK_VALUE_COL_NAME = "log1p_norm_peak_value"  # the column name of the peak value in the TOENIZED seq data file, 'peak_value' | 'sum_peak_value' | 'norm_peak_value' | 'log1p_norm_peak_value
+
+LOSS_FN_NAME = "mse" # "mse" | "msle_mse" | "msle" | "clip_mse", default: mse
+
+LOSS_ALPHA = 0.0001    # used for CLIP_MSE loss
+LOSS_BETA = 5.0     # used for CLIP_MSE loss
 
 ATTN_FFN_TYPE = "gated_mlp"  # "moe" or "mlp", "gated_mlp"
-
 
 DATA_PATH = {
     # raw seq data in .tsv/.csv file
@@ -69,9 +73,23 @@ DATA_PATH = {
     # raw seq data after being converted into `datasets.dataset` file
     "RAW_SEQ_DATASET_DIR": "datasets/raw_datasets/seq_dataset",
 
+    ######## permuatation test
+    # RAW SNP files (with corresponding peak info)
+    "RAW_SNP_CSVFILE_DIR": "/home/share/huadjyin/home/zhangwenxi/pythonproject/DNALLM/processed_data/caQTL_for_AI",
+    
+    # raw seq data for all peaks
+    "RAW_SEQ_TSV_FILE": "processed_data/all_sample-pos-seq.tsv",
+
+    # samples list for given cell type
+    "RAW_CELL_TYPE_SAMPLES_DIR": "/home/share/huadjyin/home/zhangwenxi/pythonproject/atac-data/Matrix/all-celltype-sample",
+    ########
+
     # tokenized dataset directory
     "TOKENIZED_SEQ_DATASET_DIR": "datasets/tokenized_datasets/seq_dataset",
     "TOKENIZED_SCRNA_DATASET_DIR": "datasets/tokenized_datasets/scrna_dataset",
+
+    # normalized peak value file (.csv)
+    "NORMALIZED_PEAK_VALUE_FILE": "processed_data/CD8_CTL_GZMB_sum_peak_matrix_normalized_no_cutoff.csv",
 
     # embedding dataset directory
     "EMBEDDING_SEQ_DATASET_DIR": "datasets/embedding_datasets/seq_dataset",
@@ -82,7 +100,9 @@ DATA_PATH = {
     # train output dir
     "TRAINING_OUTPUT_DIR": "outputs",
 
-    "PROJECT_ROOT_PATH": r"path/to/project/root",  
+    "OMICFORMER_PRETRAINED_MODEL_DIR": "omicformer_pretrained/v1",
+
+    "PROJECT_ROOT_PATH": r"/home/share/huadjyin/home/weiyilin/project/DNALLM",  
 }
 
 PRETRAINED_MODEL_NAME_PATH = {
@@ -101,12 +121,14 @@ PRETRAINED_MODEL_NAME_PATH = {
     },
 }
 
-BATCHE_SIZE = { # ATTN_FFN_TYPE: BATCH_SIZE
-    'moe': 16,
-    'mlp': 88,
-    'gated_mlp': 88,
+BATCH_SIZE = {
+    "mlp": 64,      # ATTN_FFN_TYPE:batch_size
+    "gated_mlp": 72 # 72, 176,
 }
 
+USE_STREAMING = False
+RAW_SCRNA_CELL_TYPE_VAR_NAME = "celltype_l4"  # This is used for Geneformer when tokenization
+NUM_EXPERTS = 4 # used for "moe" only
 
 @dataclass
 class OmicRawDataConfig:
@@ -137,20 +159,50 @@ class OmicRawDataConfig:
         DATA_PATH["PROJECT_ROOT_PATH"], 
         DATA_PATH["RAW_SEQ_DATASET_DIR"]) 
     
+    ######## permuatation test
+    raw_snp_csv_file: Optional[str] = None
+    raw_seq_tsv_file: Optional[str] = os.path.join(
+        DATA_PATH["PROJECT_ROOT_PATH"], 
+        DATA_PATH["RAW_SEQ_TSV_FILE"])
+    raw_cell_type_samples_csv_file: Optional[str] = None
+    ########
 
+    processed_cell_type_name: Optional[str] = PROCESSED_CELL_TYPE_NAME
+    
+    def __post_init__(self):
+        if self.processed_cell_type_name is None:
+            self.processed_cell_type_name = os.path.basename(self.raw_scrna_file_name).split(".")[0]
+        
+        ######## permuatation test
+        self.raw_snp_csv_file = os.path.join(
+            DATA_PATH["RAW_SNP_CSVFILE_DIR"],
+            f"{self.processed_cell_type_name}.csv")
+        
+        self.raw_cell_type_samples_csv_file = os.path.join(
+            DATA_PATH["RAW_CELL_TYPE_SAMPLES_DIR"],
+            f"{self.processed_cell_type_name}_sample.csv")
+        ######## 
 
 @dataclass
 class OmicPretrainedModelAndTokenizationConfig:
 
     seq_model_name: Optional[PretrainedModelName] = PRETRAINED_SEQ_MODEL_NAME
-    seq_model_input_max_len: Optional[int] = SEQ_MODEL_SIZE_INDICATOR
+    seq_model_input_max_len: Optional[int] = SEQ_MODEL_SIZE_INDICATOR  # used for tokenizer
+    seq_model_d_dim: Optional[int] =  256
 
     scrna_model_name: Optional[PretrainedModelName] = PRETRAINED_SCRNA_MODEL_NAME
+    scrna_model_d_dim: Optional[int] = 512
 
     use_streaming: bool = USE_STREAMING
     seq_min_len: int = SEQ_MIN_LEN  # for filter seq with length < SEQ_MIN_LEN when tokenizing
 
-    attn_ffn_type: str = ATTN_FFN_TYPE
+    attn_ffn_type: str = ATTN_FFN_TYPE  # use "moe" or "mlp" or "gated_mlp" for our OmiFormer
+    n_experts: int = NUM_EXPERTS        # number of experts for MoE for our OmiFormer
+
+    peak_value_col_name: str = PEAK_VALUE_COL_NAME
+
+    seq_input_has_embedding: bool = False  # if the input seq data has been embedded, then set to True
+    scrna_input_has_embedding: bool = True # if the input scrna data has been embedded, then set to True
 
     # pretrained seq model path
     seq_model_path = os.path.join(
@@ -169,6 +221,11 @@ class OmicPretrainedModelAndTokenizationConfig:
         DATA_PATH["TOKENIZED_SEQ_DATASET_DIR"] + f"/{PRETRAINED_SEQ_MODEL_NAME.value}" 
     )
 
+    normalized_peak_value_file: Optional[str] = os.path.join(
+        DATA_PATH["PROJECT_ROOT_PATH"], 
+        DATA_PATH["NORMALIZED_PEAK_VALUE_FILE"]
+    )
+
     tokenized_scrna_dataset_dir: Optional[str] = os.path.join(
         DATA_PATH["PROJECT_ROOT_PATH"], 
         DATA_PATH["TOKENIZED_SCRNA_DATASET_DIR"] + f"/{PRETRAINED_SCRNA_MODEL_NAME.value}"
@@ -184,51 +241,64 @@ class OmicPretrainedModelAndTokenizationConfig:
         DATA_PATH["EMBEDDING_SCRNA_DATASET_DIR"] + f"/{PRETRAINED_SCRNA_MODEL_NAME.value}"
     )
 
+    omicformer_pretrained_model_dir: Optional[str] = os.path.join(
+        DATA_PATH["PROJECT_ROOT_PATH"],
+        DATA_PATH["OMICFORMER_PRETRAINED_MODEL_DIR"]
+    )
+
 
 @dataclass
 class OmicFormerTrainingArguments(TrainingArguments):
+    
+    loss_fn_name:str = LOSS_FN_NAME  
+
     output_dir: str = os.path.join(
         DATA_PATH["PROJECT_ROOT_PATH"], 
-        DATA_PATH["TRAINING_OUTPUT_DIR"] + f"/{ATTN_FFN_TYPE}")
+        DATA_PATH["TRAINING_OUTPUT_DIR"] + f"/{ATTN_FFN_TYPE}_{LOSS_FN_NAME}")
     overwrite_output_dir: bool = True 
 
-    msle_alpha: float = MSLE_LOSS_ALPHA
-    msle_beta: float = MSLE_LOSS_BETA
-    auxiliary_loss: str = "mse"
-    label_names: List[str] = field(default_factory=lambda: ["peak_value"])
+    loss_alpha: float = LOSS_ALPHA
+    loss_beta: float = LOSS_BETA
+    clip_temprature: float = -0.5 # 0.07
+    
+    auxiliary_loss: str = "mse"  # decrpted, used for MSLEMSELoss
 
-    learning_rate: float = 6e-5   
+    label_names: List[str] = field(default_factory=lambda: ["peak_value"])  # for evaluation
+
+    learning_rate: float = 6e-4   
     lr_scheduler_type: str = "cosine"
     # lr_scheduler_kwargs: Dict[str, Any] = field(default_factory=lambda: {"min_lr": 1e-8})
 
     warmup_steps: int = 1000 
-    max_steps:int = 60000  
+    max_steps:int = 60000
+    # num_train_epochs = 2  # https://discuss.huggingface.co/t/trainer-only-doing-3-epochs-no-matter-the-trainingarguments/19347/5
 
-    dataloader_num_workers: int = 4      
-    per_device_train_batch_size: int = BATCHE_SIZE[ATTN_FFN_TYPE] 
-    per_device_eval_batch_size: int = BATCHE_SIZE[ATTN_FFN_TYPE]
+    dataloader_num_workers: int = 3  # the number of processes per GPU to use for data loading
 
-    gradient_accumulation_steps: int = 2  
+    per_device_train_batch_size: int = BATCH_SIZE[ATTN_FFN_TYPE]
+    per_device_eval_batch_size: int = BATCH_SIZE[ATTN_FFN_TYPE]
 
-    eval_accumulation_steps: int = 100
+    gradient_accumulation_steps: int = 10  
+
+    eval_accumulation_steps: int = 50
 
     # NOTE: config for evaluation
     evaluation_strategy: str = "steps"
-    # evaluation_strategy: str = "no"
+    # evaluation_strategy: str = "no"  # no evaluation during training
     do_eval: bool = True
 
     #
     # if evaluation_strategy="steps". eval_steps will default to the same 
     # value as logging_steps if not set.
     # eval_steps must be an integer if bigger than 1
-    eval_steps: int = 100
+    eval_steps: int = 50
     
     # NOTE: logging config 
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         DATA_PATH["PROJECT_ROOT_PATH"], 
-        DATA_PATH["TRAINING_OUTPUT_DIR"] + f"/{ATTN_FFN_TYPE}/log")
-    logging_steps: int = 100 #
+        DATA_PATH["TRAINING_OUTPUT_DIR"] + f"/{ATTN_FFN_TYPE}_{LOSS_FN_NAME}/log")
+    logging_steps: int = 50 #
     logging_strategy: str = "steps"
     report_to: str = "tensorboard" 
 
@@ -255,18 +325,18 @@ class OmicFormerTrainingArguments(TrainingArguments):
 
     resume_from_checkpoint: bool = False 
 
-    seed: int = 42
-    data_seed: int = 42
+    seed: int = 3407
+    data_seed: int = 3407
 
     #
     # # If input does not contained labels, then we need to use this
     # include_inputs_for_metrics: bool = True
 
     #
-    disable_tqdm: bool = True 
+    disable_tqdm: bool = True
 
     tf32: bool = True
-    # fp16: bool = True 
+    # fp16: bool = True
     # gradient_checkpointing: bool = True
 
     # for debug
